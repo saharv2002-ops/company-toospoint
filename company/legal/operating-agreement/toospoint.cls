@@ -61,7 +61,7 @@
   colorlinks=false,
   pdfborder={0 0 0},
   pdftitle={Consulting Agreement},
-  pdfauthor={ToosPoint Consulting}
+  pdfauthor={ToosPoint LLC}
 }
 
 %% ─── Section Styling ────────────────────────────────────────────────────────
@@ -100,7 +100,7 @@
   \end{tikzpicture}%
 }
 
-\fancyfoot[L]{\sffamily\footnotesize\color{TPGray}ToosPoint Consulting\enspace·\enspace Confidential}
+\fancyfoot[L]{\sffamily\footnotesize\color{TPGray}ToosPoint LLC\enspace·\enspace Confidential}
 \fancyfoot[C]{%
   \begin{tikzpicture}
     \fill[TPOrange] (0,0) rectangle (0.09\textwidth,1.2pt);
@@ -130,7 +130,7 @@
   \vspace*{1.8cm}
   \begin{center}
     \includegraphics[height=72pt]{toospoint-logo}\\[20pt]
-    {\sffamily\fontsize{9}{11}\selectfont\color{TPGray}\MakeUppercase{ToosPoint Consulting}}\\[6pt]
+    {\sffamily\fontsize{9}{11}\selectfont\color{TPGray}\MakeUppercase{ToosPoint LLC}}\\[6pt]
     {\color{TPBorder}\rule{0.35\textwidth}{0.5pt}}\\[18pt]
     {\sffamily\bfseries\fontsize{26}{30}\selectfont\color{TPDark}#1}\\[12pt]
     {\sffamily\large\color{TPTeal}#2}\\[32pt]
