@@ -1,0 +1,39 @@
+\documentclass{toospoint-invoice}
+
+\invoiceno{001}
+\invoiceclient{iCall International}
+\invoicedate{June 11, 2026}
+
+\begin{document}
+
+\invoicemeta
+  {June 11, 2026}
+  {June 26, 2026}
+  {Net 15}
+  {May 11 -- June 11, 2026}
+
+\invoiceparties{%
+  \textbf{Sahar Feiz}\\
+  ToosPoint Consulting\\[3pt]
+  {\footnotesize\color{TPGray}\faEnvelope[regular]\ \, \href{mailto:toospoint@gmail.com}{toospoint@gmail.com}}%
+}{%
+  \textbf{iCall International}\\[1pt]
+  {\footnotesize\color{TPGray}Client}%
+}
+
+\invoicelines{%
+  \invoiceline
+    {Consulting Services -- Hourly}
+    {40 hours, May 11 -- June 11, 2026}
+    {\$95.00 / hr}
+    {\$3,800.00}
+}
+
+\invoicetotals{\$3,800.00}{\$0.00}{Total Due (USD)}{\$3,800.00}
+
+\invoicepayment
+  {Stripe}
+  {\href{https://buy.stripe.com/dRmaEX5Cl1h74UCgrs7Vm00}{Pay Invoice \#001}}
+  {Please reference \textbf{Invoice \#001} when remitting payment.}
+
+\end{document}
