@@ -1,0 +1,24 @@
+[
+  {
+    "id": "exp-2026-001",
+    "date": "2026-06-05",
+    "amount": 75.00,
+    "category": "23",
+    "category_name": "Taxes and licenses",
+    "description": "CA LLC formation (Articles of Organization + Certified Copy)",
+    "payee": "California Secretary of State",
+    "file": "../../company/legal/2026-06-05_LLC-formation-receipt_B20260265785.pdf",
+    "notes": "Document B20260265785. Under $5k, eligible for Sec 195 first-year deduction; CPA may reclassify as organizational/startup cost."
+  },
+  {
+    "id": "exp-2026-002",
+    "date": "2026-06-08",
+    "amount": 20.00,
+    "category": "23",
+    "category_name": "Taxes and licenses",
+    "description": "CA Statement of Information (Form LLC-12)",
+    "payee": "California Secretary of State",
+    "file": "../../company/legal/2026-06-08_SOI-receipt_BA20261213865.pdf",
+    "notes": "Document BA20261213865. Filed within 90 days of formation."
+  }
+]
