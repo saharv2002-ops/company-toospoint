@@ -1,0 +1,40 @@
+\documentclass{toospoint-invoice}
+
+\invoiceno{001}
+\invoiceclient{Simplified Group BPO LLC}
+\invoicedate{May 7, 2026}
+
+\begin{document}
+
+\invoicemeta
+  {May 7, 2026}
+  {May 22, 2026}
+  {Net 15}
+  {Apr 21 -- May 6, 2026}
+
+\invoiceparties{%
+  \textbf{Sahar Vojoodi}\\
+  27446 Hyatt Ct\\
+  Laguna Niguel, CA 92677\\[3pt]
+  {\footnotesize\color{TPGray}\faEnvelope[regular]\ \, \href{mailto:toospoint@gmail.com}{toospoint@gmail.com}}%
+}{%
+  \textbf{Simplified Group BPO LLC}\\[1pt]
+  {\footnotesize\color{TPGray}Client}%
+}
+
+\invoicelines{%
+  \invoiceline
+    {Consulting Services -- Monthly Retainer}
+    {16 days prorated, Apr 21 -- May 6, 2026}
+    {\$4,000.00 / mo}
+    {\$2,133.33}
+}
+
+\invoicetotals{\$2,133.33}{\$0.00}{Total Due (USD)}{\$2,133.33}
+
+\invoicepayment
+  {ACH -- Wells Fargo}
+  {Account ending in 0224}
+  {}
+
+\end{document}

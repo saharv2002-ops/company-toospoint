@@ -1,0 +1,198 @@
+% =====================================================================
+%  sgp_report.sty   —   SGP-branded report style
+%  A reusable LaTeX style package for Simplified Group BPO reports.
+%  Provides: brand palette, type system, section styling, KPI cards,
+%  callouts, captioned figures and table styling.
+% =====================================================================
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{sgp_report}[2026/04/22 v1.0 Simplified Group BPO Report Style]
+
+% ---------- core packages ----------
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[a4paper,margin=2.4cm,top=2.6cm,bottom=2.6cm,headheight=14.5pt]{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\RequirePackage{titlesec}
+\RequirePackage{titling}
+\RequirePackage{fancyhdr}
+\RequirePackage{enumitem}
+\RequirePackage{booktabs}
+\RequirePackage{array}
+\RequirePackage{tabularx}
+\RequirePackage{colortbl}
+\RequirePackage{caption}
+\RequirePackage{microtype}
+\RequirePackage{etoolbox}
+\RequirePackage{hyperref}
+
+% ---------- brand palette ----------
+\definecolor{sgpNavy}{HTML}{0B1D3A}
+\definecolor{sgpNavyDk}{HTML}{071328}
+\definecolor{sgpNavy600}{HTML}{23507F}
+\definecolor{sgpSky}{HTML}{4EA7CE}
+\definecolor{sgpSkyLite}{HTML}{7FC5E3}
+\definecolor{sgpSkyBg}{HTML}{E6F4FB}
+\definecolor{sgpGold}{HTML}{E2B770}
+\definecolor{sgpCoral}{HTML}{EE7D6A}
+\definecolor{sgpInk}{HTML}{0D1424}
+\definecolor{sgpGray}{HTML}{5E6678}
+\definecolor{sgpRule}{HTML}{D9D9D9}
+\definecolor{sgpBone}{HTML}{FBF8F3}
+
+% ---------- hyperref tuning ----------
+\hypersetup{
+  colorlinks=true,
+  linkcolor=sgpSky,
+  urlcolor=sgpSky,
+  citecolor=sgpSky,
+  pdfauthor={Simplified Group BPO},
+  pdftitle={SGP Analytical Report},
+}
+
+% ---------- header / footer ----------
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\footnotesize\color{sgpGray}\MakeUppercase{\@title}}
+\fancyhead[R]{\footnotesize\color{sgpGray}Simplified Group BPO}
+\fancyfoot[L]{\footnotesize\color{sgpGray}Confidential — for client review}
+\fancyfoot[R]{\footnotesize\color{sgpGray}\thepage}
+
+\fancypagestyle{titlepage}{%
+  \fancyhf{}\renewcommand{\headrulewidth}{0pt}\renewcommand{\footrulewidth}{0pt}
+}
+
+% ---------- titles ----------
+\titleformat{\section}
+  {\color{sgpNavy}\sffamily\bfseries\Large}
+  {\color{sgpSky}\thesection\hspace{0.6em}}{0pt}{}
+  [\vspace{-0.4em}{\color{sgpSky}\rule{2.4cm}{1.4pt}}]
+
+\titleformat{\subsection}
+  {\color{sgpNavy}\sffamily\bfseries\large}
+  {\color{sgpSky}\thesubsection}{0.6em}{}
+
+\titleformat{\subsubsection}
+  {\color{sgpNavy}\sffamily\bfseries\normalsize}
+  {}{0pt}{}
+
+\titlespacing*{\section}{0pt}{1.6em}{0.6em}
+\titlespacing*{\subsection}{0pt}{1.2em}{0.4em}
+
+% ---------- captions ----------
+\DeclareCaptionFormat{sgp}{\color{sgpGray}\sffamily\footnotesize\textbf{#1#2}#3}
+\captionsetup{format=sgp,labelfont={color=sgpSky,bf}, textfont={color=sgpGray}}
+
+% ---------- list spacing ----------
+\setlist[itemize]{leftmargin=1.4em,itemsep=2pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=1.5em,itemsep=2pt,topsep=4pt}
+\renewcommand{\labelitemi}{\color{sgpSky}\textbullet}
+
+% ---------- title block ----------
+\renewcommand{\maketitle}{%
+  \thispagestyle{titlepage}
+  \begin{tcolorbox}[
+    enhanced, colback=sgpNavy, colframe=sgpNavy, boxrule=0pt,
+    arc=0pt, outer arc=0pt,
+    left=24pt, right=24pt, top=28pt, bottom=24pt,
+    overlay={
+      \node[anchor=south east, opacity=0.16] at ([xshift=-12pt,yshift=10pt]frame.south east)
+          {\color{sgpSkyLite}\sffamily\bfseries\fontsize{120pt}{120pt}\selectfont SGP};
+    },
+  ]
+  {\color{sgpSkyLite}\sffamily\bfseries\fontsize{9pt}{9pt}\selectfont
+   \MakeUppercase{Analytical Report \quad\textbar\quad \@date}\par}
+  \vspace{14pt}
+  {\color{white}\sffamily\bfseries\fontsize{30pt}{34pt}\selectfont \@title\par}
+  \vspace{8pt}
+  {\color{sgpSkyLite}\sffamily\itshape\fontsize{14pt}{18pt}\selectfont \@author\par}
+  \end{tcolorbox}
+  \vspace{1.2em}
+}
+
+% ---------- KPI card grid ----------
+% Usage:  \kpicard{Label}{Value}{(optional sub-line)}
+\newcommand{\kpicard}[3]{%
+  \begin{tcolorbox}[
+    enhanced, colback=sgpBone, colframe=sgpRule, boxrule=0.4pt,
+    arc=2pt, left=10pt, right=10pt, top=8pt, bottom=8pt,
+    width=\linewidth, halign=left, valign=center,
+    nobeforeafter, height=2.6cm,
+  ]
+  {\color{sgpGray}\sffamily\fontsize{8pt}{9pt}\selectfont\MakeUppercase{#1}\par}
+  \vspace{4pt}
+  {\color{sgpNavy}\sffamily\bfseries\fontsize{20pt}{22pt}\selectfont #2\par}
+  \vspace{2pt}
+  {\color{sgpGray}\sffamily\fontsize{8pt}{10pt}\selectfont #3}
+  \end{tcolorbox}%
+}
+
+% ---------- KPI row helper (4 columns) ----------
+\newcommand{\kpirow}[1]{%
+  \par\noindent\begin{minipage}{\linewidth}#1\end{minipage}\par
+}
+
+% ---------- callout boxes ----------
+% Usage: \callout{Title}{body}
+\newtcolorbox{sgpcallout}[1]{
+  enhanced, colback=sgpSkyBg, colframe=sgpSky,
+  boxrule=0pt, leftrule=3pt, arc=2pt,
+  left=12pt, right=12pt, top=8pt, bottom=8pt,
+  fonttitle=\sffamily\bfseries\color{sgpNavy},
+  title={\color{sgpNavy}#1},
+  before skip=8pt, after skip=8pt,
+}
+
+% Usage: \insightbox{title}{body}
+\newcommand{\insightbox}[2]{
+  \begin{tcolorbox}[
+    enhanced, colback=sgpSkyBg, colframe=sgpSky,
+    boxrule=0pt, leftrule=4pt, arc=2pt,
+    left=14pt, right=14pt, top=10pt, bottom=10pt,
+  ]
+  {\color{sgpNavy}\sffamily\bfseries #1\par}
+  \vspace{4pt}
+  {\color{sgpInk}\rmfamily #2}
+  \end{tcolorbox}
+}
+
+% Usage: \alertbox{title}{body}  — for risk / red flag callouts
+\newcommand{\alertbox}[2]{
+  \begin{tcolorbox}[
+    enhanced, colback={sgpCoral!10}, colframe=sgpCoral,
+    boxrule=0pt, leftrule=4pt, arc=2pt,
+    left=14pt, right=14pt, top=10pt, bottom=10pt,
+  ]
+  {\color{sgpCoral}\sffamily\bfseries\fontsize{8pt}{10pt}\selectfont
+   \MakeUppercase{Red flag}\par}
+  \vspace{2pt}
+  {\color{sgpNavy}\sffamily\bfseries\large #1\par}
+  \vspace{4pt}
+  {\color{sgpInk}\rmfamily #2}
+  \end{tcolorbox}
+}
+
+% ---------- table styling ----------
+\renewcommand{\arraystretch}{1.2}
+\newcommand{\sgpheadrow}{\rowcolor{sgpNavy}\color{white}\sffamily\bfseries}
+\newcommand{\sgpaltrow}{\rowcolor{sgpBone}}
+% column types
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+% ---------- TOC styling ----------
+\RequirePackage{tocloft}
+\renewcommand{\cftsecfont}{\sffamily\color{sgpNavy}\bfseries}
+\renewcommand{\cftsecpagefont}{\sffamily\color{sgpSky}}
+\renewcommand{\cftsubsecfont}{\sffamily\color{sgpGray}}
+\renewcommand{\cftsubsecpagefont}{\sffamily\color{sgpGray}}
+\setlength{\cftbeforesecskip}{4pt}
+
+% ---------- end ----------
+\endinput

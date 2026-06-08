@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Simplified Group BPO — Sales Deck</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+  :root{
+    --navy-900:#0b1d3a;
+    --navy-800:#102a4c;
+    --navy-700:#1a3a66;
+    --navy-600:#23507f;
+    --navy-500:#2f6ea1;
+    --sky-500:#4ea7ce;
+    --sky-400:#7fc5e3;
+    --sky-300:#a9dcef;
+    --sky-100:#e6f4fb;
+    --gold:#e2b770;
+    --coral:#ee7d6a;
+    --ink:#0d1424;
+    --paper:#f5f1ea;
+    --bone:#fbf8f3;
+    --rule:rgba(11,29,58,0.10);
+    --rule-dk:rgba(255,255,255,0.10);
+  }
+
+  html,body{
+    background:#171a22;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  /* ───────────────  DECK SHELL  ─────────────── */
+  .deck{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:48px 24px 96px;
+    gap:34px;
+  }
+
+  .slide{
+    width:1280px;
+    max-width:100%;
+    aspect-ratio:16/9;
+    background:var(--bone);
+    box-shadow:
+      0 60px 120px -30px rgba(0,0,0,0.55),
+      0 12px 36px -12px rgba(0,0,0,0.35);
+    position:relative;
+    overflow:hidden;
+    border-radius:6px;
+    color:var(--ink);
+  }
+
+  /* Slide chrome */
+  .chrome-corner{
+    position:absolute;
+    top:22px; right:28px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:2px;
+    color:var(--navy-700);
+    opacity:0.55;
+    text-transform:uppercase;
+    z-index:5;
+  }
+  .slide.dark .chrome-corner{color:var(--sky-300);opacity:0.55;}
+
+  .chrome-foot{
+    position:absolute;
+    bottom:22px; left:36px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:2.4px;
+    color:var(--navy-700);
+    opacity:0.55;
+    text-transform:uppercase;
+    z-index:5;
+  }
+  .slide.dark .chrome-foot{color:var(--sky-300);opacity:0.55;}
+
+  .slide-num{
+    position:absolute;
+    bottom:22px; right:28px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:2px;
+    color:var(--navy-700);
+    opacity:0.6;
+    z-index:5;
+  }
+  .slide.dark .slide-num{color:var(--sky-300);opacity:0.6;}
+
+  /* Eyebrow chip */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:11px;font-weight:700;letter-spacing:3.4px;
+    text-transform:uppercase;color:var(--sky-500);
+  }
+  .eyebrow::before{
+    content:'';display:block;width:34px;height:2px;background:var(--sky-500);
+  }
+  .slide.dark .eyebrow{color:var(--sky-400);}
+  .slide.dark .eyebrow::before{background:var(--sky-400);}
+
+  .display{
+    font-family:'Playfair Display',serif;
+    font-weight:800;
+    line-height:1.02;
+    letter-spacing:-0.6px;
+    word-spacing:0.02em;
+    color:var(--navy-900);
+  }
+  .slide.dark .display{color:#fff;}
+  .display em{
+    font-style:italic;
+    font-weight:500;
+    color:var(--sky-500);
+  }
+  .slide.dark .display em{color:var(--sky-400);}
+
+  .body-copy{
+    font-size:16.5px;line-height:1.72;color:#3a4456;font-weight:400;
+  }
+  .slide.dark .body-copy{color:rgba(255,255,255,0.82);}
+
+  /* ─────────── SHARED COMPONENTS ─────────── */
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 14px;border-radius:999px;
+    background:rgba(78,167,206,0.10);
+    color:var(--navy-700);
+    font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;
+    border:1px solid rgba(78,167,206,0.25);
+  }
+  .slide.dark .pill{
+    background:rgba(127,197,227,0.10);
+    border:1px solid rgba(127,197,227,0.30);
+    color:var(--sky-300);
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 1 — COVER
+     ════════════════════════════════════════════ */
+  .slide-cover{
+    background:
+      radial-gradient(120% 80% at 75% 30%, rgba(78,167,206,0.18), transparent 55%),
+      radial-gradient(80% 60% at 15% 95%, rgba(226,183,112,0.18), transparent 60%),
+      linear-gradient(155deg,#0b1d3a 0%, #102a4c 45%, #1a3a66 100%);
+    color:#fff;
+  }
+  /* subtle grain */
+  .grain::after{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size:3px 3px;
+    mix-blend-mode:overlay;
+    opacity:0.5;
+  }
+  .cover-grid{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,0.045) 1px,transparent 1px);
+    background-size:80px 80px;
+    mask-image:radial-gradient(ellipse at 60% 40%,#000 30%,transparent 75%);
+  }
+  .cover-orb{
+    position:absolute;
+    width:520px;height:520px;border-radius:50%;
+    right:-90px;top:-130px;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(127,197,227,0.55), rgba(78,167,206,0.15) 45%, transparent 70%);
+    filter:blur(2px);
+  }
+  .cover-orb.b{
+    width:340px;height:340px;
+    left:-120px;bottom:-120px;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(226,183,112,0.40), rgba(238,125,106,0.10) 50%, transparent 75%);
+  }
+  .cover-content{
+    position:relative;z-index:3;
+    height:100%;padding:72px 90px 90px;
+    display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .cover-top{
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .cover-logo{
+    height:54px;
+    /* invert dark text in logo to white for dark BG, keeping accent */
+    filter:brightness(0) invert(1);
+    opacity:0.95;
+  }
+  .cover-meta{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:2.5px;
+    color:rgba(255,255,255,0.55);
+    text-transform:uppercase;
+    text-align:right;line-height:1.7;
+  }
+  .cover-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:800;
+    font-size:90px;
+    line-height:1.04;
+    letter-spacing:-1.2px;
+    word-spacing:0.02em;
+    color:#fff;
+    max-width:1000px;
+  }
+  .cover-headline .accent{
+    background:linear-gradient(90deg,var(--sky-300),var(--sky-500));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-style:italic;
+    font-weight:600;
+  }
+  .cover-tag{
+    margin-top:32px;
+    font-size:17.5px;line-height:1.7;font-weight:400;
+    color:rgba(255,255,255,0.82);
+    max-width:660px;
+    letter-spacing:0.1px;
+  }
+  .cover-bottom{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
+  }
+  .cover-mini-stats{
+    display:flex;gap:54px;
+  }
+  .mini-stat .num{
+    font-family:'Playfair Display',serif;
+    font-size:42px;font-weight:800;line-height:1;
+    color:#fff;letter-spacing:-1px;
+  }
+  .mini-stat .num span{color:var(--sky-400);}
+  .mini-stat .lbl{
+    margin-top:8px;font-size:11px;letter-spacing:2px;
+    color:rgba(255,255,255,0.55);text-transform:uppercase;font-weight:600;
+  }
+  .cover-cta{
+    display:inline-flex;align-items:center;gap:14px;
+    padding:18px 28px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.18);
+    backdrop-filter:blur(10px);
+    border-radius:50px;
+    color:#fff;
+    font-size:13px;letter-spacing:2.5px;font-weight:600;text-transform:uppercase;
+    text-decoration:none;
+    transition:background .25s ease,border-color .25s ease,transform .25s ease;
+  }
+  .cover-cta:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.32);transform:translateY(-1px);}
+  .cover-cta .arrow{
+    flex:none;
+    width:30px;height:30px;border-radius:50%;
+    aspect-ratio:1/1;
+    background:var(--sky-400);color:var(--navy-900);
+    display:inline-flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:14px;letter-spacing:0;line-height:1;
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 2 — CHALLENGE
+     ════════════════════════════════════════════ */
+  .slide-challenge{
+    background:var(--bone);
+  }
+  .challenge-content{
+    height:100%;
+    display:grid;grid-template-columns:1.05fr 0.95fr;
+  }
+  .challenge-left{
+    padding:90px 80px 70px;
+    display:flex;flex-direction:column;justify-content:center;gap:30px;
+  }
+  .ch-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:58px;line-height:1.1;
+    letter-spacing:-0.6px;color:var(--navy-900);
+    word-spacing:0.02em;
+  }
+  .ch-headline em{font-style:italic;color:var(--sky-500);font-weight:600;}
+  .ch-quote{
+    border-left:3px solid var(--sky-500);
+    padding:6px 0 6px 22px;
+    font-size:17px;line-height:1.6;color:#3a4456;font-weight:300;
+    font-style:italic;max-width:520px;
+  }
+  .challenge-right{
+    background:
+      radial-gradient(80% 60% at 70% 20%, rgba(127,197,227,0.16), transparent 60%),
+      linear-gradient(150deg,var(--navy-800),var(--navy-900));
+    padding:80px 70px;
+    color:#fff;
+    display:flex;flex-direction:column;justify-content:center;gap:32px;
+    position:relative;
+  }
+  .ch-stat-row{
+    display:flex;align-items:flex-start;gap:22px;
+    padding:22px 0;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .ch-stat-row:last-child{border-bottom:none;}
+  .ch-stat-num{
+    font-family:'Playfair Display',serif;
+    font-size:64px;font-weight:800;line-height:1;
+    color:var(--sky-400);min-width:130px;letter-spacing:-1.5px;
+  }
+  .ch-stat-text{
+    flex:1;
+  }
+  .ch-stat-text strong{
+    display:block;font-size:16px;font-weight:600;color:#fff;margin-bottom:4px;
+  }
+  .ch-stat-text span{
+    font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 3 — WHO WE ARE
+     ════════════════════════════════════════════ */
+  .slide-about{
+    background:linear-gradient(180deg,#fbf8f3,#f1ecdf);
+  }
+  .about-content{
+    height:100%;padding:90px 90px 80px;
+    display:grid;grid-template-columns:0.8fr 1.2fr;gap:80px;
+  }
+  .about-left{display:flex;flex-direction:column;gap:28px;justify-content:center;}
+  .about-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:66px;line-height:1.08;
+    letter-spacing:-0.8px;color:var(--navy-900);
+    word-spacing:0.02em;
+  }
+  .about-headline em{font-style:italic;color:var(--sky-500);font-weight:600;}
+  .about-right{
+    display:flex;flex-direction:column;justify-content:center;gap:30px;
+  }
+  .about-lead{
+    font-size:16px;line-height:1.72;color:#3a4456;font-weight:400;
+    letter-spacing:0.1px;
+  }
+  .about-lead strong{color:var(--navy-900);font-weight:600;}
+  .about-values{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:18px 24px;margin-top:8px;
+  }
+  .value-row{
+    display:flex;align-items:flex-start;gap:14px;
+    padding:14px 0;border-top:1px solid var(--rule);
+  }
+  .value-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;font-weight:600;
+    color:var(--sky-500);letter-spacing:1px;
+    min-width:24px;
+  }
+  .value-text strong{
+    font-size:14px;font-weight:700;color:var(--navy-900);
+    display:block;margin-bottom:2px;
+  }
+  .value-text span{font-size:12px;color:#5e6678;line-height:1.45;}
+
+  /* ════════════════════════════════════════════
+     SLIDE 4 — SERVICES OVERVIEW
+     ════════════════════════════════════════════ */
+  .slide-services{
+    background:#fff;
+  }
+  .services-header{
+    padding:70px 80px 0;
+    display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
+  }
+  .services-header h2{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:58px;line-height:1.08;
+    letter-spacing:-0.7px;color:var(--navy-900);
+    max-width:720px;word-spacing:0.02em;
+  }
+  .services-header h2 em{color:var(--sky-500);font-style:italic;font-weight:600;}
+  .services-header p{
+    font-size:14px;line-height:1.6;color:#5e6678;max-width:340px;
+  }
+  .services-grid{
+    margin:50px 80px 80px;
+    display:grid;grid-template-columns:repeat(4,1fr);gap:18px;
+    height:380px;
+  }
+  .svc-card{
+    background:linear-gradient(180deg,#fbf8f3,#f5f0e6);
+    border:1px solid rgba(11,29,58,0.05);
+    border-radius:8px;
+    padding:30px 26px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    position:relative;overflow:hidden;
+    color:inherit;text-decoration:none;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  }
+  .svc-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 40px -18px rgba(11,29,58,0.20);
+    border-color:rgba(78,167,206,0.35);
+  }
+  .svc-card.featured:hover{
+    box-shadow:0 26px 60px -22px rgba(78,167,206,0.45);
+    border-color:rgba(127,197,227,0.45);
+  }
+  .svc-card.featured{
+    background:linear-gradient(165deg,var(--navy-800),var(--navy-900));
+    color:#fff;
+    border:1px solid rgba(127,197,227,0.20);
+  }
+  .svc-card.featured::after{
+    content:'';position:absolute;
+    width:200px;height:200px;border-radius:50%;
+    right:-70px;bottom:-70px;
+    background:radial-gradient(circle at 30% 30%,rgba(127,197,227,0.40),transparent 70%);
+  }
+  .svc-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;font-weight:600;letter-spacing:1.5px;
+    color:var(--sky-500);
+  }
+  .svc-card.featured .svc-num{color:var(--sky-400);}
+  .svc-icon{
+    width:54px;height:54px;border-radius:14px;
+    background:rgba(78,167,206,0.12);
+    display:flex;align-items:center;justify-content:center;
+    margin-top:18px;
+  }
+  .svc-card.featured .svc-icon{background:rgba(127,197,227,0.18);}
+  .svc-icon svg{width:26px;height:26px;}
+  .svc-title{
+    font-family:'Playfair Display',serif;
+    font-size:28px;font-weight:700;line-height:1.15;
+    color:var(--navy-900);margin-top:18px;letter-spacing:-0.3px;
+  }
+  .svc-card.featured .svc-title{color:#fff;}
+  .svc-desc{
+    font-size:13px;line-height:1.6;color:#5e6678;margin-top:12px;
+  }
+  .svc-card.featured .svc-desc{color:rgba(255,255,255,0.78);}
+  .svc-link{
+    margin-top:20px;
+    font-size:11px;letter-spacing:2px;font-weight:700;text-transform:uppercase;
+    color:var(--navy-700);display:flex;align-items:center;gap:10px;
+  }
+  .svc-card.featured .svc-link{color:var(--sky-300);}
+
+  /* ════════════════════════════════════════════
+     SLIDE 5 — OPI DEEP DIVE
+     ════════════════════════════════════════════ */
+  .slide-opi{
+    background:linear-gradient(135deg,#0b1d3a 0%,#102a4c 60%,#1a3a66 100%);
+    color:#fff;
+  }
+  .opi-grid{
+    display:grid;grid-template-columns:1fr 1fr;
+    height:100%;
+  }
+  .opi-left{
+    padding:80px 70px;
+    display:flex;flex-direction:column;justify-content:center;gap:32px;
+    border-right:1px solid rgba(255,255,255,0.07);
+  }
+  .opi-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:72px;line-height:1.02;
+    letter-spacing:-1px;color:#fff;word-spacing:0.02em;
+  }
+  .opi-headline em{color:var(--sky-400);font-style:italic;font-weight:600;}
+  .opi-subline{
+    font-size:16px;line-height:1.7;color:rgba(255,255,255,0.82);
+    max-width:500px;font-weight:400;letter-spacing:0.1px;
+  }
+  .opi-icons{
+    display:flex;gap:18px;margin-top:6px;
+  }
+  .icon-pill{
+    width:54px;height:54px;border-radius:14px;
+    background:rgba(127,197,227,0.10);
+    border:1px solid rgba(127,197,227,0.25);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .icon-pill svg{width:24px;height:24px;}
+  .opi-right{
+    padding:80px 70px;
+    display:flex;flex-direction:column;justify-content:center;gap:18px;
+  }
+  .feat-row{
+    display:grid;grid-template-columns:60px 1fr;
+    gap:24px;padding:22px 0;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .feat-row:last-child{border-bottom:none;}
+  .feat-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;font-weight:600;color:var(--sky-400);
+    letter-spacing:1px;padding-top:4px;
+  }
+  .feat-title{
+    font-family:'Playfair Display',serif;
+    font-size:22px;font-weight:700;color:#fff;line-height:1.2;
+    margin-bottom:8px;letter-spacing:-0.1px;
+  }
+  .feat-desc{
+    font-size:13.5px;line-height:1.65;color:rgba(255,255,255,0.72);
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 6 — VRI DEEP DIVE
+     ════════════════════════════════════════════ */
+  .slide-vri{
+    background:var(--bone);
+  }
+  .vri-wrap{
+    height:100%;display:grid;grid-template-columns:1.05fr 0.95fr;
+    overflow:hidden;
+  }
+  .vri-left{
+    padding:56px 60px;
+    display:flex;flex-direction:column;justify-content:center;gap:18px;
+    min-height:0;
+  }
+  .vri-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:56px;line-height:1.06;
+    letter-spacing:-0.6px;color:var(--navy-900);word-spacing:0.02em;
+  }
+  .vri-headline em{color:var(--sky-500);font-style:italic;font-weight:600;}
+  .vri-subline{
+    font-size:14.5px;line-height:1.68;color:#3a4456;
+    max-width:480px;letter-spacing:0.1px;
+  }
+  .vri-feat-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;
+  }
+  .vri-feat{
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:8px;
+    padding:14px 16px;
+  }
+  .vri-feat-icon{
+    width:30px;height:30px;border-radius:8px;
+    background:rgba(78,167,206,0.12);
+    display:flex;align-items:center;justify-content:center;margin-bottom:8px;
+  }
+  .vri-feat-icon svg{width:15px;height:15px;color:var(--sky-500);}
+  .vri-feat strong{
+    display:block;font-size:13px;font-weight:700;color:var(--navy-900);
+    margin-bottom:3px;
+  }
+  .vri-feat span{
+    font-size:11.5px;line-height:1.45;color:#5e6678;
+  }
+  .vri-right{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(80% 60% at 30% 30%, rgba(78,167,206,0.18), transparent 60%),
+      linear-gradient(160deg,var(--navy-700),var(--navy-900));
+    display:flex;align-items:center;justify-content:center;
+  }
+  /* Decorative video tile mock */
+  .video-mock{
+    position:relative;
+    width:74%;
+    max-height:74%;
+    aspect-ratio:16/10;
+    border-radius:14px;
+    background:
+      linear-gradient(135deg,#1d4060,#0b1d3a);
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.08);
+  }
+  .video-mock::before{
+    content:'';position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 25% 35%, rgba(127,197,227,0.30) 0 18%, transparent 30%),
+      radial-gradient(circle at 75% 65%, rgba(226,183,112,0.30) 0 14%, transparent 28%);
+    filter:blur(20px);
+  }
+  .v-tiles{
+    position:absolute;inset:0;
+    display:grid;grid-template-columns:1.6fr 1fr;gap:10px;padding:14px;
+  }
+  .v-tile{
+    border-radius:10px;
+    background:linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.10);
+    position:relative;backdrop-filter:blur(8px);
+    overflow:hidden;
+  }
+  .v-tile.small{
+    display:flex;flex-direction:column;
+  }
+  .v-side{
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .v-tile.right{flex:1;}
+  .v-mic{
+    position:absolute;bottom:10px;left:10px;
+    background:rgba(0,0,0,0.4);color:#fff;
+    font-size:9px;letter-spacing:1.5px;
+    padding:5px 10px;border-radius:50px;
+    font-family:'JetBrains Mono',monospace;
+  }
+  .v-mic.live{
+    background:#ee7d6a;color:#fff;
+  }
+  .v-mic.live::before{
+    content:'';display:inline-block;width:6px;height:6px;
+    background:#fff;border-radius:50%;margin-right:6px;
+  }
+  .v-avatar{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);
+    width:64px;height:64px;border-radius:50%;
+    background:linear-gradient(135deg,var(--sky-400),var(--navy-600));
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-weight:700;font-family:'Playfair Display',serif;font-size:24px;
+    border:2px solid rgba(255,255,255,0.20);
+  }
+  .video-controls{
+    position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);
+    display:flex;gap:10px;
+  }
+  .vc-btn{
+    width:44px;height:44px;border-radius:50%;
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;
+  }
+  .vc-btn.danger{background:#ee7d6a;border:none;}
+
+  /* ════════════════════════════════════════════
+     SLIDE 7 — SALES
+     ════════════════════════════════════════════ */
+  .slide-sales{
+    background:linear-gradient(180deg,#fbf8f3,#f1ecdf);
+  }
+  .sales-wrap{
+    height:100%;padding:56px 72px 52px;
+    display:grid;grid-template-rows:auto 1fr;gap:30px;
+    overflow:hidden;
+  }
+  .sales-head{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:50px;
+  }
+  .sales-head h2{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:64px;line-height:1.05;letter-spacing:-0.7px;
+    color:var(--navy-900);max-width:760px;word-spacing:0.02em;
+  }
+  .sales-head h2 em{color:var(--sky-500);font-style:italic;font-weight:600;}
+  .sales-head p{
+    font-size:14px;line-height:1.6;color:#5e6678;max-width:300px;
+  }
+  .sales-cols{
+    display:grid;grid-template-columns:1fr 1fr;gap:22px;
+    align-items:stretch;min-height:0;
+  }
+  .sales-col{
+    background:#fff;border-radius:12px;
+    padding:28px 30px;
+    display:flex;flex-direction:column;
+    border:1px solid var(--rule);
+    position:relative;overflow:hidden;
+  }
+  .sales-col.dark{
+    background:linear-gradient(160deg,var(--navy-800),var(--navy-900));
+    color:#fff;border:none;
+  }
+  .sales-col .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:2px;font-weight:600;
+    color:var(--sky-500);text-transform:uppercase;margin-bottom:10px;
+  }
+  .sales-col.dark .tag{color:var(--sky-400);}
+  .sales-col h3{
+    font-family:'Playfair Display',serif;
+    font-size:26px;font-weight:700;line-height:1.2;
+    color:var(--navy-900);letter-spacing:-0.2px;
+  }
+  .sales-col.dark h3{color:#fff;}
+  .sales-col .lead{
+    margin-top:12px;font-size:13.5px;line-height:1.6;color:#5e6678;
+    letter-spacing:0.1px;
+  }
+  .sales-col.dark .lead{color:rgba(255,255,255,0.78);}
+  .sales-list{
+    margin-top:16px;list-style:none;display:flex;flex-direction:column;gap:9px;
+  }
+  .sales-list li{
+    display:flex;align-items:flex-start;gap:12px;
+    font-size:13px;color:#3a4456;line-height:1.5;
+  }
+  .sales-col.dark .sales-list li{color:rgba(255,255,255,0.78);}
+  .sales-list li::before{
+    content:'';display:inline-block;flex-shrink:0;
+    width:18px;height:18px;border-radius:50%;
+    background:var(--sky-500) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M2 6 L5 9 L10 3' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/12px no-repeat;
+    margin-top:2px;
+  }
+  .sales-col.dark .sales-list li::before{background-color:var(--sky-400);}
+
+  /* ════════════════════════════════════════════
+     SLIDE 8 — CUSTOMER SERVICE
+     ════════════════════════════════════════════ */
+  .slide-cs{
+    background:#fff;
+  }
+  .cs-grid{
+    display:grid;grid-template-columns:0.95fr 1.05fr;height:100%;
+  }
+  .cs-left{
+    background:
+      radial-gradient(60% 60% at 20% 20%, rgba(127,197,227,0.20), transparent 60%),
+      radial-gradient(50% 50% at 80% 80%, rgba(226,183,112,0.15), transparent 60%),
+      linear-gradient(160deg,#102a4c,#0b1d3a);
+    color:#fff;
+    padding:80px 70px;
+    display:flex;flex-direction:column;justify-content:center;gap:30px;
+    position:relative;overflow:hidden;
+  }
+  .cs-left h2{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:64px;line-height:1.05;letter-spacing:-0.8px;
+    word-spacing:0.02em;
+  }
+  .cs-left h2 em{color:var(--sky-400);font-style:italic;font-weight:600;}
+  .cs-left p{
+    font-size:15.5px;line-height:1.72;color:rgba(255,255,255,0.82);max-width:440px;
+    letter-spacing:0.1px;
+  }
+  /* Floating chat bubbles deco */
+  .chat-bubble{
+    position:absolute;
+    border-radius:18px;
+    padding:14px 18px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+    backdrop-filter:blur(8px);
+    color:rgba(255,255,255,0.85);
+    font-size:11px;
+    letter-spacing:0.5px;
+    line-height:1.4;
+    box-shadow:0 14px 36px -14px rgba(0,0,0,0.5);
+  }
+  .chat-bubble.b1{top:60px;right:60px;max-width:170px;}
+  .chat-bubble.b2{bottom:80px;right:130px;max-width:200px;background:rgba(127,197,227,0.18);border-color:rgba(127,197,227,0.30);}
+  .chat-bubble small{
+    display:block;font-size:9px;letter-spacing:1.5px;color:var(--sky-300);
+    text-transform:uppercase;margin-bottom:5px;font-weight:700;
+  }
+  .cs-right{
+    padding:80px 70px;
+    display:flex;flex-direction:column;justify-content:center;gap:14px;
+  }
+  .cs-row{
+    display:grid;grid-template-columns:48px 1fr;gap:22px;
+    padding:22px 0;border-bottom:1px solid var(--rule);
+  }
+  .cs-row:last-child{border-bottom:none;}
+  .cs-icon{
+    width:48px;height:48px;border-radius:12px;
+    background:linear-gradient(135deg,var(--sky-400),var(--sky-500));
+    display:flex;align-items:center;justify-content:center;color:#fff;
+  }
+  .cs-icon svg{width:22px;height:22px;}
+  .cs-row strong{
+    display:block;font-size:18px;font-weight:700;color:var(--navy-900);
+    margin-bottom:4px;
+  }
+  .cs-row span{font-size:13.5px;color:#5e6678;line-height:1.55;}
+
+  /* ════════════════════════════════════════════
+     SLIDE 9 — INDUSTRIES
+     ════════════════════════════════════════════ */
+  .slide-industries{
+    background:linear-gradient(180deg,#fbf8f3,#f5f0e6);
+  }
+  .ind-wrap{
+    height:100%;padding:80px 90px;
+    display:flex;flex-direction:column;gap:48px;
+  }
+  .ind-head{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
+  }
+  .ind-head h2{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:62px;line-height:1.05;letter-spacing:-0.7px;
+    color:var(--navy-900);max-width:780px;word-spacing:0.02em;
+  }
+  .ind-head h2 em{color:var(--sky-500);font-style:italic;font-weight:600;}
+  .ind-head p{font-size:14px;color:#5e6678;line-height:1.6;max-width:300px;}
+  .ind-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:20px;flex:1;
+  }
+  .ind-card{
+    background:#fff;border-radius:12px;
+    padding:32px 30px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    border:1px solid var(--rule);
+    position:relative;overflow:hidden;
+    transition:transform .3s ease;
+  }
+  .ind-card .ind-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:1.5px;color:var(--sky-500);
+    font-weight:600;text-transform:uppercase;
+  }
+  .ind-card h3{
+    font-family:'Playfair Display',serif;
+    font-size:28px;font-weight:700;color:var(--navy-900);
+    margin-top:auto;letter-spacing:-0.2px;line-height:1.2;
+  }
+  .ind-card p{
+    font-size:13px;line-height:1.65;color:#5e6678;margin-top:12px;
+  }
+  .ind-illus{
+    width:74px;height:74px;border-radius:18px;
+    background:linear-gradient(135deg,var(--sky-300),var(--sky-500));
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;margin-bottom:24px;
+    box-shadow:0 18px 36px -16px rgba(78,167,206,0.6);
+  }
+  .ind-illus svg{width:34px;height:34px;}
+  .ind-card.medical .ind-illus{background:linear-gradient(135deg,#ee7d6a,#d04a4a);box-shadow:0 18px 36px -16px rgba(238,125,106,0.55);}
+  .ind-card.education .ind-illus{background:linear-gradient(135deg,#e2b770,#c89149);box-shadow:0 18px 36px -16px rgba(226,183,112,0.55);}
+  .ind-card.tech .ind-illus{background:linear-gradient(135deg,var(--navy-600),var(--navy-800));box-shadow:0 18px 36px -16px rgba(35,80,127,0.55);}
+
+  /* ════════════════════════════════════════════
+     SLIDE 10 — WHY US (DIFFERENTIATORS + PROCESS)
+     ════════════════════════════════════════════ */
+  .slide-why{
+    background:linear-gradient(150deg,#0b1d3a 0%,#102a4c 60%,#1a3a66 100%);
+    color:#fff;
+  }
+  .why-wrap{
+    height:100%;padding:78px 80px;
+    display:grid;grid-template-rows:auto 1fr;gap:46px;
+  }
+  .why-head{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:50px;
+  }
+  .why-head h2{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:60px;line-height:1.08;letter-spacing:-0.7px;
+    color:#fff;max-width:800px;word-spacing:0.02em;
+  }
+  .why-head h2 em{color:var(--sky-400);font-style:italic;font-weight:600;}
+  .why-head p{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.6;max-width:300px;}
+  .why-body{
+    display:grid;grid-template-columns:1fr 1px 1fr;gap:50px;align-items:stretch;
+  }
+  .why-divider{background:rgba(255,255,255,0.10);width:1px;height:100%;}
+  .why-list{display:flex;flex-direction:column;gap:14px;}
+  .why-item{
+    display:grid;grid-template-columns:46px 1fr;gap:18px;
+    padding:14px 0;
+  }
+  .why-icon{
+    width:46px;height:46px;border-radius:12px;
+    background:rgba(127,197,227,0.10);
+    border:1px solid rgba(127,197,227,0.25);
+    display:flex;align-items:center;justify-content:center;color:var(--sky-300);
+  }
+  .why-icon svg{width:22px;height:22px;}
+  .why-item strong{
+    display:block;font-size:17px;color:#fff;font-weight:700;margin-bottom:4px;
+  }
+  .why-item span{font-size:13px;line-height:1.5;color:rgba(255,255,255,0.65);}
+  .process-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:2.5px;color:var(--sky-400);
+    font-weight:600;text-transform:uppercase;margin-bottom:24px;
+  }
+  .process-steps{
+    display:flex;flex-direction:column;gap:0;
+  }
+  .pstep{
+    display:grid;grid-template-columns:54px 1fr;gap:24px;
+    padding:18px 0;
+    position:relative;
+  }
+  .pstep:not(:last-child)::after{
+    content:'';position:absolute;
+    left:26px;top:60px;bottom:-2px;
+    width:2px;
+    background:linear-gradient(180deg,rgba(127,197,227,0.5),rgba(127,197,227,0.05));
+  }
+  .pstep-num{
+    width:54px;height:54px;border-radius:50%;
+    background:linear-gradient(135deg,var(--sky-400),var(--navy-600));
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:22px;
+    box-shadow:0 0 0 1px rgba(127,197,227,0.30), 0 14px 30px -10px rgba(0,0,0,0.4);
+  }
+  .pstep strong{
+    display:block;font-size:18px;color:#fff;font-weight:700;
+    margin-bottom:5px;font-family:'Playfair Display',serif;letter-spacing:-0.3px;
+  }
+  .pstep span{font-size:13px;line-height:1.5;color:rgba(255,255,255,0.65);}
+
+  /* ════════════════════════════════════════════
+     SLIDE 11 — CTA / CONTACT
+     ════════════════════════════════════════════ */
+  .slide-cta{
+    background:
+      radial-gradient(60% 50% at 80% 30%, rgba(78,167,206,0.20), transparent 60%),
+      radial-gradient(50% 50% at 15% 80%, rgba(226,183,112,0.16), transparent 60%),
+      linear-gradient(155deg,#0b1d3a,#102a4c 60%,#1a3a66);
+    color:#fff;
+  }
+  .cta-wrap{
+    height:100%;padding:90px 90px;
+    display:grid;grid-template-rows:auto 1fr auto;gap:40px;
+  }
+  .cta-eyebrow{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:11px;letter-spacing:5px;color:var(--sky-400);
+    text-transform:uppercase;font-weight:700;
+  }
+  .cta-eyebrow::before{
+    content:'';display:block;width:34px;height:2px;background:var(--sky-400);
+  }
+  .cta-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:800;font-size:96px;line-height:1.02;
+    letter-spacing:-1.4px;color:#fff;max-width:1100px;word-spacing:0.02em;
+  }
+  .cta-headline em{
+    background:linear-gradient(90deg,var(--sky-300),var(--sky-500));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-style:italic;font-weight:600;
+  }
+  .cta-bottom{
+    display:grid;grid-template-columns:auto 1fr auto;gap:50px;align-items:end;
+  }
+  .cta-contact{
+    display:flex;flex-direction:column;gap:20px;
+  }
+  .contact-item{
+    display:flex;align-items:center;gap:16px;
+    color:inherit;text-decoration:none;
+    transition:transform .25s ease;
+  }
+  .contact-item:hover{transform:translateX(3px);}
+  .contact-item:hover .contact-icon{
+    background:rgba(127,197,227,0.16);
+    border-color:rgba(127,197,227,0.40);
+    color:var(--sky-400);
+  }
+  .contact-icon{
+    width:48px;height:48px;border-radius:12px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.15);
+    display:flex;align-items:center;justify-content:center;color:var(--sky-300);
+  }
+  .contact-icon svg{width:22px;height:22px;}
+  .contact-text small{
+    display:block;font-size:10.5px;letter-spacing:2.5px;
+    color:rgba(255,255,255,0.5);text-transform:uppercase;font-weight:600;
+    margin-bottom:4px;
+  }
+  .contact-text strong{
+    font-size:20px;color:#fff;font-weight:600;
+    font-family:'Playfair Display',serif;letter-spacing:-0.4px;
+  }
+  .cta-mid{
+    display:flex;justify-content:center;align-items:center;
+  }
+  .cta-button{
+    display:inline-flex;align-items:center;gap:18px;
+    padding:24px 36px;
+    background:linear-gradient(135deg,var(--sky-400),var(--sky-500));
+    color:var(--navy-900);
+    border-radius:60px;
+    font-size:14px;letter-spacing:3px;text-transform:uppercase;font-weight:800;
+    text-decoration:none;
+    box-shadow:
+      0 30px 60px -20px rgba(78,167,206,0.6),
+      inset 0 1px 0 rgba(255,255,255,0.4);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .cta-button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 36px 70px -22px rgba(78,167,206,0.75),
+               inset 0 1px 0 rgba(255,255,255,0.4);
+  }
+  .cta-button .arr{
+    flex:none;
+    width:36px;height:36px;border-radius:50%;
+    aspect-ratio:1/1;
+    background:var(--navy-900);color:var(--sky-400);
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:900;letter-spacing:0;line-height:1;
+  }
+  .cta-logo{
+    height:50px;
+    filter:brightness(0) invert(1);
+    opacity:0.9;
+  }
+
+  /* ─────────── deck navigation hint ─────────── */
+  .nav-hint{
+    position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+    background:rgba(0,0,0,0.6);
+    color:rgba(255,255,255,0.85);
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:1.5px;
+    padding:8px 16px;border-radius:30px;
+    text-transform:uppercase;
+    backdrop-filter:blur(6px);
+    z-index:1000;
+    border:1px solid rgba(255,255,255,0.10);
+  }
+  .nav-hint span{color:var(--sky-400);font-weight:700;}
+
+  /* tiny screen helper */
+  @media (max-width:1320px){
+    .deck{padding:24px 16px 80px;}
+  }
+
+  /* ─────────── PRINT / PDF EXPORT ─────────── */
+  @page { size: 1280px 720px; margin: 0; }
+
+  @media print {
+    html, body { background:#ffffff !important; }
+    body { padding:0 !important; }
+    .deck {
+      padding:0 !important;
+      gap:0 !important;
+      display:block !important;
+    }
+    .slide {
+      width:1280px !important;
+      height:720px !important;
+      max-width:none !important;
+      aspect-ratio:auto !important;
+      box-shadow:none !important;
+      border-radius:0 !important;
+      page-break-after:always;
+      break-after:page;
+      page-break-inside:avoid;
+      break-inside:avoid;
+      margin:0 !important;
+    }
+    .slide:last-child { page-break-after:auto; break-after:auto; }
+    .nav-hint { display:none !important; }
+    /* honour brand colors in print */
+    *, *::before, *::after {
+      -webkit-print-color-adjust:exact !important;
+      print-color-adjust:exact !important;
+      color-adjust:exact !important;
+    }
+    /* fall back gradient-clipped text to a solid sky tint —
+       headless Chrome paints the gradient as a rectangle behind
+       the text instead of clipping to the glyphs */
+    .cover-headline .accent,
+    .cta-headline em {
+      background:none !important;
+      -webkit-background-clip:initial !important;
+      background-clip:initial !important;
+      color:var(--sky-400) !important;
+      -webkit-text-fill-color:var(--sky-400) !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ═══════════════════════════════════
+       SLIDE 1 — COVER
+       ═══════════════════════════════════ -->
+  <section class="slide slide-cover dark grain" id="s1">
+    <div class="cover-grid"></div>
+    <div class="cover-orb"></div>
+    <div class="cover-orb b"></div>
+
+    <div class="cover-content">
+      <div class="cover-top">
+        <img class="cover-logo" src="logo.png" alt="Simplified Group BPO">
+      </div>
+
+      <div>
+        <div class="eyebrow">Global Communication Partner</div>
+        <h1 class="cover-headline" style="margin-top:24px;">
+          Simplifying<br>
+          communication.<br>
+          <span class="accent">Amplifying results.</span>
+        </h1>
+        <p class="cover-tag">
+          A 20-year language &amp; contact-center partner trusted by commercial,
+          medical, education and technology brands to bridge every conversation —
+          in any language, on any channel, around the clock.
+        </p>
+      </div>
+
+      <div class="cover-bottom">
+        <div class="cover-mini-stats">
+          <div class="mini-stat">
+            <div class="num"><span>20+</span></div>
+            <div class="lbl">Years of Industry Experience</div>
+          </div>
+          <div class="mini-stat">
+            <div class="num"><span>100+</span></div>
+            <div class="lbl">Languages on Demand</div>
+          </div>
+          <div class="mini-stat">
+            <div class="num"><span>24/7</span></div>
+            <div class="lbl">Real-Time Coverage</div>
+          </div>
+        </div>
+        <a class="cover-cta" href="https://simplifiedbpo.com" target="_blank" rel="noopener">
+          The 2026 Capabilities Brief
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="slide-num">01 / 11</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 2 — THE CHALLENGE
+       ═══════════════════════════════════ -->
+  <section class="slide slide-challenge" id="s2">
+
+    <div class="challenge-content">
+      <div class="challenge-left">
+        <span class="pill">A market reality</span>
+        <h2 class="ch-headline">
+          Every missed word<br>
+          is a missed <em>customer.</em>
+        </h2>
+        <p class="body-copy" style="max-width:480px;">
+          When language stops a conversation, it stops a sale, a diagnosis, a
+          decision. Modern operations cannot run on guesswork — they need the
+          right voice, on the right call, the moment it rings.
+        </p>
+        <div class="ch-quote">
+          “Communication isn't a soft cost — it's the operating system for
+          revenue, care, and trust.”
+        </div>
+      </div>
+
+      <div class="challenge-right">
+        <div class="eyebrow" style="color:var(--sky-400);">By the numbers</div>
+
+        <div class="ch-stat-row">
+          <div class="ch-stat-num">68<span style="font-size:38px;color:var(--sky-300);">%</span></div>
+          <div class="ch-stat-text">
+            <strong>of customers will switch brands</strong>
+            <span>after a single poor service interaction caused by language friction.</span>
+          </div>
+        </div>
+
+        <div class="ch-stat-row">
+          <div class="ch-stat-num">$62<span style="font-size:30px;color:var(--sky-300);">B</span></div>
+          <div class="ch-stat-text">
+            <strong>lost annually in U.S. healthcare</strong>
+            <span>tied to miscommunication, misdiagnosis and avoidable readmissions.</span>
+          </div>
+        </div>
+
+        <div class="ch-stat-row">
+          <div class="ch-stat-num">3.2<span style="font-size:30px;color:var(--sky-300);">×</span></div>
+          <div class="ch-stat-text">
+            <strong>longer call resolution times</strong>
+            <span>when bilingual support is unavailable at the moment of contact.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">SGP — Simplified Group BPO LLC</div>
+    <div class="slide-num">02 / 11</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 3 — WHO WE ARE
+       ═══════════════════════════════════ -->
+  <section class="slide slide-about" id="s3">
+
+    <div class="about-content">
+      <div class="about-left">
+        <span class="pill">About Simplified</span>
+        <h2 class="about-headline">
+          We make<br>
+          the world<br>
+          <em>understood.</em>
+        </h2>
+      </div>
+
+      <div class="about-right">
+        <p class="about-lead">
+          <strong>Simplified Group BPO</strong> is a U.S.-based interpretation
+          and contact-center company on a mission to eliminate language barriers
+          and become the <em>go-to resource for every interpretation need</em>.
+        </p>
+        <p class="about-lead">
+          Our certified interpreters combine linguistic fluency with deep
+          cultural competency — so every call is not just translated, but
+          understood. We pair that human craft with an enterprise-grade
+          platform built for security, scale and 24/7 availability.
+        </p>
+
+        <div class="about-values">
+          <div class="value-row">
+            <div class="value-num">01</div>
+            <div class="value-text">
+              <strong>Innovation</strong>
+              <span>New ways to connect people, faster.</span>
+            </div>
+          </div>
+          <div class="value-row">
+            <div class="value-num">02</div>
+            <div class="value-text">
+              <strong>Efficiency</strong>
+              <span>Operations engineered around your SLAs.</span>
+            </div>
+          </div>
+          <div class="value-row">
+            <div class="value-num">03</div>
+            <div class="value-text">
+              <strong>Excellence</strong>
+              <span>Quality measured on every session.</span>
+            </div>
+          </div>
+          <div class="value-row">
+            <div class="value-num">04</div>
+            <div class="value-text">
+              <strong>Responsibility</strong>
+              <span>Privacy, ethics &amp; cultural respect by default.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">SGP — Simplified Group BPO LLC</div>
+    <div class="slide-num">03 / 11</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 4 — SERVICES OVERVIEW
+       ═══════════════════════════════════ -->
+  <section class="slide slide-services" id="s4">
+
+    <div class="services-header">
+      <h2>Four pillars,<br>one <em>seamless</em> partner.</h2>
+      <p>
+        Whether you need a voice on the line in 30 seconds or a fully managed
+        sales floor, our service stack is engineered to plug into yours and
+        deliver from day one.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <!-- OPI -->
+      <a class="svc-card featured" href="https://simplifiedbpo.com/opi/" target="_blank" rel="noopener">
+        <div>
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#7fc5e3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="svc-title">Over-the-Phone<br>Interpretation</div>
+          <p class="svc-desc">
+            On-demand human interpreters in seconds, no booking required.
+            Cost-effective, real-time, globally available.
+          </p>
+          <div class="svc-link">Connect instantly &nbsp;→</div>
+        </div>
+      </a>
+
+      <!-- VRI -->
+      <a class="svc-card" href="https://simplifiedbpo.com/vri/" target="_blank" rel="noopener">
+        <div>
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4ea7ce" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="23 7 16 12 23 17 23 7"/>
+              <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="svc-title">Video Remote<br>Interpretation</div>
+          <p class="svc-desc">
+            Face-to-face nuance — body language, tone, signing — delivered
+            on a secure, enterprise-grade video platform.
+          </p>
+          <div class="svc-link">See &amp; be seen &nbsp;→</div>
+        </div>
+      </a>
+
+      <!-- Sales -->
+      <a class="svc-card" href="https://simplifiedbpo.com/" target="_blank" rel="noopener">
+        <div>
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4ea7ce" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 17 9 11 13 15 21 7"/>
+              <polyline points="14 7 21 7 21 14"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="svc-title">Inbound &amp;<br>Outbound Sales</div>
+          <p class="svc-desc">
+            Trained, multilingual reps and tailored playbooks that turn
+            every conversation into measurable pipeline.
+          </p>
+          <div class="svc-link">Grow with us &nbsp;→</div>
+        </div>
+      </a>
+
+      <!-- Customer Service -->
+      <a class="svc-card" href="https://simplifiedbpo.com/customer-service/" target="_blank" rel="noopener">
+        <div>
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#4ea7ce" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="svc-title">Customer<br>Service</div>
+          <p class="svc-desc">
+            Multilingual support, technical assistance and feedback
+            programs — designed to protect lifetime value.
+          </p>
+          <div class="svc-link">Delight customers &nbsp;→</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="chrome-foot">SGP — Simplified Group BPO LLC</div>
+    <div class="slide-num">04 / 11</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 5 — OPI
+       ═══════════════════════════════════ -->
+  <section class="slide slide-opi dark grain" id="s5">
+
+    <div class="opi-grid">
+      <div class="opi-left">
+        <span class="pill">Over-the-Phone Interpretation</span>
+        <h2 class="opi-headline">A live<br>interpreter,<br><em>in seconds.</em></h2>
+        <p class="opi-subline">
+          The fastest, most economical way to resolve a multilingual call.
+          No travel, no scheduling — just a human voice on the line, the moment
+          you need one. Built for any language, any volume, any channel.
+        </p>
+
+        <div class="opi-icons">
+          <div class="icon-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#7fc5e3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
+          <div class="icon-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#7fc5e3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div class="icon-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#7fc5e3" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="opi-right">
+        <div class="feat-row">
+          <div class="feat-num">01</div>
+          <div>
+            <div class="feat-title">Cost-effective by design</div>
+            <div class="feat-desc">No travel, no on-site fees. Pay-per-minute economics that
+            scale up or down with your demand curve.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">02</div>
+          <div>
+            <div class="feat-title">Real-time, no booking</div>
+            <div class="feat-desc">Average connect under 30 seconds. Built for emergencies,
+            walk-ins and surge volume — never queues.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">03</div>
+          <div>
+            <div class="feat-title">Global accessibility</div>
+            <div class="feat-desc">Connect with speakers of any language, anywhere — across
+            time zones, devices and PBX integrations.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">04</div>
+          <div>
+            <div class="feat-title">Flexible, project-ready</div>
+            <div class="feat-desc">From a one-off call to a 100-seat program rollout, the
+            service shapes itself to your engagement model.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">SGP — Simplified Group BPO LLC</div>
+    <div class="slide-num">05 / 11</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 6 — VRI
+       ═══════════════════════════════════ -->
+  <section class="slide slide-vri" id="s6">
+
+    <div class="vri-wrap">
+      <div class="vri-left">
+        <span class="pill">Video Remote Interpretation</span>
+        <h2 class="vri-headline">When a face<br>says it <em>all.</em></h2>
+        <p class="vri-subline">
+          Some conversations need eyes, not just ears. Our VRI platform delivers
+          high-fidelity video interpretation with the security and clinical
+          precision required by regulated industries.
+        </p>
+
+        <div class="vri-feat-grid">
+          <div class="vri-feat">
+            <div class="vri-feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <strong>Personal connection</strong>
+            <span>Closer rapport than audio-only — body language matters.</span>
+          </div>
+          <div class="vri-feat">
+            <div class="vri-feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/>
+                <polyline points="9 12 11 14 15 10"/>
+              </svg>
+            </div>
+            <strong>Bank-grade security</strong>
+            <span>Encrypted streams, HIPAA-aligned controls, audit logs.</span>
+          </div>
+          <div class="vri-feat">
+            <div class="vri-feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 2v20M2 12h20"/>
+              </svg>
+            </div>
+            <strong>Higher accuracy</strong>
+            <span>Visual cues unlock nuance impossible to capture by voice.</span>
+          </div>
+          <div class="vri-feat">
+            <div class="vri-feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polygon points="10 8 16 12 10 16 10 8"/>
+              </svg>
+            </div>
+            <strong>Truly interactive</strong>
+            <span>Multi-party sessions with true turn-taking, on every device.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vri-right">
+        <div class="video-mock">
+          <div class="v-tiles">
+            <div class="v-tile right">
+              <div class="v-avatar">EM</div>
+              <div class="v-mic live">SPEAKING</div>
+            </div>
+            <div class="v-side">
+              <div class="v-tile small" style="flex:1.2;">
+                <div class="v-avatar" style="background:linear-gradient(135deg,#e2b770,#c89149);transform:translate(-50%,-60%);">SG</div>
+                <div class="v-mic">INTERPRETER</div>
+              </div>
+              <div class="v-tile small" style="flex:1;">
+                <div class="v-avatar" style="background:linear-gradient(135deg,#ee7d6a,#a23939);transform:translate(-50%,-60%);">JL</div>
+                <div class="v-mic">CLIENT</div>
+              </div>
+            </div>
+          </div>
+          <div class="video-controls">
+            <div class="vc-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <rect x="9" y="2" width="6" height="11" rx="3"/>
+                <path d="M19 10a7 7 0 0 1-14 0M12 17v5"/>
+              </svg>
+            </div>
+            <div class="vc-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <polygon points="23 7 16 12 23 17 23 7"/>
+                <rect x="1" y="5" width="15" height="14" rx="2"/>
+              </svg>
+            </div>
+            <div class="vc-btn danger">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z" transform="rotate(135 12 12)"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">SGP — Simplified Group BPO LLC</div>
+    <div class="slide-num">06 / 11</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 7 — SALES
+       ═══════════════════════════════════ -->
+  <section class="slide slide-sales" id="s7">
+
+    <div class="sales-wrap">
+      <div class="sales-head">
+        <h2>Conversations<br>that <em>convert.</em></h2>
+        <p>
+          Trained, multilingual sales reps with playbooks built around your
+          ICP — not someone else's. We don't just dial; we close.
+        </p>
+      </div>
+
+      <div class="sales-cols">
+        <div class="sales-col">
+          <div class="tag">Inbound</div>
+          <h3>Capture every opportunity that comes to you.</h3>
+          <p class="lead">
+            Specialized agents engage interested prospects the moment they
+            reach out — qualifying intent, answering objections, and
+            converting interest into closed-won.
+          </p>
+          <ul class="sales-list">
+            <li>Intent qualification &amp; instant lead routing</li>
+            <li>Multilingual product &amp; pricing expertise</li>
+            <li>CRM-native logging into your stack of choice</li>
+            <li>Human handoff to your AE when it matters</li>
+          </ul>
+        </div>
+
+        <div class="sales-col dark">
+          <div class="tag">Outbound</div>
+          <h3>Personalized pipelines, built call by call.</h3>
+          <p class="lead">
+            Targeted outbound campaigns crafted around your ICP. Every script
+            is co-developed, A/B tested, and tuned weekly against pipeline
+            outcomes — not vanity metrics.
+          </p>
+          <ul class="sales-list">
+            <li>Co-built playbooks &amp; objection libraries</li>
+            <li>Dedicated team pods, not shared seats</li>
+            <li>Weekly performance &amp; conversion reporting</li>
+            <li>Cross-language outreach in 100+ languages</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">SGP — Simplified Group BPO LLC</div>
+    <div class="slide-num">07 / 11</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 8 — CUSTOMER SERVICE
+       ═══════════════════════════════════ -->
+  <section class="slide slide-cs" id="s8">
+
+    <div class="cs-grid">
+      <div class="cs-left">
+        <span class="pill" style="background:rgba(127,197,227,0.10);border-color:rgba(127,197,227,0.30);color:var(--sky-300);">Customer Service</span>
+        <h2>Care that<br>customers<br><em>remember.</em></h2>
+        <p>
+          Quality customer service isn't a nice-to-have in the interpreting
+          industry — it's the product. We pair multilingual empathy with
+          deep technical knowledge of your platform.
+        </p>
+
+        <div class="chat-bubble b1">
+          <small>Inbound · 2:14 PM</small>
+          Hola, tengo una pregunta sobre mi cuenta...
+        </div>
+        <div class="chat-bubble b2">
+          <small>SGP Agent · Just now</small>
+          ¡Claro! Estoy aquí para ayudarte. Veamos tu cuenta ahora mismo.
+        </div>
+      </div>
+
+      <div class="cs-right">
+        <span class="eyebrow">What we handle</span>
+        <h3 style="font-family:'Playfair Display',serif;font-size:34px;font-weight:700;color:var(--navy-900);line-height:1.05;letter-spacing:-0.6px;margin-top:-4px;">
+          End-to-end multilingual support, on every channel.
+        </h3>
+
+        <div class="cs-row">
+          <div class="cs-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Technical Support</strong>
+            <span>Help your end-users navigate the interpretation platform and resolve issues fast.</span>
+          </div>
+        </div>
+
+        <div class="cs-row">
+          <div class="cs-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Information &amp; Assistance</strong>
+            <span>Pricing, scheduling, and service inquiries — answered with clarity in any language.</span>
+          </div>
+        </div>
+
+        <div class="cs-row">
+          <div class="cs-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Complaint Resolution</strong>
+            <span>Professional, empathetic handling of escalations — protecting brand &amp; lifetime value.</span>
+          </div>
+        </div>
+
+        <div class="cs-row">
+          <div class="cs-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v6m0 0 3-3m-3 3-3-3"/>
+              <rect x="3" y="10" width="18" height="12" rx="2"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Feedback Collection</strong>
+            <span>Structured voice-of-customer programs that fuel continuous improvement.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">SGP — Simplified Group BPO LLC</div>
+    <div class="slide-num">08 / 11</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 9 — INDUSTRIES
+       ═══════════════════════════════════ -->
+  <section class="slide slide-industries" id="s9">
+
+    <div class="ind-wrap">
+      <div class="ind-head">
+        <h2>Trusted across<br>regulated &amp; <em>fast-moving</em> markets.</h2>
+        <p>
+          Certified, vetted, and trained for the unique cadence and compliance
+          demands of every industry we serve.
+        </p>
+      </div>
+
+      <div class="ind-grid">
+        <div class="ind-card">
+          <div>
+            <div class="ind-illus">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M3 9h18M9 21V9"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>Commercial</h3>
+            <p>Stronger client connection, faster sales cycles, multilingual coverage that opens new markets.</p>
+          </div>
+        </div>
+
+        <div class="ind-card medical">
+          <div>
+            <div class="ind-illus">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14"/>
+                <circle cx="12" cy="12" r="9"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>Medical</h3>
+            <p>Accuracy, empathy, and cultural understanding that protect both clinical outcomes and patient trust.</p>
+          </div>
+        </div>
+
+        <div class="ind-card education">
+          <div>
+            <div class="ind-illus">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10 12 5 2 10l10 5 10-5z"/>
+                <path d="M6 12v5c3 2 9 2 12 0v-5"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>Education</h3>
+            <p>Inclusive learning environments — from family communications to live classroom support.</p>
+          </div>
+        </div>
+
+        <div class="ind-card tech">
+          <div>
+            <div class="ind-illus">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>Technology</h3>
+            <p>Multicultural team comms, online training, international product launches and global events.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">SGP — Simplified Group BPO LLC</div>
+    <div class="slide-num">09 / 11</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 10 — WHY SGP + PROCESS
+       ═══════════════════════════════════ -->
+  <section class="slide slide-why dark grain" id="s10">
+
+    <div class="why-wrap">
+      <div class="why-head">
+        <h2>Why partners pick<br>Simplified <em>and stay.</em></h2>
+        <p>
+          The intersection of cultural fluency, operational rigor, and a
+          rigorous talent pipeline — engineered to deliver the same quality
+          on call #1 and call #1,000,000.
+        </p>
+      </div>
+
+      <div class="why-body">
+        <!-- Differentiators -->
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Bilingual + cultural competency</strong>
+              <span>Fluency is table stakes. We hire for cultural depth — the difference between translation and understanding.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/>
+                <polyline points="9 12 11 14 15 10"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Enterprise-grade security</strong>
+              <span>Encrypted platform, vetted personnel, audit-ready logs — designed for healthcare, finance and regulated industries.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div>
+              <strong>24/7 real-time availability</strong>
+              <span>Round-the-clock demand across 100+ languages — never queue your customer at 3 AM.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4z"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Tailored, not templated</strong>
+              <span>Every engagement is shaped to your ICP, your stack, your KPIs — co-designed with your team, not handed down.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="why-divider"></div>
+
+        <!-- Process -->
+        <div>
+          <div class="process-title">— Our 3-stage talent pipeline</div>
+          <div class="process-steps">
+            <div class="pstep">
+              <div class="pstep-num">1</div>
+              <div>
+                <strong>Openings Review</strong>
+                <span>Targeted sourcing matched to your service requirements, languages and cultural context.</span>
+              </div>
+            </div>
+            <div class="pstep">
+              <div class="pstep-num">2</div>
+              <div>
+                <strong>Skills Assessment &amp; Vetting</strong>
+                <span>Linguistic fluency exams, role-play simulations, background checks &amp; ethics screening.</span>
+              </div>
+            </div>
+            <div class="pstep">
+              <div class="pstep-num">3</div>
+              <div>
+                <strong>Onboarding &amp; Deployment</strong>
+                <span>Account-specific training, shadow shifts and continuous QA — interpreters live-ready, day one.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">SGP — Simplified Group BPO LLC</div>
+    <div class="slide-num">10 / 11</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 11 — CTA / CONTACT
+       ═══════════════════════════════════ -->
+  <section class="slide slide-cta dark grain" id="s11">
+    <div class="cover-grid"></div>
+    <div class="cover-orb"></div>
+    <div class="cover-orb b"></div>
+
+
+    <div class="cta-wrap">
+      <div>
+        <span class="cta-eyebrow">The next step</span>
+      </div>
+
+      <div style="display:flex;flex-direction:column;justify-content:center;">
+        <h2 class="cta-headline">
+          Let's simplify<br>
+          your next<br>
+          <em>conversation.</em>
+        </h2>
+      </div>
+
+      <div class="cta-bottom">
+        <div class="cta-contact">
+          <a class="contact-item" href="tel:+13025500551">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div class="contact-text">
+              <small>Call</small>
+              <strong>(302) 550-0551</strong>
+            </div>
+          </a>
+
+          <a class="contact-item" href="mailto:recruitmentdept@simplifiedbpo.com">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="contact-text">
+              <small>Email</small>
+              <strong>recruitmentdept@simplifiedbpo.com</strong>
+            </div>
+          </a>
+
+          <a class="contact-item" href="https://simplifiedbpo.com" target="_blank" rel="noopener">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div class="contact-text">
+              <small>Web</small>
+              <strong>simplifiedbpo.com</strong>
+            </div>
+          </a>
+        </div>
+
+        <div class="cta-mid">
+          <a class="cta-button" href="https://simplifiedbpo.com" target="_blank" rel="noopener">
+            Book a Discovery Call
+            <span class="arr">→</span>
+          </a>
+        </div>
+
+        <div style="text-align:right;">
+          <img class="cta-logo" src="logo.png" alt="Simplified Group BPO">
+          <div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2px;color:rgba(255,255,255,0.5);text-transform:uppercase;">
+            Simplifying Communication ·<br>Amplifying Results
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">11 / 11</div>
+  </section>
+
+</div>
+
+<div class="nav-hint">
+  Scroll · or press <span>← →</span> to navigate
+</div>
+
+<script>
+  // Lightweight keyboard navigation between slides
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+
+  function scrollToSlide(i){
+    if(i < 0 || i >= slides.length) return;
+    current = i;
+    slides[i].scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  // Track which slide is most in view
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e => {
+      if(e.isIntersecting && e.intersectionRatio > 0.55){
+        current = slides.indexOf(e.target);
+      }
+    });
+  }, {threshold:[0.55, 0.75]});
+  slides.forEach(s => io.observe(s));
+
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' '){
+      e.preventDefault();
+      scrollToSlide(current + 1);
+    } else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){
+      e.preventDefault();
+      scrollToSlide(current - 1);
+    } else if(e.key === 'Home'){
+      scrollToSlide(0);
+    } else if(e.key === 'End'){
+      scrollToSlide(slides.length - 1);
+    }
+  });
+
+  // Hide nav hint after a few seconds
+  setTimeout(()=>{
+    const h = document.querySelector('.nav-hint');
+    if(h){ h.style.transition = 'opacity 0.6s ease'; h.style.opacity = '0'; setTimeout(()=>h.remove(), 700); }
+  }, 6000);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Language Services Procurement Search | ToosPoint</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root{
+      --tp-orange:#F08A5D; --tp-teal:#2A9D8F; --tp-dark:#1A1A2E;
+      --tp-gray:#6B7280; --tp-light:#F9FAFB; --tp-border:#E5E7EB;
+      --mode-color: var(--tp-teal);
+    }
+    *{box-sizing:border-box}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:#F0F4F8;color:var(--tp-dark);margin:0}
+
+    /* ── Header ── */
+    .tp-header{background:var(--tp-dark);position:sticky;top:0;z-index:1000;box-shadow:0 2px 16px rgba(0,0,0,.35)}
+    .tp-bar{height:4px;background:linear-gradient(90deg,var(--tp-orange) 50%,var(--tp-teal) 50%)}
+    .tp-inner{display:flex;align-items:center;gap:14px;padding:10px 24px}
+    .tp-logo{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--tp-orange),var(--tp-teal));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .tp-brand{color:#fff;font-size:1.05rem;font-weight:700}
+    .tp-brand em{color:var(--tp-teal);font-style:normal}
+    .tp-sub{color:var(--tp-gray);font-size:.74rem;margin-top:1px}
+    .tp-nav{margin-left:auto;display:flex;align-items:center;gap:8px}
+    .key-badge{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;padding:3px 10px;border-radius:10px;font-weight:600}
+    .key-set{background:#ECFDF5;color:#065F46} .key-unset{background:#FEF2F2;color:#991B1B}
+    .btn-settings{background:transparent;border:1px solid rgba(255,255,255,.2);color:#ccc;border-radius:20px;padding:5px 14px;font-size:.82rem;cursor:pointer}
+    .btn-settings:hover{background:rgba(255,255,255,.08);color:#fff}
+
+    /* ── Mode Switcher ── */
+    .mode-bar{background:#13132a;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;padding:0 24px;gap:4px}
+    .mode-tab{padding:10px 22px;font-size:.88rem;font-weight:700;color:#888;cursor:pointer;border:none;background:transparent;border-bottom:3px solid transparent;transition:all .18s;letter-spacing:.3px}
+    .mode-tab:hover{color:#ccc}
+    .mode-tab.active-rfi{color:#8B5CF6;border-bottom-color:#8B5CF6}
+    .mode-tab.active-rfp{color:var(--tp-teal);border-bottom-color:var(--tp-teal)}
+    .mode-tab.active-rfq{color:var(--tp-orange);border-bottom-color:var(--tp-orange)}
+    .mode-desc{margin-left:auto;font-size:.75rem;color:#666;font-style:italic}
+
+    /* ── Layout ── */
+    .layout{display:grid;grid-template-columns:295px 1fr;height:calc(100vh - 106px);overflow:hidden}
+
+    /* ── Sidebar ── */
+    .sidebar{background:#fff;border-right:1px solid var(--tp-border);overflow-y:auto;padding:16px 15px;display:flex;flex-direction:column;gap:13px}
+    .s-box{background:var(--tp-light);border:1px solid var(--tp-border);border-radius:10px;padding:12px 14px}
+    .s-box h6{font-size:.73rem;font-weight:700;color:var(--tp-gray);text-transform:uppercase;letter-spacing:.8px;margin-bottom:9px}
+    .form-control,.form-select{border-radius:8px;border:1px solid var(--tp-border);font-size:.85rem}
+    .form-control:focus,.form-select:focus{border-color:var(--mode-color);box-shadow:0 0 0 3px rgba(42,157,143,.12)}
+    label.fl{font-size:.79rem;font-weight:600;color:var(--tp-dark);display:block;margin-bottom:3px}
+
+    .presets{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+    .preset{font-size:.71rem;padding:2px 9px;border-radius:12px;border:1px solid var(--tp-teal);background:transparent;color:var(--tp-teal);cursor:pointer;transition:all .14s}
+    .preset:hover{background:var(--tp-teal);color:#fff}
+
+    .src-row{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:.83rem}
+    .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+    .dot-sam{background:#3B82F6} .dot-grants{background:#F59E0B}
+
+    .notice-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+    .form-check-label{font-size:.79rem}
+
+    .btn-search{border:none;color:#fff;width:100%;padding:11px;border-radius:10px;font-weight:700;font-size:.92rem;cursor:pointer;transition:opacity .2s,transform .1s;background:linear-gradient(135deg,var(--tp-teal),#1d7a6e)}
+    .btn-search:hover{opacity:.9;transform:translateY(-1px)}
+    .btn-search:disabled{opacity:.5}
+    .mode-rfi .btn-search{background:linear-gradient(135deg,#8B5CF6,#6D28D9)}
+    .mode-rfp .btn-search{background:linear-gradient(135deg,var(--tp-teal),#1d7a6e)}
+    .mode-rfq .btn-search{background:linear-gradient(135deg,var(--tp-orange),#d4683c)}
+
+    /* ── Results ── */
+    .results{display:flex;flex-direction:column;overflow:hidden}
+    .r-toolbar{background:#fff;border-bottom:1px solid var(--tp-border);padding:10px 18px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .r-count{font-weight:700;font-size:.9rem} .r-count .n{color:var(--tp-teal)}
+    .spacer{flex:1}
+    .btn-exp{font-size:.79rem;padding:5px 12px;border-radius:8px;border:1px solid var(--tp-border);background:#fff;cursor:pointer;display:flex;align-items:center;gap:5px}
+    .btn-exp:hover{background:var(--tp-light)} .btn-exp:disabled{opacity:.4;cursor:default}
+
+    /* Mode pill in toolbar */
+    .mode-pill{font-size:.73rem;font-weight:700;padding:3px 10px;border-radius:10px}
+    .pill-rfi{background:#F5F3FF;color:#6D28D9}
+    .pill-rfp{background:#ECFDF5;color:#065F46}
+    .pill-rfq{background:#FFF7ED;color:#9A3412}
+
+    /* ── Table ── */
+    .tbl-wrap{flex:1;overflow-y:auto}
+    .main-table{width:100%;border-collapse:collapse;font-size:.83rem}
+    .main-table thead th{background:var(--tp-dark);color:#bbb;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.7px;padding:9px 12px;position:sticky;top:0;z-index:2;cursor:pointer;white-space:nowrap;user-select:none}
+    .main-table thead th:hover{color:#fff}
+    .main-table thead th.asc::after{content:" ↑";color:var(--tp-orange)}
+    .main-table thead th.desc::after{content:" ↓";color:var(--tp-orange)}
+    .main-table tbody tr{border-bottom:1px solid var(--tp-border);cursor:pointer;transition:background .1s}
+    .main-table tbody tr:hover{background:#EEF9F8}
+    .main-table tbody tr.active{background:#C7F0EB}
+    .main-table tbody td{padding:9px 12px;vertical-align:middle}
+    .td-title{font-weight:600;max-width:310px}
+    .td-title div{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .td-agency{color:var(--tp-gray);font-size:.79rem;max-width:165px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .td-date{white-space:nowrap;color:#374151}
+    .dl-soon{color:#DC2626;font-weight:700} .dl-ok{color:#059669}
+
+    .badge-src{display:inline-flex;align-items:center;gap:4px;font-size:.71rem;padding:2px 8px;border-radius:9px;font-weight:600;white-space:nowrap}
+    .b-sam{background:#EFF6FF;color:#1D4ED8} .b-grants{background:#FFFBEB;color:#92400E}
+    .type-tag{font-size:.69rem;padding:2px 7px;border-radius:7px;background:var(--tp-light);color:var(--tp-gray);border:1px solid var(--tp-border)}
+
+    /* ── Drawer ── */
+    .drawer{position:fixed;right:0;top:106px;width:420px;height:calc(100vh - 106px);background:#fff;border-left:1px solid var(--tp-border);box-shadow:-4px 0 24px rgba(0,0,0,.1);transform:translateX(100%);transition:transform .24s ease;z-index:500;display:flex;flex-direction:column}
+    .drawer.open{transform:translateX(0)}
+    .d-head{padding:14px 17px;border-bottom:1px solid var(--tp-border);display:flex;align-items:flex-start;gap:10px}
+    .d-title{font-size:.91rem;font-weight:700;flex:1;line-height:1.4}
+    .d-close{background:none;border:none;color:var(--tp-gray);font-size:1.1rem;cursor:pointer;flex-shrink:0}
+    .d-close:hover{color:var(--tp-dark)}
+    .d-body{flex:1;overflow-y:auto;padding:14px 17px}
+    .d-foot{padding:10px 17px;border-top:1px solid var(--tp-border);display:flex;gap:7px}
+    .d-row{margin-bottom:10px}
+    .d-lbl{font-size:.71rem;font-weight:700;color:var(--tp-gray);text-transform:uppercase;letter-spacing:.6px;margin-bottom:2px}
+    .d-val{font-size:.84rem}
+    .d-desc{font-size:.8rem;color:#374151;line-height:1.6;background:var(--tp-light);border:1px solid var(--tp-border);border-radius:8px;padding:10px;max-height:230px;overflow-y:auto;white-space:pre-wrap}
+    .btn-open{flex:1;background:var(--tp-teal);color:#fff;border:none;border-radius:8px;padding:9px;font-weight:600;font-size:.84rem;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none}
+    .btn-open:hover{background:#1d7a6e;color:#fff}
+    .btn-copy{background:var(--tp-light);border:1px solid var(--tp-border);border-radius:8px;padding:9px 12px;font-size:.84rem;cursor:pointer;display:flex;align-items:center;gap:4px}
+    .btn-copy:hover{background:var(--tp-border)}
+
+    /* ── States ── */
+    .state{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:var(--tp-gray);gap:10px;padding:40px;text-align:center}
+    .state i{font-size:2.8rem;opacity:.28}
+    .state h5{font-size:.93rem;color:var(--tp-dark);margin:0}
+    .state p{font-size:.81rem;margin:0;max-width:290px}
+    .spin-wrap{display:flex;align-items:center;justify-content:center;height:100%;gap:12px;font-size:.9rem}
+    .err-box{background:#FEF2F2;border:1px solid #FECACA;border-radius:8px;padding:8px 12px;font-size:.79rem;color:#991B1B;margin:0 17px 10px}
+    .err-box li{margin:2px 0}
+
+    /* Modal */
+    .modal-header{background:var(--tp-dark);color:#fff;border-radius:12px 12px 0 0}
+    .modal-header .btn-close{filter:invert(1)}
+    ::-webkit-scrollbar{width:5px;height:5px}
+    ::-webkit-scrollbar-thumb{background:#D1D5DB;border-radius:3px}
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="tp-header">
+  <div class="tp-bar"></div>
+  <div class="tp-inner">
+    <div class="tp-logo"><i class="bi bi-compass" style="color:#fff;font-size:1.15rem"></i></div>
+    <div>
+      <div class="tp-brand">Toos<em>Point</em> Procurement Search</div>
+      <div class="tp-sub">Language Services · Open Opportunities Only</div>
+    </div>
+    <div class="tp-nav">
+      <span id="keyBadge" class="key-badge {% if has_sam_key %}key-set{% else %}key-unset{% endif %}">
+        <i class="bi bi-key-fill"></i>
+        SAM.gov {% if has_sam_key %}Key Set{% else %}No Key{% endif %}
+      </span>
+      <button class="btn-settings" data-bs-toggle="modal" data-bs-target="#settingsModal">
+        <i class="bi bi-gear-fill me-1"></i>Settings
+      </button>
+    </div>
+  </div>
+  <!-- Mode Switcher -->
+  <div class="mode-bar">
+    <button class="mode-tab" id="tab-rfi" onclick="setMode('rfi')">
+      <i class="bi bi-lightbulb me-1"></i>RFI
+    </button>
+    <button class="mode-tab active-rfp" id="tab-rfp" onclick="setMode('rfp')">
+      <i class="bi bi-file-earmark-text me-1"></i>RFP
+    </button>
+    <button class="mode-tab" id="tab-rfq" onclick="setMode('rfq')">
+      <i class="bi bi-receipt me-1"></i>RFQ
+    </button>
+    <span class="mode-desc" id="modeDesc">Request for Proposal — Complex services, technical proposals</span>
+  </div>
+</div>
+
+<!-- Layout -->
+<div class="layout mode-rfp" id="mainLayout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <div class="s-box">
+      <h6><i class="bi bi-search me-1"></i>Keywords</h6>
+      <div class="input-group mb-1">
+        <input id="kw" type="text" class="form-control" placeholder="language services, translation…" value="language services"/>
+        <button class="btn btn-outline-secondary btn-sm" onclick="document.getElementById('kw').value='';document.getElementById('kw').focus()"><i class="bi bi-x"></i></button>
+      </div>
+      <div class="presets" id="presetList">
+        {% for p in presets %}
+        <button class="preset" onclick="document.getElementById('kw').value='{{ p }}'">{{ p }}</button>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="s-box">
+      <h6><i class="bi bi-calendar3 me-1"></i>Date Range</h6>
+      <div class="row g-2">
+        <div class="col-6"><label class="fl">From</label><input id="df" type="date" class="form-control"/></div>
+        <div class="col-6"><label class="fl">To</label><input id="dt" type="date" class="form-control"/></div>
+      </div>
+      <div class="presets mt-2">
+        <button class="preset" onclick="setRange(30)">30d</button>
+        <button class="preset" onclick="setRange(60)">60d</button>
+        <button class="preset" onclick="setRange(90)">90d</button>
+        <button class="preset" onclick="setRange(180)">6mo</button>
+        <button class="preset" onclick="setRange(365)">1yr</button>
+      </div>
+    </div>
+
+    <div class="s-box">
+      <h6><i class="bi bi-tag me-1"></i>NAICS Code</h6>
+      <select id="naics" class="form-select">
+        <option value="">Any</option>
+        {% for code, label in naics_codes.items() %}
+        <option value="{{ code }}" {% if code=='541930' %}selected{% endif %}>{{ code }} – {{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="s-box" id="noticeBox">
+      <h6><i class="bi bi-funnel me-1"></i>Notice Types <small class="text-muted">(SAM.gov)</small></h6>
+      <div class="notice-grid" id="noticeGrid">
+        <div class="form-check"><input class="form-check-input" type="checkbox" value="r" id="nt_r"/><label class="form-check-label" for="nt_r">Sources Sought</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" value="s" id="nt_s"/><label class="form-check-label" for="nt_s">Special Notice</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" value="o" id="nt_o"/><label class="form-check-label" for="nt_o">Solicitation</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" value="k" id="nt_k"/><label class="form-check-label" for="nt_k">Combined</label></div>
+        <div class="form-check"><input class="form-check-input" type="checkbox" value="p" id="nt_p"/><label class="form-check-label" for="nt_p">Pre-Sol</label></div>
+      </div>
+    </div>
+
+    <div class="s-box">
+      <h6><i class="bi bi-database me-1"></i>Sources</h6>
+      <div class="src-row">
+        <input class="form-check-input m-0" type="checkbox" id="src_sam" checked/>
+        <span class="dot dot-sam"></span>
+        <label for="src_sam">SAM.gov <small class="text-muted">(US Federal)</small></label>
+      </div>
+      <div class="src-row">
+        <input class="form-check-input m-0" type="checkbox" id="src_grants" checked/>
+        <span class="dot dot-grants"></span>
+        <label for="src_grants">Grants.gov</label>
+      </div>
+      <div class="mt-2">
+        <label class="fl">Max results / source</label>
+        <input id="maxRes" type="number" class="form-control" value="25" min="5" max="100"/>
+      </div>
+    </div>
+
+    <button class="btn-search" id="searchBtn" onclick="doSearch()">
+      <i class="bi bi-search me-2"></i><span id="searchBtnLabel">Search Open RFPs</span>
+    </button>
+
+  </aside>
+
+  <!-- Results -->
+  <main class="results">
+    <div class="r-toolbar">
+      <span id="modePill" class="mode-pill pill-rfp">RFP</span>
+      <div class="r-count" id="rCount"><span class="n">0</span> results</div>
+      <div class="spacer"></div>
+      <button class="btn-exp" id="expBtn" onclick="exportCSV()" disabled>
+        <i class="bi bi-download"></i> Export CSV
+      </button>
+    </div>
+
+    <div id="errBox" style="display:none"></div>
+
+    <div class="tbl-wrap">
+      <div class="state" id="emptyState">
+        <i class="bi bi-file-earmark-magnify"></i>
+        <h5>Ready to Search</h5>
+        <p>Select a mode — <strong>RFI</strong>, <strong>RFP</strong>, or <strong>RFQ</strong> — then click Search to find open language services opportunities.</p>
+      </div>
+      <div id="loadState" style="display:none" class="spin-wrap">
+        <div class="spinner-border" style="color:var(--tp-teal);width:1.3rem;height:1.3rem;border-width:2px"></div>
+        <span id="loadMsg">Searching open opportunities…</span>
+      </div>
+      <table class="main-table" id="mainTable" style="display:none">
+        <thead>
+          <tr>
+            <th onclick="sort('title')">Title</th>
+            <th onclick="sort('agency')">Agency</th>
+            <th onclick="sort('source')">Source</th>
+            <th onclick="sort('posted')">Posted</th>
+            <th onclick="sort('deadline')">Deadline</th>
+            <th onclick="sort('type')">Type</th>
+            <th onclick="sort('value')">Value</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<!-- Detail Drawer -->
+<div class="drawer" id="drawer">
+  <div class="d-head">
+    <div class="d-title" id="dTitle">—</div>
+    <button class="d-close" onclick="closeDrawer()"><i class="bi bi-x-lg"></i></button>
+  </div>
+  <div class="d-body" id="dBody"></div>
+  <div class="d-foot">
+    <a id="dLink" href="#" target="_blank" class="btn-open"><i class="bi bi-box-arrow-up-right"></i> Open Posting</a>
+    <button class="btn-copy" onclick="copyLink()"><i class="bi bi-clipboard"></i> Copy</button>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal fade" id="settingsModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border-radius:12px">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-gear-fill me-2"></i>Settings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div class="mb-3">
+          <label class="form-label fw-bold">SAM.gov API Key</label>
+          <input type="password" id="samKey" class="form-control" placeholder="SAM-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"/>
+          <div class="form-text">Free key from <a href="https://sam.gov/profile/details" target="_blank">sam.gov</a> → Account Details → System Accounts.</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Max Results per Source</label>
+          <input type="number" id="settMax" class="form-control" value="25" min="5" max="100"/>
+        </div>
+        <div class="alert alert-info" style="font-size:.82rem">
+          <i class="bi bi-info-circle me-1"></i>
+          Without a SAM.gov key, only Grants.gov results are returned.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" onclick="saveSettings()" style="background:var(--tp-teal);border-color:var(--tp-teal)">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ── Mode config ───────────────────────────────────────────────────────────────
+const MODES = {
+  rfi: {
+    label: 'RFI', full: 'Request for Information',
+    desc:  'Request for Information — Market research, no commitment',
+    notices: ['r','s'],
+    pillClass: 'pill-rfi', color: '#8B5CF6',
+    btnGrad: 'linear-gradient(135deg,#8B5CF6,#6D28D9)',
+    icon: 'bi-lightbulb',
+  },
+  rfp: {
+    label: 'RFP', full: 'Request for Proposal',
+    desc:  'Request for Proposal — Complex services, technical proposals',
+    notices: ['o','k','p'],
+    pillClass: 'pill-rfp', color: '#2A9D8F',
+    btnGrad: 'linear-gradient(135deg,#2A9D8F,#1d7a6e)',
+    icon: 'bi-file-earmark-text',
+  },
+  rfq: {
+    label: 'RFQ', full: 'Request for Quotation',
+    desc:  'Request for Quotation — Price-based, simplified acquisitions',
+    notices: ['o','k'],
+    pillClass: 'pill-rfq', color: '#F08A5D',
+    btnGrad: 'linear-gradient(135deg,#F08A5D,#d4683c)',
+    icon: 'bi-receipt',
+  },
+};
+
+let currentMode = 'rfp';
+let allResults  = [], sortedResults = [], sortCol = 'posted', sortDir = 'desc';
+
+// ── Init ───────────────────────────────────────────────────────────────────────
+(function(){
+  const to=new Date(), from=new Date();
+  from.setDate(from.getDate()-90);
+  document.getElementById('dt').value=to.toISOString().split('T')[0];
+  document.getElementById('df').value=from.toISOString().split('T')[0];
+  setMode('rfp', false);
+})();
+
+function setRange(days){
+  const to=new Date(), from=new Date();
+  from.setDate(from.getDate()-days);
+  document.getElementById('dt').value=to.toISOString().split('T')[0];
+  document.getElementById('df').value=from.toISOString().split('T')[0];
+}
+
+document.getElementById('kw').addEventListener('keydown', e=>{ if(e.key==='Enter') doSearch(); });
+
+// ── Mode switching ────────────────────────────────────────────────────────────
+function setMode(mode, clearResults=true){
+  currentMode = mode;
+  const m = MODES[mode];
+
+  // Update tabs
+  Object.keys(MODES).forEach(k=>{
+    const tab=document.getElementById('tab-'+k);
+    tab.className = 'mode-tab' + (k===mode ? ` active-${k}` : '');
+  });
+
+  // Update description
+  document.getElementById('modeDesc').textContent = m.desc;
+
+  // Update layout class
+  const layout = document.getElementById('mainLayout');
+  layout.className = `layout mode-${mode}`;
+
+  // Update notice checkboxes
+  ['r','s','o','k','p'].forEach(v=>{
+    document.getElementById('nt_'+v).checked = m.notices.includes(v);
+  });
+
+  // Update search button
+  document.getElementById('searchBtnLabel').textContent = `Search Open ${m.label}s`;
+  document.getElementById('searchBtn').style.background = m.btnGrad;
+
+  // Update mode pill
+  const pill = document.getElementById('modePill');
+  pill.textContent = m.label;
+  pill.className = `mode-pill ${m.pillClass}`;
+
+  // Focus input color
+  document.documentElement.style.setProperty('--mode-color', m.color);
+
+  if(clearResults){
+    allResults=[]; sortedResults=[];
+    document.getElementById('mainTable').style.display='none';
+    document.getElementById('errBox').style.display='none';
+    document.getElementById('rCount').innerHTML='<span class="n">0</span> results';
+    document.getElementById('expBtn').disabled=true;
+    document.getElementById('emptyState').style.display='flex';
+    document.getElementById('emptyState').querySelector('h5').textContent='Ready to Search';
+    document.getElementById('emptyState').querySelector('p').textContent=
+      `Set your keywords and click Search Open ${m.label}s to find active language services opportunities.`;
+    closeDrawer();
+  }
+}
+
+// ── Search ────────────────────────────────────────────────────────────────────
+function doSearch(){
+  const kw = document.getElementById('kw').value.trim();
+  if(!kw){ document.getElementById('kw').focus(); return; }
+
+  const sources    = ['sam','grants'].filter(s=>document.getElementById('src_'+s).checked);
+  const noticeTypes= ['r','s','o','k','p'].filter(v=>document.getElementById('nt_'+v).checked);
+  const m          = MODES[currentMode];
+
+  const body={
+    keyword: kw, mode: currentMode,
+    date_from: document.getElementById('df').value,
+    date_to:   document.getElementById('dt').value,
+    sources, notice_types: noticeTypes,
+    naics: document.getElementById('naics').value,
+    max_results: parseInt(document.getElementById('maxRes').value)||25,
+  };
+
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('loadState').style.display='flex';
+  document.getElementById('loadMsg').textContent=`Searching open ${m.label}s…`;
+  document.getElementById('mainTable').style.display='none';
+  document.getElementById('errBox').style.display='none';
+  document.getElementById('searchBtn').disabled=true;
+  document.getElementById('expBtn').disabled=true;
+  closeDrawer();
+
+  fetch('/api/search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+    .then(r=>r.json())
+    .then(d=>{ allResults=d.results||[]; renderResults(d.errors||[]); })
+    .catch(e=>{ allResults=[]; renderResults([`Search failed: ${e.message}`]); })
+    .finally(()=>{
+      document.getElementById('loadState').style.display='none';
+      document.getElementById('searchBtn').disabled=false;
+    });
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function renderResults(errors){
+  if(errors.length){
+    document.getElementById('errBox').innerHTML='<ul class="mb-0">'+errors.map(e=>`<li>${esc(e)}</li>`).join('')+'</ul>';
+    document.getElementById('errBox').className='err-box';
+    document.getElementById('errBox').style.display='';
+  }
+  const c=allResults.length, kw=document.getElementById('kw').value, m=MODES[currentMode];
+  document.getElementById('rCount').innerHTML=
+    `<span class="n">${c}</span> ${m.label} result${c!==1?'s':''} for "<strong>${esc(kw)}</strong>"`;
+
+  if(c===0){
+    document.getElementById('mainTable').style.display='none';
+    const s=document.getElementById('emptyState');
+    s.style.display='flex';
+    s.querySelector('h5').textContent=`No Open ${m.label}s Found`;
+    s.querySelector('p').textContent='Try broader keywords, a longer date range, or check your SAM.gov API key in Settings.';
+    return;
+  }
+  document.getElementById('expBtn').disabled=false;
+  renderTable();
+}
+
+function renderTable(){
+  sortedResults=[...allResults].sort((a,b)=>{
+    let av=a[sortCol]||'', bv=b[sortCol]||'';
+    if(typeof av==='number') return sortDir==='asc'?av-bv:bv-av;
+    return sortDir==='asc'?av.localeCompare(bv):bv.localeCompare(av);
+  });
+
+  document.querySelectorAll('.main-table thead th').forEach(th=>th.classList.remove('asc','desc'));
+  ['title','agency','source','posted','deadline','type','value'].forEach((c,i)=>{
+    if(c===sortCol) document.querySelectorAll('.main-table thead th')[i].classList.add(sortDir==='asc'?'asc':'desc');
+  });
+
+  document.getElementById('tableBody').innerHTML=sortedResults.map((r,i)=>`
+    <tr onclick="showDetail(${i})" data-i="${i}">
+      <td class="td-title"><div>${esc(r.title)}</div></td>
+      <td class="td-agency" title="${esc(r.agency)}">${esc(r.agency)}</td>
+      <td>${srcBadge(r.source)}</td>
+      <td class="td-date">${r.posted||'—'}</td>
+      <td class="${dlClass(r.deadline)}">${r.deadline||'—'}</td>
+      <td><span class="type-tag">${esc(r.type)}</span></td>
+      <td style="white-space:nowrap;font-weight:600">${r.value||'—'}</td>
+    </tr>`).join('');
+
+  document.getElementById('mainTable').style.display='';
+  document.getElementById('emptyState').style.display='none';
+}
+
+function sort(col){
+  sortDir = sortCol===col?(sortDir==='asc'?'desc':'asc'):'asc';
+  sortCol=col; renderTable();
+}
+
+// ── Drawer ────────────────────────────────────────────────────────────────────
+function showDetail(i){
+  const r=sortedResults[i]; if(!r) return;
+  document.querySelectorAll('#tableBody tr').forEach(tr=>tr.classList.remove('active'));
+  document.querySelector(`#tableBody tr[data-i="${i}"]`)?.classList.add('active');
+  document.getElementById('dTitle').textContent=r.title;
+  document.getElementById('dLink').href=r.link||'#';
+
+  const rows=[
+    ['Agency',r.agency],['Source',r.source],['Posted',r.posted],
+    ['Response Deadline',r.deadline],['Notice Type',r.type],
+    ['NAICS',r.naics],['Set-Aside',r.set_aside],
+    ['Solicitation No.',r.sol_number],['Est. Value',r.value],
+  ].filter(([,v])=>v).map(([l,v])=>
+    `<div class="d-row"><div class="d-lbl">${l}</div><div class="d-val">${esc(v)}</div></div>`
+  ).join('');
+  const desc=r.description?`<div class="d-row"><div class="d-lbl">Description</div><div class="d-desc">${esc(r.description)}</div></div>`:'';
+  document.getElementById('dBody').innerHTML=rows+desc;
+  document.getElementById('drawer').classList.add('open');
+}
+
+function closeDrawer(){
+  document.getElementById('drawer').classList.remove('open');
+  document.querySelectorAll('#tableBody tr').forEach(tr=>tr.classList.remove('active'));
+}
+
+function copyLink(){
+  navigator.clipboard.writeText(document.getElementById('dLink').href).then(()=>{
+    const b=document.querySelector('.btn-copy');
+    b.innerHTML='<i class="bi bi-check-lg"></i> Copied!';
+    setTimeout(()=>{ b.innerHTML='<i class="bi bi-clipboard"></i> Copy'; },1800);
+  });
+}
+
+// ── Export ────────────────────────────────────────────────────────────────────
+function exportCSV(){
+  fetch('/api/export/csv',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({results:allResults,mode:currentMode})})
+  .then(r=>r.blob()).then(blob=>{
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download=`${currentMode}_language_services_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+  });
+}
+
+// ── Settings ──────────────────────────────────────────────────────────────────
+document.getElementById('settingsModal').addEventListener('show.bs.modal',()=>{
+  fetch('/api/settings').then(r=>r.json()).then(c=>{
+    document.getElementById('samKey').value=c.sam_api_key||'';
+    document.getElementById('settMax').value=c.max_results||25;
+  });
+});
+
+function saveSettings(){
+  const cfg={
+    sam_api_key:document.getElementById('samKey').value.trim(),
+    max_results:parseInt(document.getElementById('settMax').value)||25,
+  };
+  fetch('/api/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(cfg)})
+  .then(()=>{
+    bootstrap.Modal.getInstance(document.getElementById('settingsModal')).hide();
+    const b=document.getElementById('keyBadge');
+    if(cfg.sam_api_key){b.className='key-badge key-set';b.innerHTML='<i class="bi bi-key-fill"></i> SAM.gov Key Set';}
+    else{b.className='key-badge key-unset';b.innerHTML='<i class="bi bi-key-fill"></i> SAM.gov No Key';}
+  });
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+function srcBadge(s){
+  return `<span class="badge-src ${'SAM.gov'===s?'b-sam':'b-grants'}">${esc(s)}</span>`;
+}
+function dlClass(d){
+  if(!d) return '';
+  const diff=(new Date(d)-new Date())/86400000;
+  if(diff<0) return ''; return diff<14?'dl-soon':'dl-ok';
+}
+function esc(s){
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

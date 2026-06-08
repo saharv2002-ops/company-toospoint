@@ -1,0 +1,2301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>iCall International — Sales Deck</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+  :root{
+    --violet-900:#1f0a47;
+    --violet-800:#2c1166;
+    --violet-700:#3d1a8c;
+    --violet-600:#5028b3;
+    --violet-500:#6a3dd0;
+    --violet-400:#8c63e0;
+    --violet-300:#b094ec;
+    --violet-200:#d2bff5;
+    --violet-100:#ece1fb;
+    --gold:#e2b770;
+    --coral:#ee7d6a;
+    --ink:#160a2e;
+    --paper:#f5f1ea;
+    --bone:#fbf8f3;
+    --rule:rgba(31,10,71,0.10);
+    --rule-dk:rgba(255,255,255,0.10);
+  }
+
+  html,body{
+    background:#15101f;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  /* ───────────────  DECK SHELL  ─────────────── */
+  .deck{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:48px 24px 96px;
+    gap:34px;
+  }
+
+  .slide{
+    width:1280px;
+    max-width:100%;
+    aspect-ratio:16/9;
+    background:var(--bone);
+    box-shadow:
+      0 60px 120px -30px rgba(0,0,0,0.55),
+      0 12px 36px -12px rgba(0,0,0,0.35);
+    position:relative;
+    overflow:hidden;
+    border-radius:6px;
+    color:var(--ink);
+  }
+
+  /* Slide chrome */
+  .chrome-corner{
+    position:absolute;
+    top:22px; right:28px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:2px;
+    color:var(--violet-700);
+    opacity:0.55;
+    text-transform:uppercase;
+    z-index:5;
+  }
+  .slide.dark .chrome-corner{color:var(--violet-200);opacity:0.55;}
+
+  .chrome-foot{
+    position:absolute;
+    bottom:22px; left:36px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    letter-spacing:2.4px;
+    color:var(--violet-700);
+    opacity:0.55;
+    text-transform:uppercase;
+    z-index:5;
+  }
+  .slide.dark .chrome-foot{color:var(--violet-200);opacity:0.55;}
+
+  .slide-num{
+    position:absolute;
+    bottom:22px; right:28px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:2px;
+    color:var(--violet-700);
+    opacity:0.6;
+    z-index:5;
+  }
+  .slide.dark .slide-num{color:var(--violet-200);opacity:0.6;}
+
+  /* Eyebrow chip */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:11px;font-weight:700;letter-spacing:3.4px;
+    text-transform:uppercase;color:var(--violet-500);
+  }
+  .eyebrow::before{
+    content:'';display:block;width:34px;height:2px;background:var(--violet-500);
+  }
+  .slide.dark .eyebrow{color:var(--violet-300);}
+  .slide.dark .eyebrow::before{background:var(--violet-300);}
+
+  .display{
+    font-family:'Playfair Display',serif;
+    font-weight:800;
+    line-height:1.02;
+    letter-spacing:-0.6px;
+    word-spacing:0.02em;
+    color:var(--violet-900);
+  }
+  .slide.dark .display{color:#fff;}
+  .display em{
+    font-style:italic;
+    font-weight:500;
+    color:var(--violet-500);
+  }
+  .slide.dark .display em{color:var(--violet-300);}
+
+  .body-copy{
+    font-size:16.5px;line-height:1.72;color:#3a3450;font-weight:400;
+  }
+  .slide.dark .body-copy{color:rgba(255,255,255,0.82);}
+
+  /* ─────────── SHARED COMPONENTS ─────────── */
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 14px;border-radius:999px;
+    background:rgba(106,61,208,0.10);
+    color:var(--violet-700);
+    font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;
+    border:1px solid rgba(106,61,208,0.25);
+  }
+  .slide.dark .pill{
+    background:rgba(176,148,236,0.10);
+    border:1px solid rgba(176,148,236,0.30);
+    color:var(--violet-200);
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 1 — COVER
+     ════════════════════════════════════════════ */
+  .slide-cover{
+    background:
+      radial-gradient(120% 80% at 75% 30%, rgba(140,99,224,0.22), transparent 55%),
+      radial-gradient(80% 60% at 15% 95%, rgba(226,183,112,0.16), transparent 60%),
+      linear-gradient(155deg,#1f0a47 0%, #2c1166 45%, #3d1a8c 100%);
+    color:#fff;
+  }
+  /* subtle grain */
+  .grain::after{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size:3px 3px;
+    mix-blend-mode:overlay;
+    opacity:0.5;
+  }
+  .cover-grid{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,0.045) 1px,transparent 1px);
+    background-size:80px 80px;
+    mask-image:radial-gradient(ellipse at 60% 40%,#000 30%,transparent 75%);
+  }
+  .cover-orb{
+    position:absolute;
+    width:520px;height:520px;border-radius:50%;
+    right:-90px;top:-130px;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(176,148,236,0.55), rgba(106,61,208,0.18) 45%, transparent 70%);
+    filter:blur(2px);
+  }
+  .cover-orb.b{
+    width:340px;height:340px;
+    left:-120px;bottom:-120px;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(226,183,112,0.40), rgba(238,125,106,0.10) 50%, transparent 75%);
+  }
+  .cover-content{
+    position:relative;z-index:3;
+    height:100%;padding:72px 90px 90px;
+    display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .cover-top{
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .cover-logo{
+    height:78px;
+    display:block;
+    padding:12px 18px;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 18px 40px -16px rgba(0,0,0,0.45);
+  }
+  .cover-meta{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:2.5px;
+    color:rgba(255,255,255,0.55);
+    text-transform:uppercase;
+    text-align:right;line-height:1.7;
+  }
+  .cover-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:800;
+    font-size:88px;
+    line-height:1.04;
+    letter-spacing:-1.2px;
+    word-spacing:0.02em;
+    color:#fff;
+    max-width:1000px;
+  }
+  .cover-headline .accent{
+    background:linear-gradient(90deg,var(--violet-200),var(--violet-400));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-style:italic;
+    font-weight:600;
+  }
+  .cover-tag{
+    margin-top:32px;
+    font-size:17.5px;line-height:1.7;font-weight:400;
+    color:rgba(255,255,255,0.82);
+    max-width:680px;
+    letter-spacing:0.1px;
+  }
+  .cover-bottom{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
+  }
+  .cover-mini-stats{
+    display:flex;gap:54px;
+  }
+  .mini-stat .num{
+    font-family:'Playfair Display',serif;
+    font-size:42px;font-weight:800;line-height:1;
+    color:#fff;letter-spacing:-1px;
+  }
+  .mini-stat .num span{color:var(--violet-300);}
+  .mini-stat .lbl{
+    margin-top:8px;font-size:11px;letter-spacing:2px;
+    color:rgba(255,255,255,0.55);text-transform:uppercase;font-weight:600;
+  }
+  .cover-cta{
+    display:inline-flex;align-items:center;gap:14px;
+    padding:18px 28px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.18);
+    backdrop-filter:blur(10px);
+    border-radius:50px;
+    color:#fff;
+    font-size:13px;letter-spacing:2.5px;font-weight:600;text-transform:uppercase;
+    text-decoration:none;
+    transition:background .25s ease,border-color .25s ease,transform .25s ease;
+  }
+  .cover-cta:hover{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.32);transform:translateY(-1px);}
+  .cover-cta .arrow{
+    flex:none;
+    width:30px;height:30px;border-radius:50%;
+    aspect-ratio:1/1;
+    background:var(--violet-300);color:var(--violet-900);
+    display:inline-flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:14px;letter-spacing:0;line-height:1;
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 2 — CHALLENGE
+     ════════════════════════════════════════════ */
+  .slide-challenge{ background:var(--bone); }
+  .challenge-content{ height:100%; display:grid;grid-template-columns:1.05fr 0.95fr; }
+  .challenge-left{
+    padding:90px 80px 70px;
+    display:flex;flex-direction:column;justify-content:center;gap:30px;
+  }
+  .ch-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:58px;line-height:1.1;
+    letter-spacing:-0.6px;color:var(--violet-900);
+    word-spacing:0.02em;
+  }
+  .ch-headline em{font-style:italic;color:var(--violet-500);font-weight:600;}
+  .ch-quote{
+    border-left:3px solid var(--violet-500);
+    padding:6px 0 6px 22px;
+    font-size:17px;line-height:1.6;color:#3a3450;font-weight:300;
+    font-style:italic;max-width:520px;
+  }
+  .challenge-right{
+    background:
+      radial-gradient(80% 60% at 70% 20%, rgba(176,148,236,0.16), transparent 60%),
+      linear-gradient(150deg,var(--violet-800),var(--violet-900));
+    padding:80px 70px;
+    color:#fff;
+    display:flex;flex-direction:column;justify-content:center;gap:32px;
+    position:relative;
+  }
+  .ch-stat-row{
+    display:flex;align-items:flex-start;gap:22px;
+    padding:22px 0;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .ch-stat-row:last-child{border-bottom:none;}
+  .ch-stat-num{
+    font-family:'Playfair Display',serif;
+    font-size:64px;font-weight:800;line-height:1;
+    color:var(--violet-300);min-width:130px;letter-spacing:-1.5px;
+  }
+  .ch-stat-text strong{
+    display:block;font-size:16px;font-weight:600;color:#fff;margin-bottom:4px;
+  }
+  .ch-stat-text span{
+    font-size:13px;color:rgba(255,255,255,0.6);line-height:1.5;
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 3 — WHO WE ARE
+     ════════════════════════════════════════════ */
+  .slide-about{ background:linear-gradient(180deg,#fbf8f3,#f1ecdf); }
+  .about-content{
+    height:100%;padding:90px 90px 80px;
+    display:grid;grid-template-columns:0.8fr 1.2fr;gap:80px;
+  }
+  .about-left{display:flex;flex-direction:column;gap:28px;justify-content:center;}
+  .about-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:66px;line-height:1.08;
+    letter-spacing:-0.8px;color:var(--violet-900);
+    word-spacing:0.02em;
+  }
+  .about-headline em{font-style:italic;color:var(--violet-500);font-weight:600;}
+  .about-right{ display:flex;flex-direction:column;justify-content:center;gap:30px; }
+  .about-lead{
+    font-size:16px;line-height:1.72;color:#3a3450;font-weight:400;
+    letter-spacing:0.1px;
+  }
+  .about-lead strong{color:var(--violet-900);font-weight:600;}
+  .about-values{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:18px 24px;margin-top:8px;
+  }
+  .value-row{
+    display:flex;align-items:flex-start;gap:14px;
+    padding:14px 0;border-top:1px solid var(--rule);
+  }
+  .value-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;font-weight:600;
+    color:var(--violet-500);letter-spacing:1px;
+    min-width:24px;
+  }
+  .value-text strong{
+    font-size:14px;font-weight:700;color:var(--violet-900);
+    display:block;margin-bottom:2px;
+  }
+  .value-text span{font-size:12px;color:#5e587a;line-height:1.45;}
+
+  /* ════════════════════════════════════════════
+     SLIDE 4 — SERVICES OVERVIEW
+     ════════════════════════════════════════════ */
+  .slide-services{ background:#fff; }
+  .services-header{
+    padding:70px 80px 0;
+    display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
+  }
+  .services-header h2{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:58px;line-height:1.08;
+    letter-spacing:-0.7px;color:var(--violet-900);
+    max-width:720px;word-spacing:0.02em;
+  }
+  .services-header h2 em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .services-header p{
+    font-size:14px;line-height:1.6;color:#5e587a;max-width:340px;
+  }
+  .services-grid{
+    margin:26px 80px 64px;
+    display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(2,1fr);gap:14px;
+    height:404px;
+  }
+  .svc-card{
+    background:linear-gradient(180deg,#fbf8f3,#f3eaf7);
+    border:1px solid rgba(31,10,71,0.05);
+    border-radius:8px;
+    padding:22px 22px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    position:relative;overflow:hidden;
+    color:inherit;text-decoration:none;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  }
+  .svc-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 20px 40px -18px rgba(31,10,71,0.20);
+    border-color:rgba(106,61,208,0.35);
+  }
+  .svc-card.featured:hover{
+    box-shadow:0 26px 60px -22px rgba(106,61,208,0.45);
+    border-color:rgba(176,148,236,0.45);
+  }
+  .svc-card.featured{
+    background:linear-gradient(165deg,var(--violet-700),var(--violet-900));
+    color:#fff;
+    border:1px solid rgba(176,148,236,0.20);
+  }
+  .svc-card.featured::after{
+    content:'';position:absolute;
+    width:200px;height:200px;border-radius:50%;
+    right:-70px;bottom:-70px;
+    background:radial-gradient(circle at 30% 30%,rgba(176,148,236,0.40),transparent 70%);
+  }
+  .svc-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;font-weight:600;letter-spacing:1.5px;
+    color:var(--violet-500);
+  }
+  .svc-card.featured .svc-num{color:var(--violet-300);}
+  .svc-icon{
+    width:44px;height:44px;border-radius:12px;
+    background:rgba(106,61,208,0.12);
+    display:flex;align-items:center;justify-content:center;
+    margin-top:6px;
+  }
+  .svc-card.featured .svc-icon{background:rgba(176,148,236,0.18);}
+  .svc-icon svg{width:22px;height:22px;}
+  .svc-title{
+    font-family:'Playfair Display',serif;
+    font-size:21px;font-weight:700;line-height:1.15;
+    color:var(--violet-900);margin-top:12px;letter-spacing:-0.3px;
+  }
+  .svc-card.featured .svc-title{color:#fff;}
+  .svc-desc{
+    font-size:12px;line-height:1.55;color:#5e587a;margin-top:8px;
+  }
+  .svc-card.featured .svc-desc{color:rgba(255,255,255,0.78);}
+  .svc-link{
+    margin-top:14px;
+    font-size:10px;letter-spacing:1.6px;font-weight:700;text-transform:uppercase;
+    color:var(--violet-700);display:flex;align-items:center;gap:10px;
+  }
+  .svc-card.featured .svc-link{color:var(--violet-200);}
+
+  /* ════════════════════════════════════════════
+     SLIDE 5 — INBOUND CALL CENTER (light variant of opi-grid)
+     ════════════════════════════════════════════ */
+  .slide-inbound{ background:linear-gradient(180deg,#fbf8f3,#f1ecdf); }
+  .ib-grid{ display:grid;grid-template-columns:1fr 1fr; height:100%; }
+  .ib-left{
+    padding:80px 70px;
+    display:flex;flex-direction:column;justify-content:center;gap:32px;
+    border-right:1px solid var(--rule);
+  }
+  .ib-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:62px;line-height:1.04;
+    letter-spacing:-1px;color:var(--violet-900);word-spacing:0.02em;
+  }
+  .ib-headline em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .ib-subline{
+    font-size:16px;line-height:1.7;color:#3a3450;
+    max-width:500px;font-weight:400;letter-spacing:0.1px;
+  }
+  .ib-stats{ display:flex;gap:38px;margin-top:4px; }
+  .ib-stat .n{
+    font-family:'Playfair Display',serif;
+    font-size:38px;font-weight:800;color:var(--violet-700);
+    line-height:1;letter-spacing:-0.8px;
+  }
+  .ib-stat .n span{ color:var(--violet-400); font-size:24px; }
+  .ib-stat .l{
+    margin-top:8px;font-size:10.5px;letter-spacing:2px;
+    color:var(--violet-700);text-transform:uppercase;font-weight:700;
+    opacity:0.75;
+  }
+  .ib-right{
+    padding:70px 60px;
+    display:flex;flex-direction:column;justify-content:center;gap:14px;
+  }
+  .ib-feat{
+    display:grid;grid-template-columns:50px 1fr;gap:20px;
+    padding:18px 0;border-bottom:1px solid var(--rule);
+  }
+  .ib-feat:last-child{border-bottom:none;}
+  .ib-feat-icon{
+    width:42px;height:42px;border-radius:11px;
+    background:rgba(106,61,208,0.10);
+    border:1px solid rgba(106,61,208,0.20);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--violet-600);
+  }
+  .ib-feat-icon svg{ width:20px;height:20px; }
+  .ib-feat strong{
+    display:block;font-family:'Playfair Display',serif;
+    font-size:19px;font-weight:700;color:var(--violet-900);
+    line-height:1.2;margin-bottom:5px;letter-spacing:-0.2px;
+  }
+  .ib-feat span{ font-size:13px;line-height:1.55;color:#5e587a; }
+
+  /* ════════════════════════════════════════════
+     SLIDE 6 — MULTILINGUAL INTERPRETATION
+     ════════════════════════════════════════════ */
+  .slide-opi{
+    background:linear-gradient(135deg,#1f0a47 0%,#2c1166 60%,#3d1a8c 100%);
+    color:#fff;
+  }
+  .opi-grid{ display:grid;grid-template-columns:1fr 1fr; height:100%; }
+  .opi-left{
+    padding:80px 70px;
+    display:flex;flex-direction:column;justify-content:center;gap:32px;
+    border-right:1px solid rgba(255,255,255,0.07);
+  }
+  .opi-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:68px;line-height:1.02;
+    letter-spacing:-1px;color:#fff;word-spacing:0.02em;
+  }
+  .opi-headline em{color:var(--violet-300);font-style:italic;font-weight:600;}
+  .opi-subline{
+    font-size:16px;line-height:1.7;color:rgba(255,255,255,0.82);
+    max-width:500px;font-weight:400;letter-spacing:0.1px;
+  }
+  .opi-icons{ display:flex;gap:18px;margin-top:6px; }
+  .icon-pill{
+    width:54px;height:54px;border-radius:14px;
+    background:rgba(176,148,236,0.10);
+    border:1px solid rgba(176,148,236,0.25);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .icon-pill svg{width:24px;height:24px;}
+  .opi-right{
+    padding:80px 70px;
+    display:flex;flex-direction:column;justify-content:center;gap:18px;
+  }
+  .feat-row{
+    display:grid;grid-template-columns:60px 1fr;
+    gap:24px;padding:22px 0;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .feat-row:last-child{border-bottom:none;}
+  .feat-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:14px;font-weight:600;color:var(--violet-300);
+    letter-spacing:1px;padding-top:4px;
+  }
+  .feat-title{
+    font-family:'Playfair Display',serif;
+    font-size:22px;font-weight:700;color:#fff;line-height:1.2;
+    margin-bottom:8px;letter-spacing:-0.1px;
+  }
+  .feat-desc{
+    font-size:13.5px;line-height:1.65;color:rgba(255,255,255,0.72);
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 6 — HEALTHCARE
+     ════════════════════════════════════════════ */
+  .slide-vri{ background:var(--bone); }
+  .vri-wrap{
+    height:100%;display:grid;grid-template-columns:1.05fr 0.95fr;
+    overflow:hidden;
+  }
+  .vri-left{
+    padding:56px 60px;
+    display:flex;flex-direction:column;justify-content:center;gap:18px;
+    min-height:0;
+  }
+  .vri-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:54px;line-height:1.06;
+    letter-spacing:-0.6px;color:var(--violet-900);word-spacing:0.02em;
+  }
+  .vri-headline em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .vri-subline{
+    font-size:14.5px;line-height:1.68;color:#3a3450;
+    max-width:480px;letter-spacing:0.1px;
+  }
+  .vri-feat-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px;
+  }
+  .vri-feat{
+    background:#fff;
+    border:1px solid var(--rule);
+    border-radius:8px;
+    padding:14px 16px;
+  }
+  .vri-feat-icon{
+    width:30px;height:30px;border-radius:8px;
+    background:rgba(106,61,208,0.12);
+    display:flex;align-items:center;justify-content:center;margin-bottom:8px;
+  }
+  .vri-feat-icon svg{width:15px;height:15px;color:var(--violet-500);}
+  .vri-feat strong{
+    display:block;font-size:13px;font-weight:700;color:var(--violet-900);
+    margin-bottom:3px;
+  }
+  .vri-feat span{ font-size:11.5px;line-height:1.45;color:#5e587a; }
+  .vri-right{
+    position:relative;overflow:hidden;
+    background:
+      radial-gradient(80% 60% at 30% 30%, rgba(140,99,224,0.18), transparent 60%),
+      linear-gradient(160deg,var(--violet-700),var(--violet-900));
+    display:flex;align-items:center;justify-content:center;
+  }
+  /* Hero panel: stats grid + pulse ring */
+  .hc-panel{
+    position:relative;
+    width:78%;
+    aspect-ratio:1/1;
+    max-height:78%;
+    border-radius:22px;
+    background:
+      linear-gradient(150deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
+    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(8px);
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.5);
+    display:flex;flex-direction:column;
+    padding:26px;
+    overflow:hidden;
+  }
+  .hc-ring{
+    position:absolute;top:50%;left:50%;
+    width:75%;aspect-ratio:1/1;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    border:1.5px dashed rgba(176,148,236,0.30);
+    pointer-events:none;
+    animation:hc-spin 60s linear infinite;
+  }
+  @keyframes hc-spin { from{transform:translate(-50%,-50%) rotate(0)} to{transform:translate(-50%,-50%) rotate(360deg)} }
+  .hc-pulse{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:84px;height:84px;border-radius:50%;
+    background:radial-gradient(circle,rgba(176,148,236,0.50),rgba(106,61,208,0.05) 70%,transparent);
+    box-shadow:0 0 0 1px rgba(255,255,255,0.10);
+  }
+  .hc-pulse::after{
+    content:'';position:absolute;inset:18px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--violet-300),var(--violet-600));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .hc-pulse-icon{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:#fff;z-index:2;
+  }
+  .hc-pulse-icon svg{width:28px;height:28px;}
+  .hc-stats{
+    position:relative;z-index:2;
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;
+    align-self:flex-start;
+  }
+  .hc-stat{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:12px;
+    padding:12px 14px;
+    color:#fff;
+  }
+  .hc-stat .n{
+    font-family:'Playfair Display',serif;
+    font-size:28px;font-weight:800;letter-spacing:-0.5px;line-height:1;
+    color:var(--violet-200);
+  }
+  .hc-stat .l{
+    margin-top:6px;font-size:10px;letter-spacing:1.5px;
+    text-transform:uppercase;color:rgba(255,255,255,0.6);font-weight:600;
+  }
+  .hc-tag{
+    position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+    z-index:3;
+    background:rgba(0,0,0,0.4);
+    color:#fff;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:1.8px;
+    padding:6px 12px;border-radius:50px;
+    text-transform:uppercase;
+    border:1px solid rgba(255,255,255,0.1);
+    white-space:nowrap;
+  }
+  .hc-tag::before{
+    content:'';display:inline-block;width:6px;height:6px;border-radius:50%;
+    background:#7be39a;margin-right:8px;vertical-align:middle;
+    box-shadow:0 0 8px rgba(123,227,154,0.7);
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 7 — SALES
+     ════════════════════════════════════════════ */
+  .slide-sales{ background:linear-gradient(180deg,#fbf8f3,#f1ecdf); }
+  .sales-wrap{
+    height:100%;padding:56px 72px 52px;
+    display:grid;grid-template-rows:auto 1fr;gap:30px;
+    overflow:hidden;
+  }
+  .sales-head{ display:flex;align-items:flex-end;justify-content:space-between;gap:50px; }
+  .sales-head h2{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:64px;line-height:1.05;letter-spacing:-0.7px;
+    color:var(--violet-900);max-width:760px;word-spacing:0.02em;
+  }
+  .sales-head h2 em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .sales-head p{ font-size:14px;line-height:1.6;color:#5e587a;max-width:300px; }
+  .sales-cols{
+    display:grid;grid-template-columns:1fr 1fr;gap:22px;
+    align-items:stretch;min-height:0;
+  }
+  .sales-col{
+    background:#fff;border-radius:12px;
+    padding:28px 30px;
+    display:flex;flex-direction:column;
+    border:1px solid var(--rule);
+    position:relative;overflow:hidden;
+  }
+  .sales-col.dark{
+    background:linear-gradient(160deg,var(--violet-800),var(--violet-900));
+    color:#fff;border:none;
+  }
+  .sales-col .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:2px;font-weight:600;
+    color:var(--violet-500);text-transform:uppercase;margin-bottom:10px;
+  }
+  .sales-col.dark .tag{color:var(--violet-300);}
+  .sales-col h3{
+    font-family:'Playfair Display',serif;
+    font-size:26px;font-weight:700;line-height:1.2;
+    color:var(--violet-900);letter-spacing:-0.2px;
+  }
+  .sales-col.dark h3{color:#fff;}
+  .sales-col .lead{
+    margin-top:12px;font-size:13.5px;line-height:1.6;color:#5e587a;
+    letter-spacing:0.1px;
+  }
+  .sales-col.dark .lead{color:rgba(255,255,255,0.78);}
+  .sales-list{
+    margin-top:16px;list-style:none;display:flex;flex-direction:column;gap:9px;
+  }
+  .sales-list li{
+    display:flex;align-items:flex-start;gap:12px;
+    font-size:13px;color:#3a3450;line-height:1.5;
+  }
+  .sales-col.dark .sales-list li{color:rgba(255,255,255,0.78);}
+  .sales-list li::before{
+    content:'';display:inline-block;flex-shrink:0;
+    width:18px;height:18px;border-radius:50%;
+    background:var(--violet-500) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'><path d='M2 6 L5 9 L10 3' stroke='white' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/12px no-repeat;
+    margin-top:2px;
+  }
+  .sales-col.dark .sales-list li::before{background-color:var(--violet-300);}
+
+  /* ════════════════════════════════════════════
+     SLIDE 8 — CUSTOMER SERVICE
+     ════════════════════════════════════════════ */
+  .slide-cs{ background:#fff; }
+  .cs-grid{ display:grid;grid-template-columns:0.95fr 1.05fr;height:100%; }
+  .cs-left{
+    background:
+      radial-gradient(60% 60% at 20% 20%, rgba(176,148,236,0.22), transparent 60%),
+      radial-gradient(50% 50% at 80% 80%, rgba(226,183,112,0.13), transparent 60%),
+      linear-gradient(160deg,#2c1166,#1f0a47);
+    color:#fff;
+    padding:80px 70px;
+    display:flex;flex-direction:column;justify-content:center;gap:30px;
+    position:relative;overflow:hidden;
+  }
+  .cs-left h2{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:60px;line-height:1.05;letter-spacing:-0.8px;
+    word-spacing:0.02em;
+  }
+  .cs-left h2 em{color:var(--violet-300);font-style:italic;font-weight:600;}
+  .cs-left p{
+    font-size:15.5px;line-height:1.72;color:rgba(255,255,255,0.82);max-width:440px;
+    letter-spacing:0.1px;
+  }
+  .chat-bubble{
+    position:absolute;
+    border-radius:18px;
+    padding:14px 18px;
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.12);
+    backdrop-filter:blur(8px);
+    color:rgba(255,255,255,0.85);
+    font-size:11px;
+    letter-spacing:0.5px;
+    line-height:1.4;
+    box-shadow:0 14px 36px -14px rgba(0,0,0,0.5);
+  }
+  .chat-bubble.b1{top:60px;right:60px;max-width:170px;}
+  .chat-bubble.b2{bottom:80px;right:130px;max-width:200px;background:rgba(176,148,236,0.18);border-color:rgba(176,148,236,0.30);}
+  .chat-bubble small{
+    display:block;font-size:9px;letter-spacing:1.5px;color:var(--violet-200);
+    text-transform:uppercase;margin-bottom:5px;font-weight:700;
+  }
+  .cs-right{
+    padding:80px 70px;
+    display:flex;flex-direction:column;justify-content:center;gap:14px;
+  }
+  .cs-row{
+    display:grid;grid-template-columns:48px 1fr;gap:22px;
+    padding:22px 0;border-bottom:1px solid var(--rule);
+  }
+  .cs-row:last-child{border-bottom:none;}
+  .cs-icon{
+    width:48px;height:48px;border-radius:12px;
+    background:linear-gradient(135deg,var(--violet-400),var(--violet-600));
+    display:flex;align-items:center;justify-content:center;color:#fff;
+  }
+  .cs-icon svg{width:22px;height:22px;}
+  .cs-row strong{
+    display:block;font-size:18px;font-weight:700;color:var(--violet-900);
+    margin-bottom:4px;
+  }
+  .cs-row span{font-size:13.5px;color:#5e587a;line-height:1.55;}
+
+  /* ════════════════════════════════════════════
+     SLIDE 9 — MEDICAL SPECIALTY (Billing + Transcription + AI)
+     ════════════════════════════════════════════ */
+  .slide-medspec{ background:linear-gradient(180deg,#fbf8f3,#f1ecdf); }
+  .ms-wrap{ height:100%;padding:64px 80px 70px;display:flex;flex-direction:column;gap:28px; }
+  .ms-head{ display:flex;align-items:flex-end;justify-content:space-between;gap:40px; }
+  .ms-head h2{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:54px;line-height:1.06;letter-spacing:-0.7px;
+    color:var(--violet-900);max-width:760px;word-spacing:0.02em;
+  }
+  .ms-head h2 em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .ms-head p{font-size:13.5px;line-height:1.65;color:#5e587a;max-width:320px;}
+  .ms-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:22px;flex:1;
+  }
+  .ms-panel{
+    background:#fff;border:1px solid var(--rule);border-radius:14px;
+    padding:30px 30px 26px;display:flex;flex-direction:column;
+    position:relative;overflow:hidden;
+  }
+  .ms-panel.dark{
+    background:linear-gradient(165deg,#2c1166,#1f0a47);
+    color:#fff;border-color:rgba(176,148,236,0.20);
+  }
+  .ms-panel.dark::after{
+    content:'';position:absolute;
+    width:240px;height:240px;border-radius:50%;
+    right:-90px;bottom:-90px;
+    background:radial-gradient(circle at 30% 30%,rgba(176,148,236,0.32),transparent 70%);
+  }
+  .ms-eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;font-weight:600;letter-spacing:1.6px;
+    color:var(--violet-500);text-transform:uppercase;
+  }
+  .ms-panel.dark .ms-eyebrow{color:var(--violet-300);}
+  .ms-title{
+    font-family:'Playfair Display',serif;
+    font-size:30px;font-weight:700;line-height:1.12;letter-spacing:-0.3px;
+    color:var(--violet-900);margin-top:8px;
+  }
+  .ms-panel.dark .ms-title{color:#fff;}
+  .ms-title em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .ms-panel.dark .ms-title em{color:var(--violet-300);}
+  .ms-lead{
+    font-size:13px;line-height:1.6;color:#5e587a;margin-top:10px;
+  }
+  .ms-panel.dark .ms-lead{color:rgba(255,255,255,0.78);}
+  .ms-rows{margin-top:14px;display:flex;flex-direction:column;}
+  .ms-row{
+    display:grid;grid-template-columns:42px 1fr;gap:16px;
+    padding:14px 0;border-bottom:1px solid var(--rule);
+  }
+  .ms-panel.dark .ms-row{border-bottom-color:rgba(255,255,255,0.10);}
+  .ms-row:last-child{border-bottom:none;}
+  .ms-ico{
+    width:42px;height:42px;border-radius:10px;
+    background:linear-gradient(135deg,var(--violet-400),var(--violet-600));
+    display:flex;align-items:center;justify-content:center;color:#fff;
+  }
+  .ms-panel.dark .ms-ico{
+    background:linear-gradient(135deg,#b094ec,#6a3dd0);
+  }
+  .ms-ico svg{width:20px;height:20px;}
+  .ms-row strong{
+    display:block;font-size:14.5px;font-weight:700;color:var(--violet-900);
+    margin-bottom:2px;letter-spacing:0.1px;
+  }
+  .ms-panel.dark .ms-row strong{color:#fff;}
+  .ms-row span{font-size:12px;color:#5e587a;line-height:1.55;}
+  .ms-panel.dark .ms-row span{color:rgba(255,255,255,0.72);}
+
+  /* ════════════════════════════════════════════
+     SLIDE 10 — INDUSTRIES
+     ════════════════════════════════════════════ */
+  .slide-industries{ background:linear-gradient(180deg,#fbf8f3,#f5f0e6); }
+  .ind-wrap{
+    height:100%;padding:80px 90px;
+    display:flex;flex-direction:column;gap:48px;
+  }
+  .ind-head{ display:flex;align-items:flex-end;justify-content:space-between;gap:40px; }
+  .ind-head h2{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:62px;line-height:1.05;letter-spacing:-0.7px;
+    color:var(--violet-900);max-width:780px;word-spacing:0.02em;
+  }
+  .ind-head h2 em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .ind-head p{font-size:14px;color:#5e587a;line-height:1.6;max-width:300px;}
+  .ind-grid{ display:grid;grid-template-columns:repeat(4,1fr);gap:20px;flex:1; }
+  .ind-card{
+    background:#fff;border-radius:12px;
+    padding:32px 30px;
+    display:flex;flex-direction:column;
+    border:1px solid var(--rule);
+    position:relative;overflow:hidden;
+    transition:transform .3s ease;
+  }
+  .ind-card h3{
+    font-family:'Playfair Display',serif;
+    font-size:28px;font-weight:700;color:var(--violet-900);
+    letter-spacing:-0.2px;line-height:1.2;
+  }
+  .ind-card p{ font-size:13px;line-height:1.65;color:#5e587a;margin-top:12px; }
+  .ind-illus{
+    width:74px;height:74px;border-radius:18px;
+    background:linear-gradient(135deg,var(--violet-300),var(--violet-500));
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;margin-bottom:24px;
+    box-shadow:0 18px 36px -16px rgba(106,61,208,0.6);
+  }
+  .ind-illus svg{width:34px;height:34px;}
+  .ind-card.medical .ind-illus{background:linear-gradient(135deg,#ee7d6a,#d04a4a);box-shadow:0 18px 36px -16px rgba(238,125,106,0.55);}
+  .ind-card.finance .ind-illus{background:linear-gradient(135deg,#e2b770,#c89149);box-shadow:0 18px 36px -16px rgba(226,183,112,0.55);}
+  .ind-card.tech .ind-illus{background:linear-gradient(135deg,var(--violet-600),var(--violet-800));box-shadow:0 18px 36px -16px rgba(80,40,179,0.55);}
+
+  /* ════════════════════════════════════════════
+     SLIDE 11 — WHY iCALL
+     ════════════════════════════════════════════ */
+  .slide-why{
+    background:linear-gradient(150deg,#1f0a47 0%,#2c1166 60%,#3d1a8c 100%);
+    color:#fff;
+  }
+  .why-wrap{
+    height:100%;padding:78px 80px;
+    display:grid;grid-template-rows:auto 1fr;gap:46px;
+  }
+  .why-head{ display:flex;align-items:flex-end;justify-content:space-between;gap:50px; }
+  .why-head h2{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:58px;line-height:1.08;letter-spacing:-0.7px;
+    color:#fff;max-width:800px;word-spacing:0.02em;
+  }
+  .why-head h2 em{color:var(--violet-300);font-style:italic;font-weight:600;}
+  .why-head p{font-size:14px;color:rgba(255,255,255,0.65);line-height:1.6;max-width:300px;}
+  .why-body{
+    display:grid;grid-template-columns:1fr 1px 1fr;gap:50px;align-items:stretch;
+  }
+  .why-divider{background:rgba(255,255,255,0.10);width:1px;height:100%;}
+  .why-list{display:flex;flex-direction:column;gap:14px;}
+  .why-item{
+    display:grid;grid-template-columns:46px 1fr;gap:18px;
+    padding:14px 0;
+  }
+  .why-icon{
+    width:46px;height:46px;border-radius:12px;
+    background:rgba(176,148,236,0.10);
+    border:1px solid rgba(176,148,236,0.25);
+    display:flex;align-items:center;justify-content:center;color:var(--violet-200);
+  }
+  .why-icon svg{width:22px;height:22px;}
+  .why-item strong{
+    display:block;font-size:17px;color:#fff;font-weight:700;margin-bottom:4px;
+  }
+  .why-item span{font-size:13px;line-height:1.5;color:rgba(255,255,255,0.65);}
+  .process-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:2.5px;color:var(--violet-300);
+    font-weight:600;text-transform:uppercase;margin-bottom:24px;
+  }
+  .process-steps{ display:flex;flex-direction:column;gap:0; }
+  .pstep{
+    display:grid;grid-template-columns:54px 1fr;gap:24px;
+    padding:18px 0;
+    position:relative;
+  }
+  .pstep:not(:last-child)::after{
+    content:'';position:absolute;
+    left:26px;top:60px;bottom:-2px;
+    width:2px;
+    background:linear-gradient(180deg,rgba(176,148,236,0.5),rgba(176,148,236,0.05));
+  }
+  .pstep-num{
+    width:54px;height:54px;border-radius:50%;
+    background:linear-gradient(135deg,var(--violet-400),var(--violet-700));
+    color:#fff;display:flex;align-items:center;justify-content:center;
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:22px;
+    box-shadow:0 0 0 1px rgba(176,148,236,0.30), 0 14px 30px -10px rgba(0,0,0,0.4);
+  }
+  .pstep strong{
+    display:block;font-size:18px;color:#fff;font-weight:700;
+    margin-bottom:5px;font-family:'Playfair Display',serif;letter-spacing:-0.3px;
+  }
+  .pstep span{font-size:13px;line-height:1.5;color:rgba(255,255,255,0.65);}
+
+  /* ════════════════════════════════════════════
+     SLIDE 12 — CTA / CONTACT
+     ════════════════════════════════════════════ */
+  .slide-cta{
+    background:
+      radial-gradient(60% 50% at 80% 30%, rgba(140,99,224,0.22), transparent 60%),
+      radial-gradient(50% 50% at 15% 80%, rgba(226,183,112,0.14), transparent 60%),
+      linear-gradient(155deg,#1f0a47,#2c1166 60%,#3d1a8c);
+    color:#fff;
+  }
+  .cta-wrap{
+    height:100%;padding:90px 90px;
+    display:grid;grid-template-rows:auto 1fr auto;gap:40px;
+  }
+  .cta-eyebrow{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:11px;letter-spacing:5px;color:var(--violet-300);
+    text-transform:uppercase;font-weight:700;
+  }
+  .cta-eyebrow::before{
+    content:'';display:block;width:34px;height:2px;background:var(--violet-300);
+  }
+  .cta-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:800;font-size:92px;line-height:1.02;
+    letter-spacing:-1.4px;color:#fff;max-width:1100px;word-spacing:0.02em;
+  }
+  .cta-headline em{
+    background:linear-gradient(90deg,var(--violet-200),var(--violet-400));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-style:italic;font-weight:600;
+  }
+  .cta-bottom{
+    display:grid;grid-template-columns:auto 1fr auto;gap:50px;align-items:end;
+  }
+  .cta-contact{ display:flex;flex-direction:column;gap:20px; }
+  .contact-item{
+    display:flex;align-items:center;gap:16px;
+    color:inherit;text-decoration:none;
+    transition:transform .25s ease;
+  }
+  .contact-item:hover{transform:translateX(3px);}
+  .contact-item:hover .contact-icon{
+    background:rgba(176,148,236,0.16);
+    border-color:rgba(176,148,236,0.40);
+    color:var(--violet-300);
+  }
+  .contact-icon{
+    width:48px;height:48px;border-radius:12px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.15);
+    display:flex;align-items:center;justify-content:center;color:var(--violet-200);
+  }
+  .contact-icon svg{width:22px;height:22px;}
+  .contact-text small{
+    display:block;font-size:10.5px;letter-spacing:2.5px;
+    color:rgba(255,255,255,0.5);text-transform:uppercase;font-weight:600;
+    margin-bottom:4px;
+  }
+  .contact-text strong{
+    font-size:18px;color:#fff;font-weight:600;
+    font-family:'Playfair Display',serif;letter-spacing:-0.4px;
+  }
+  .cta-mid{ display:flex;justify-content:center;align-items:center; }
+  .cta-button{
+    display:inline-flex;align-items:center;gap:18px;
+    padding:24px 36px;
+    background:linear-gradient(135deg,var(--violet-300),var(--violet-500));
+    color:var(--violet-900);
+    border-radius:60px;
+    font-size:14px;letter-spacing:3px;text-transform:uppercase;font-weight:800;
+    text-decoration:none;
+    box-shadow:
+      0 30px 60px -20px rgba(106,61,208,0.6),
+      inset 0 1px 0 rgba(255,255,255,0.4);
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .cta-button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 36px 70px -22px rgba(106,61,208,0.75),
+               inset 0 1px 0 rgba(255,255,255,0.4);
+  }
+  .cta-button .arr{
+    flex:none;
+    width:36px;height:36px;border-radius:50%;
+    aspect-ratio:1/1;
+    background:var(--violet-900);color:var(--violet-300);
+    display:inline-flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:900;letter-spacing:0;line-height:1;
+  }
+  .cta-logo{
+    height:64px;
+    display:inline-block;
+    padding:10px 16px;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 16px 36px -14px rgba(0,0,0,0.45);
+  }
+
+  /* ─────────── deck navigation hint ─────────── */
+  .nav-hint{
+    position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+    background:rgba(0,0,0,0.6);
+    color:rgba(255,255,255,0.85);
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:1.5px;
+    padding:8px 16px;border-radius:30px;
+    text-transform:uppercase;
+    backdrop-filter:blur(6px);
+    z-index:1000;
+    border:1px solid rgba(255,255,255,0.10);
+  }
+  .nav-hint span{color:var(--violet-300);font-weight:700;}
+
+  @media (max-width:1320px){
+    .deck{padding:24px 16px 80px;}
+  }
+
+  /* ─────────── PRINT / PDF EXPORT ─────────── */
+  @page { size: 1280px 720px; margin: 0; }
+
+  @media print {
+    html, body { background:#ffffff !important; }
+    body { padding:0 !important; }
+    .deck {
+      padding:0 !important;
+      gap:0 !important;
+      display:block !important;
+    }
+    .slide {
+      width:1280px !important;
+      height:720px !important;
+      max-width:none !important;
+      aspect-ratio:auto !important;
+      box-shadow:none !important;
+      border-radius:0 !important;
+      page-break-after:always;
+      break-after:page;
+      page-break-inside:avoid;
+      break-inside:avoid;
+      margin:0 !important;
+    }
+    .slide:last-child { page-break-after:auto; break-after:auto; }
+    .nav-hint { display:none !important; }
+    *, *::before, *::after {
+      -webkit-print-color-adjust:exact !important;
+      print-color-adjust:exact !important;
+      color-adjust:exact !important;
+    }
+    .cover-headline .accent,
+    .cta-headline em {
+      background:none !important;
+      -webkit-background-clip:initial !important;
+      background-clip:initial !important;
+      color:var(--violet-300) !important;
+      -webkit-text-fill-color:var(--violet-300) !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ═══════════════════════════════════
+       SLIDE 1 — COVER
+       ═══════════════════════════════════ -->
+  <section class="slide slide-cover dark grain" id="s1">
+    <div class="cover-grid"></div>
+    <div class="cover-orb"></div>
+    <div class="cover-orb b"></div>
+
+    <div class="chrome-corner">iCall · 2026</div>
+
+    <div class="cover-content">
+      <div class="cover-top">
+        <img class="cover-logo" src="logo.png" alt="iCall International">
+      </div>
+
+      <div>
+        <div class="eyebrow">International Call Center Partner</div>
+        <h1 class="cover-headline" style="margin-top:24px;">
+          Make every<br>
+          customer<br>
+          <span class="accent">feel heard.</span>
+        </h1>
+        <p class="cover-tag">
+          A multilingual contact-center built on a simple promise — every
+          conversation counts. Inbound, customer care, healthcare &amp;
+          specialized interpretation, delivered 24/7 in 300+ languages.
+        </p>
+      </div>
+
+      <div class="cover-bottom">
+        <div class="cover-mini-stats">
+          <div class="mini-stat">
+            <div class="num"><span>300+</span></div>
+            <div class="lbl">Languages &amp; Dialects</div>
+          </div>
+          <div class="mini-stat">
+            <div class="num"><span>99%</span></div>
+            <div class="lbl">Accuracy Rate</div>
+          </div>
+          <div class="mini-stat">
+            <div class="num"><span>24/7</span></div>
+            <div class="lbl">Global Coverage</div>
+          </div>
+        </div>
+        <a class="cover-cta" href="https://icallinternational.com" target="_blank" rel="noopener">
+          Explore Capabilities
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="slide-num">01 / 12</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 2 — CHALLENGE
+       ═══════════════════════════════════ -->
+  <section class="slide slide-challenge" id="s2">
+
+    <div class="challenge-content">
+      <div class="challenge-left">
+        <span class="pill">A market reality</span>
+        <h2 class="ch-headline">
+          Every unanswered<br>
+          call is a lost <em>customer.</em>
+        </h2>
+        <p class="body-copy" style="max-width:480px;">
+          When a customer can't reach a human — or can't be understood —
+          they don't wait. They switch. Modern operations need the right
+          voice, in the right language, the moment the phone rings.
+        </p>
+        <div class="ch-quote">
+          “Every conversation counts — because every conversation is a
+          chance to win, or lose, a customer for life.”
+        </div>
+      </div>
+
+      <div class="challenge-right">
+        <div class="eyebrow" style="color:var(--violet-300);">By the numbers</div>
+
+        <div class="ch-stat-row">
+          <div class="ch-stat-num">80<span style="font-size:38px;color:var(--violet-200);">%</span></div>
+          <div class="ch-stat-text">
+            <strong>faster problem resolution</strong>
+            <span>when bilingual, trained agents handle the call at first contact.</span>
+          </div>
+        </div>
+
+        <div class="ch-stat-row">
+          <div class="ch-stat-num" style="font-size:48px;">2000<span style="font-size:30px;color:var(--violet-200);">+</span></div>
+          <div class="ch-stat-text">
+            <strong>professional interpreters on call</strong>
+            <span>vetted linguists ready across 300+ languages and dialects.</span>
+          </div>
+        </div>
+
+        <div class="ch-stat-row">
+          <div class="ch-stat-num">99<span style="font-size:38px;color:var(--violet-200);">%</span></div>
+          <div class="ch-stat-text">
+            <strong>accuracy on every call</strong>
+            <span>built into our QA, monitoring, and live-coaching workflows.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Where Every Conversation Counts</div>
+    <div class="slide-num">02 / 12</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 3 — WHO WE ARE
+       ═══════════════════════════════════ -->
+  <section class="slide slide-about" id="s3">
+
+    <div class="about-content">
+      <div class="about-left">
+        <span class="pill">About iCall</span>
+        <h2 class="about-headline">
+          Bridging<br>
+          languages,<br>
+          building <em>trust.</em>
+        </h2>
+      </div>
+
+      <div class="about-right">
+        <p class="about-lead">
+          <strong>iCall International</strong> is a U.S.-based call-center
+          and interpretation partner trusted by brands across retail, healthcare,
+          finance and technology to deliver <em>exceptional communication
+          experiences 24/7, worldwide</em>.
+        </p>
+        <p class="about-lead">
+          Our qualified interpreters bridge language and cultural gaps across
+          300+ languages and dialects, including specialized medical and legal
+          interpretation. Onboard fast, scale anywhere, never miss a conversation.
+        </p>
+
+        <div class="about-values">
+          <div class="value-row">
+            <div class="value-num">01</div>
+            <div class="value-text">
+              <strong>Empathy</strong>
+              <span>Every caller is met with patience, clarity and respect.</span>
+            </div>
+          </div>
+          <div class="value-row">
+            <div class="value-num">02</div>
+            <div class="value-text">
+              <strong>Accuracy</strong>
+              <span>QA &amp; live coaching keep us at 99% accuracy on every call.</span>
+            </div>
+          </div>
+          <div class="value-row">
+            <div class="value-num">03</div>
+            <div class="value-text">
+              <strong>Speed</strong>
+              <span>Rapid setup, minimal disruption, instant capacity.</span>
+            </div>
+          </div>
+          <div class="value-row">
+            <div class="value-num">04</div>
+            <div class="value-text">
+              <strong>Reach</strong>
+              <span>US-based or offshore — staffed around your demand curve.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Where Every Conversation Counts</div>
+    <div class="slide-num">03 / 12</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 4 — SERVICES OVERVIEW
+       ═══════════════════════════════════ -->
+  <section class="slide slide-services" id="s4">
+
+    <div class="services-header">
+      <h2>Six service pillars,<br>one <em>seamless</em> partner.</h2>
+      <p>
+        From a single inbound queue to a fully managed multilingual operation
+        — including AI-powered automation and healthcare back-office support
+        — our service stack plugs into yours and delivers from day one.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Inbound -->
+      <a class="svc-card featured" href="https://icallinternational.com/call-center-outsourcing-services/" target="_blank" rel="noopener">
+        <div>
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b094ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="svc-title">Inbound<br>Call Center</div>
+          <p class="svc-desc">
+            Professional, empathetic agents answering customer queries the
+            moment they call — 24/7, in any language.
+          </p>
+          <div class="svc-link">Pick up every call &nbsp;→</div>
+        </div>
+      </a>
+
+      <!-- Healthcare -->
+      <a class="svc-card" href="https://icallinternational.com" target="_blank" rel="noopener">
+        <div>
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#6a3dd0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 5v14M5 12h14"/>
+              <circle cx="12" cy="12" r="9"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="svc-title">Healthcare<br>Call Center</div>
+          <p class="svc-desc">
+            Specialized intake, scheduling and medical interpretation —
+            purpose-built for providers and care teams.
+          </p>
+          <div class="svc-link">Patient-first care &nbsp;→</div>
+        </div>
+      </a>
+
+      <!-- Multilingual Interpretation -->
+      <a class="svc-card" href="https://icallinternational.com" target="_blank" rel="noopener">
+        <div>
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#6a3dd0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="svc-title">Multilingual<br>Interpretation</div>
+          <p class="svc-desc">
+            Real-time interpretation in 300+ languages, delivered by 2,000+
+            qualified professional interpreters.
+          </p>
+          <div class="svc-link">Speak any language &nbsp;→</div>
+        </div>
+      </a>
+
+      <!-- Customer Service / Tech Support -->
+      <a class="svc-card" href="https://icallinternational.com" target="_blank" rel="noopener">
+        <div>
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#6a3dd0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="svc-title">Customer &amp;<br>Tech Support</div>
+          <p class="svc-desc">
+            Tiered support that protects lifetime value — order processing,
+            troubleshooting, account &amp; billing.
+          </p>
+          <div class="svc-link">Protect retention &nbsp;→</div>
+        </div>
+      </a>
+
+      <!-- Medical Billing & Transcription -->
+      <a class="svc-card" href="https://icallinternational.com" target="_blank" rel="noopener">
+        <div>
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#6a3dd0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="3" width="16" height="18" rx="2"/>
+              <path d="M9 8h6M9 12h6M9 16h4"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="svc-title">Medical Billing<br>&amp; Transcription</div>
+          <p class="svc-desc">
+            HIPAA-compliant revenue cycle support, claims processing and
+            accurate clinical documentation for medical practices.
+          </p>
+          <div class="svc-link">Heal the back office &nbsp;→</div>
+        </div>
+      </a>
+
+      <!-- AI Chatbots & Virtual Assistants -->
+      <a class="svc-card" href="https://icallinternational.com" target="_blank" rel="noopener">
+        <div>
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#6a3dd0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="6" width="18" height="12" rx="3"/>
+              <circle cx="9" cy="12" r="1.2"/>
+              <circle cx="15" cy="12" r="1.2"/>
+              <path d="M12 3v3M8 18l-1.5 2M16 18l1.5 2"/>
+            </svg>
+          </div>
+        </div>
+        <div>
+          <div class="svc-title">AI Chatbots &amp;<br>Virtual Assistants</div>
+          <p class="svc-desc">
+            Custom AI agents, virtual assistants and trained appointment
+            setters that scale your medical office 24/7.
+          </p>
+          <div class="svc-link">Automate &amp; staff &nbsp;→</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="chrome-foot">iCall International · Where Every Conversation Counts</div>
+    <div class="slide-num">04 / 12</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 5 — INBOUND CALL CENTER
+       ═══════════════════════════════════ -->
+  <section class="slide slide-inbound" id="s5">
+
+    <div class="ib-grid">
+      <div class="ib-left">
+        <span class="pill">Inbound Call Center</span>
+        <h2 class="ib-headline">Pick up every call.<br><em>Win every customer.</em></h2>
+        <p class="ib-subline">
+          Many businesses lose customers and sales to slow, fragmented inbound
+          support. iCall fixes that — expert agents handle every inquiry the
+          moment it lands, with the empathy, accuracy and speed your brand
+          needs.
+        </p>
+
+        <div class="ib-stats">
+          <div class="ib-stat">
+            <div class="n">80<span>%</span></div>
+            <div class="l">Issue Resolution Lift</div>
+          </div>
+          <div class="ib-stat">
+            <div class="n">99<span>%</span></div>
+            <div class="l">Agent Accuracy</div>
+          </div>
+          <div class="ib-stat">
+            <div class="n">15<span>+</span></div>
+            <div class="l">Industry Sectors</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ib-right">
+        <div class="ib-feat">
+          <div class="ib-feat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Customer Support &amp; Help Desk</strong>
+            <span>Real-time troubleshooting, quick response times and tiered escalation paths.</span>
+          </div>
+        </div>
+
+        <div class="ib-feat">
+          <div class="ib-feat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 17 9 11 13 15 21 7"/>
+              <polyline points="14 7 21 7 21 14"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Inbound Sales Solutions</strong>
+            <span>Proven methodologies that convert inbound leads into closed-won revenue.</span>
+          </div>
+        </div>
+
+        <div class="ib-feat">
+          <div class="ib-feat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Multilingual Support</strong>
+            <span>Handle inquiries from a global customer base in their own language.</span>
+          </div>
+        </div>
+
+        <div class="ib-feat">
+          <div class="ib-feat-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Interpretation &amp; Localization</strong>
+            <span>Language and content adaptation for every market you operate in.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Where Every Conversation Counts</div>
+    <div class="slide-num">05 / 12</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 6 — MULTILINGUAL INTERPRETATION
+       ═══════════════════════════════════ -->
+  <section class="slide slide-opi dark grain" id="s6">
+
+    <div class="opi-grid">
+      <div class="opi-left">
+        <span class="pill">Multilingual Interpretation</span>
+        <h2 class="opi-headline">300+ languages,<br><em>one call away.</em></h2>
+        <p class="opi-subline">
+          Real-time interpretation that meets your customer in their native
+          tongue — delivered by 2,000+ trained, qualified human interpreters
+          with deep linguistic and cultural fluency.
+        </p>
+
+        <div class="opi-icons">
+          <div class="icon-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b094ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <div class="icon-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b094ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+            </svg>
+          </div>
+          <div class="icon-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b094ec" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="opi-right">
+        <div class="feat-row">
+          <div class="feat-num">01</div>
+          <div>
+            <div class="feat-title">Qualified human interpreters</div>
+            <div class="feat-desc">Vetted linguists with specialty tracks in medical,
+            legal and technical domains — not just bilingual generalists.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">02</div>
+          <div>
+            <div class="feat-title">300+ languages and dialects</div>
+            <div class="feat-desc">Specialized medical, legal and technical
+            tracks — one partner, every dialect, no patchwork vendors.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">03</div>
+          <div>
+            <div class="feat-title">On-demand, no booking</div>
+            <div class="feat-desc">Connect to a live interpreter in seconds —
+            handle walk-ins, surges and emergencies without queueing customers.</div>
+          </div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-num">04</div>
+          <div>
+            <div class="feat-title">99% accuracy on every call</div>
+            <div class="feat-desc">Continuous QA monitoring on every session,
+            with same-day coaching loops to keep performance high.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Where Every Conversation Counts</div>
+    <div class="slide-num">06 / 12</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 7 — HEALTHCARE
+       ═══════════════════════════════════ -->
+  <section class="slide slide-vri" id="s7">
+
+    <div class="vri-wrap">
+      <div class="vri-left">
+        <span class="pill">Healthcare Call Center</span>
+        <h2 class="vri-headline">Care that<br>speaks your<br>patient's <em>language.</em></h2>
+        <p class="vri-subline">
+          Purpose-built workflows for providers, payers and care-coordination
+          teams. From appointment scheduling to medical interpretation, our
+          agents handle the call with empathy, accuracy and the discipline
+          healthcare requires.
+        </p>
+
+        <div class="vri-feat-grid">
+          <div class="vri-feat">
+            <div class="vri-feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/>
+                <polyline points="9 12 11 14 15 10"/>
+              </svg>
+            </div>
+            <strong>Patient privacy first</strong>
+            <span>Vetted personnel, ethics screening and confidentiality protocols.</span>
+          </div>
+          <div class="vri-feat">
+            <div class="vri-feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <strong>Patient empathy</strong>
+            <span>Bilingual agents trained in cultural &amp; clinical context.</span>
+          </div>
+          <div class="vri-feat">
+            <div class="vri-feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 8v4l3 2"/>
+                <circle cx="12" cy="12" r="10"/>
+              </svg>
+            </div>
+            <strong>Round-the-clock</strong>
+            <span>24/7/365 staffing for triage, intake and follow-ups.</span>
+          </div>
+          <div class="vri-feat">
+            <div class="vri-feat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12h4l3-8 4 16 3-8h4"/>
+              </svg>
+            </div>
+            <strong>Clinical accuracy</strong>
+            <span>Specialty interpreters for medical &amp; legal terminology.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="vri-right">
+        <div class="hc-panel">
+          <div class="hc-ring"></div>
+          <div class="hc-pulse">
+            <div class="hc-pulse-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12h4l3-8 4 16 3-8h4"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="hc-stats">
+            <div class="hc-stat">
+              <div class="n">300+</div>
+              <div class="l">Languages</div>
+            </div>
+            <div class="hc-stat">
+              <div class="n">99%</div>
+              <div class="l">Accuracy</div>
+            </div>
+            <div class="hc-stat">
+              <div class="n">24/7</div>
+              <div class="l">Coverage</div>
+            </div>
+            <div class="hc-stat">
+              <div class="n">365</div>
+              <div class="l">Days/Year</div>
+            </div>
+          </div>
+
+          <div class="hc-tag">Live · Sheridan, WY · 02:14</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Where Every Conversation Counts</div>
+    <div class="slide-num">07 / 12</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 8 — CUSTOMER SERVICE
+       ═══════════════════════════════════ -->
+  <section class="slide slide-cs" id="s8">
+
+    <div class="cs-grid">
+      <div class="cs-left">
+        <span class="pill" style="background:rgba(176,148,236,0.10);border-color:rgba(176,148,236,0.30);color:var(--violet-200);">Customer Service</span>
+        <h2>Support that<br>customers<br><em>remember.</em></h2>
+        <p>
+          Quality customer service isn't a nice-to-have — it's the product.
+          We pair multilingual empathy with deep technical knowledge of
+          your platform, your policies and your tone of voice.
+        </p>
+
+        <div class="chat-bubble b1">
+          <small>Inbound · 2:14 PM</small>
+          Hola, tengo una pregunta sobre mi cuenta...
+        </div>
+        <div class="chat-bubble b2">
+          <small>iCall Agent · Just now</small>
+          ¡Claro! Estoy aquí para ayudarte. Veamos tu cuenta ahora mismo.
+        </div>
+      </div>
+
+      <div class="cs-right">
+        <span class="eyebrow">What we handle</span>
+        <h3 style="font-family:'Playfair Display',serif;font-size:34px;font-weight:700;color:var(--violet-900);line-height:1.05;letter-spacing:-0.6px;margin-top:-4px;">
+          End-to-end multilingual support, on every channel.
+        </h3>
+
+        <div class="cs-row">
+          <div class="cs-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Technical Support</strong>
+            <span>Help users navigate your product and resolve issues fast — tier 1 through tier 3.</span>
+          </div>
+        </div>
+
+        <div class="cs-row">
+          <div class="cs-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9h18v10H3z"/>
+              <path d="M3 9l9-6 9 6"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Order Processing</strong>
+            <span>End-to-end order capture, status updates, returns &amp; exchanges — all in your customer's language.</span>
+          </div>
+        </div>
+
+        <div class="cs-row">
+          <div class="cs-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Complaint Resolution</strong>
+            <span>Professional, empathetic handling of escalations — protecting brand and lifetime value.</span>
+          </div>
+        </div>
+
+        <div class="cs-row">
+          <div class="cs-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v6m0 0 3-3m-3 3-3-3"/>
+              <rect x="3" y="10" width="18" height="12" rx="2"/>
+            </svg>
+          </div>
+          <div>
+            <strong>Feedback Collection</strong>
+            <span>Structured voice-of-customer programs that fuel continuous improvement.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Where Every Conversation Counts</div>
+    <div class="slide-num">08 / 12</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 9 — MEDICAL SPECIALTY SERVICES
+       ═══════════════════════════════════ -->
+  <section class="slide slide-medspec" id="s9">
+
+    <div class="ms-wrap">
+      <div class="ms-head">
+        <h2>Healthcare specialty,<br>built <em>beyond the call.</em></h2>
+        <p>
+          Purpose-built services for medical practices — accurate documentation,
+          clean claims, AI automation and dedicated patient-facing staff.
+        </p>
+      </div>
+
+      <div class="ms-grid">
+
+        <!-- Medical Billing & Transcription -->
+        <div class="ms-panel">
+          <span class="ms-eyebrow">Healthcare Back-Office</span>
+          <h3 class="ms-title">Medical Billing<br>&amp; <em>Transcription.</em></h3>
+          <p class="ms-lead">
+            HIPAA-compliant revenue-cycle and documentation services that
+            reduce denials, speed reimbursement and protect clinical detail.
+          </p>
+
+          <div class="ms-rows">
+
+            <div class="ms-row">
+              <div class="ms-ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="4" y="3" width="16" height="18" rx="2"/>
+                  <path d="M9 8h6M9 12h6M9 16h4"/>
+                </svg>
+              </div>
+              <div>
+                <strong>Medical Billing &amp; Claims</strong>
+                <span>Charge entry, coding review, claims submission, denial management and patient statements.</span>
+              </div>
+            </div>
+
+            <div class="ms-row">
+              <div class="ms-ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                  <path d="M14 3v6h6"/>
+                  <path d="M8 14h8M8 17h5"/>
+                </svg>
+              </div>
+              <div>
+                <strong>Medical Transcription</strong>
+                <span>Fast, accurate clinical notes, op reports and dictation — formatted for your EHR workflow.</span>
+              </div>
+            </div>
+
+            <div class="ms-row">
+              <div class="ms-ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-12V5l-8-3-8 3v5c0 8 8 12 8 12z"/>
+                </svg>
+              </div>
+              <div>
+                <strong>HIPAA &amp; Compliance</strong>
+                <span>Trained staff, secure infrastructure and audited workflows aligned to U.S. healthcare standards.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- AI + Talent for Medical Offices -->
+        <div class="ms-panel dark">
+          <span class="ms-eyebrow">AI &amp; Dedicated Talent</span>
+          <h3 class="ms-title">Chatbots, Assistants<br>&amp; <em>Appointment Setters.</em></h3>
+          <p class="ms-lead">
+            Automation and trained humans, working together to capture every
+            patient — 24/7 across phone, web and messaging channels.
+          </p>
+
+          <div class="ms-rows">
+
+            <div class="ms-row">
+              <div class="ms-ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="6" width="18" height="12" rx="3"/>
+                  <circle cx="9" cy="12" r="1.2"/>
+                  <circle cx="15" cy="12" r="1.2"/>
+                  <path d="M12 3v3M8 18l-1.5 2M16 18l1.5 2"/>
+                </svg>
+              </div>
+              <div>
+                <strong>AI Chatbots</strong>
+                <span>Custom-trained chat agents that triage patient questions, intake forms and FAQs around the clock.</span>
+              </div>
+            </div>
+
+            <div class="ms-row">
+              <div class="ms-ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="4"/>
+                  <path d="M4 21a8 8 0 0 1 16 0"/>
+                </svg>
+              </div>
+              <div>
+                <strong>Virtual Assistants</strong>
+                <span>Dedicated remote staff handling scheduling, eligibility checks, follow-ups and prior auths.</span>
+              </div>
+            </div>
+
+            <div class="ms-row">
+              <div class="ms-ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2"/>
+                  <path d="M16 2v4M8 2v4M3 10h18"/>
+                  <path d="M8 14h3M8 18h3"/>
+                </svg>
+              </div>
+              <div>
+                <strong>Appointment Setters</strong>
+                <span>Trained agents for medical offices — booking, confirmations, recalls and no-show recovery.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Where Every Conversation Counts</div>
+    <div class="slide-num">09 / 12</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 10 — INDUSTRIES
+       ═══════════════════════════════════ -->
+  <section class="slide slide-industries" id="s10">
+
+    <div class="ind-wrap">
+      <div class="ind-head">
+        <h2>Trusted across<br>regulated &amp; <em>fast-moving</em> markets.</h2>
+        <p>
+          Qualified, vetted and trained for the unique cadence and compliance
+          demands of every industry we serve.
+        </p>
+      </div>
+
+      <div class="ind-grid">
+        <div class="ind-card">
+          <div>
+            <div class="ind-illus">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <path d="M3 9h18M9 21V9"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>Retail</h3>
+            <p>Order capture, customer service and post-sale support — multilingual coverage that opens new markets.</p>
+          </div>
+        </div>
+
+        <div class="ind-card medical">
+          <div>
+            <div class="ind-illus">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 5v14M5 12h14"/>
+                <circle cx="12" cy="12" r="9"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>Healthcare</h3>
+            <p>Specialized intake, scheduling and medical interpretation that protect clinical outcomes and patient trust.</p>
+          </div>
+        </div>
+
+        <div class="ind-card finance">
+          <div>
+            <div class="ind-illus">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="2" x2="12" y2="22"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>Finance</h3>
+            <p>Multilingual support for account servicing, collections and high-touch advisory conversations.</p>
+          </div>
+        </div>
+
+        <div class="ind-card tech">
+          <div>
+            <div class="ind-illus">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+          </div>
+          <div>
+            <h3>Technology</h3>
+            <p>Tiered tech support, onboarding and trial conversion for SaaS, hardware and consumer-tech brands.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Where Every Conversation Counts</div>
+    <div class="slide-num">10 / 12</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 11 — WHY iCALL + PROCESS
+       ═══════════════════════════════════ -->
+  <section class="slide slide-why dark grain" id="s11">
+
+    <div class="why-wrap">
+      <div class="why-head">
+        <h2>Why partners pick<br>iCall <em>and stay.</em></h2>
+        <p>
+          The intersection of cultural fluency, operational rigor and a
+          rigorous talent pipeline — engineered to deliver the same quality
+          on call #1 and call #1,000,000.
+        </p>
+      </div>
+
+      <div class="why-body">
+        <div class="why-list">
+          <div class="why-item">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div>
+              <strong>300+ languages on demand</strong>
+              <span>From Spanish &amp; Mandarin to specialized medical &amp; legal interpretation — one partner, every dialect.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/>
+                <polyline points="9 12 11 14 15 10"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Compliance-ready operations</strong>
+              <span>Vetted personnel, ethics screening and confidentiality protocols for regulated industries.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div>
+              <strong>24/7/365 real-time coverage</strong>
+              <span>US-based or offshore teams sized to your demand curve — never queue your customer at 3 AM.</span>
+            </div>
+          </div>
+          <div class="why-item">
+            <div class="why-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h9"/>
+                <path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19l-4 1 1-4z"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Tailored, not templated</strong>
+              <span>Every engagement is shaped to your ICP, your stack, your KPIs — co-designed with your team, not handed down.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="why-divider"></div>
+
+        <div>
+          <div class="process-title">— Our 3-stage onboarding pipeline</div>
+          <div class="process-steps">
+            <div class="pstep">
+              <div class="pstep-num">1</div>
+              <div>
+                <strong>Discovery &amp; Scoping</strong>
+                <span>We map your call types, languages, peak hours and tooling — defining success up front.</span>
+              </div>
+            </div>
+            <div class="pstep">
+              <div class="pstep-num">2</div>
+              <div>
+                <strong>Sourcing &amp; Training</strong>
+                <span>Targeted hiring against your language matrix, then account-specific training and ethics screening.</span>
+              </div>
+            </div>
+            <div class="pstep">
+              <div class="pstep-num">3</div>
+              <div>
+                <strong>Go-Live &amp; Continuous QA</strong>
+                <span>Shadow shifts, calibration calls, then daily QA scoring with same-day coaching loops.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Where Every Conversation Counts</div>
+    <div class="slide-num">11 / 12</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 12 — CTA / CONTACT
+       ═══════════════════════════════════ -->
+  <section class="slide slide-cta dark grain" id="s12">
+    <div class="cover-grid"></div>
+    <div class="cover-orb"></div>
+    <div class="cover-orb b"></div>
+
+    <div class="cta-wrap">
+      <div>
+        <span class="cta-eyebrow">The next step</span>
+      </div>
+
+      <div style="display:flex;flex-direction:column;justify-content:center;">
+        <h2 class="cta-headline">
+          Let's make<br>
+          your next call<br>
+          <em>count.</em>
+        </h2>
+      </div>
+
+      <div class="cta-bottom">
+        <div class="cta-contact">
+          <a class="contact-item" href="tel:+18182394744">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div class="contact-text">
+              <small>Call</small>
+              <strong>1 (818) 239 4744</strong>
+            </div>
+          </a>
+
+          <a class="contact-item" href="mailto:info@icallinternational.com">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </div>
+            <div class="contact-text">
+              <small>Email</small>
+              <strong>info@icallinternational.com</strong>
+            </div>
+          </a>
+
+          <a class="contact-item" href="https://icallinternational.com" target="_blank" rel="noopener">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="2" y1="12" x2="22" y2="12"/>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            </div>
+            <div class="contact-text">
+              <small>Web</small>
+              <strong>icallinternational.com</strong>
+            </div>
+          </a>
+        </div>
+
+        <div class="cta-mid">
+          <a class="cta-button" href="https://icallinternational.com" target="_blank" rel="noopener">
+            Book a Discovery Call
+            <span class="arr">→</span>
+          </a>
+        </div>
+
+        <div style="text-align:right;">
+          <img class="cta-logo" src="logo.png" alt="iCall International">
+          <div style="margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2px;color:rgba(255,255,255,0.5);text-transform:uppercase;">
+            Where Every<br>Conversation Counts
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-num">12 / 12</div>
+  </section>
+
+</div>
+
+<div class="nav-hint">
+  Scroll · or press <span>← →</span> to navigate
+</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  let current = 0;
+
+  function scrollToSlide(i){
+    if(i < 0 || i >= slides.length) return;
+    current = i;
+    slides[i].scrollIntoView({behavior:'smooth', block:'center'});
+  }
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e => {
+      if(e.isIntersecting && e.intersectionRatio > 0.55){
+        current = slides.indexOf(e.target);
+      }
+    });
+  }, {threshold:[0.55, 0.75]});
+  slides.forEach(s => io.observe(s));
+
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' '){
+      e.preventDefault();
+      scrollToSlide(current + 1);
+    } else if(e.key === 'ArrowLeft' || e.key === 'PageUp'){
+      e.preventDefault();
+      scrollToSlide(current - 1);
+    } else if(e.key === 'Home'){
+      scrollToSlide(0);
+    } else if(e.key === 'End'){
+      scrollToSlide(slides.length - 1);
+    }
+  });
+
+  setTimeout(()=>{
+    const h = document.querySelector('.nav-hint');
+    if(h){ h.style.transition = 'opacity 0.6s ease'; h.style.opacity = '0'; setTimeout(()=>h.remove(), 700); }
+  }, 6000);
+</script>
+
+</body>
+</html>

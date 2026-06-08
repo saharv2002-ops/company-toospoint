@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RFP Search — Language Services | ToosPoint</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --tp-orange: #F08A5D;
+      --tp-teal:   #2A9D8F;
+      --tp-dark:   #1A1A2E;
+      --tp-gray:   #6B7280;
+      --tp-light:  #F9FAFB;
+      --tp-border: #E5E7EB;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #F0F4F8;
+      color: var(--tp-dark);
+      margin: 0;
+    }
+
+    /* ── Header ── */
+    .tp-header {
+      background: var(--tp-dark);
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(0,0,0,.3);
+    }
+    .tp-header-bar {
+      height: 4px;
+      background: linear-gradient(90deg, var(--tp-orange) 50%, var(--tp-teal) 50%);
+    }
+    .tp-header-inner {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 24px;
+    }
+    .tp-logo-wrap { display: flex; align-items: center; gap: 10px; }
+    .tp-logo-wrap img { height: 38px; }
+    .tp-brand { color: #fff; font-size: 1.05rem; font-weight: 700; letter-spacing: .5px; }
+    .tp-brand span { color: var(--tp-orange); }
+    .tp-tagline { color: var(--tp-gray); font-size: .78rem; margin-top: 1px; }
+    .tp-nav { margin-left: auto; display: flex; gap: 6px; }
+    .tp-nav .btn { font-size: .82rem; padding: 5px 14px; border-radius: 20px; }
+    .btn-settings {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.25);
+      color: #ccc;
+    }
+    .btn-settings:hover { background: rgba(255,255,255,.08); color: #fff; }
+
+    /* ── Layout ── */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      grid-template-rows: 1fr;
+      height: calc(100vh - 62px);
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      background: #fff;
+      border-right: 1px solid var(--tp-border);
+      overflow-y: auto;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .sidebar-section {
+      background: var(--tp-light);
+      border: 1px solid var(--tp-border);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+    .sidebar-section h6 {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--tp-gray);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-bottom: 10px;
+    }
+    .form-control, .form-select {
+      border-radius: 8px;
+      border: 1px solid var(--tp-border);
+      font-size: .88rem;
+    }
+    .form-control:focus, .form-select:focus {
+      border-color: var(--tp-teal);
+      box-shadow: 0 0 0 3px rgba(42,157,143,.15);
+    }
+    .form-label { font-size: .82rem; font-weight: 600; color: var(--tp-dark); margin-bottom: 4px; }
+
+    .preset-btns { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+    .preset-btn {
+      font-size: .74rem;
+      padding: 3px 10px;
+      border-radius: 14px;
+      border: 1px solid var(--tp-teal);
+      background: transparent;
+      color: var(--tp-teal);
+      cursor: pointer;
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    .preset-btn:hover { background: var(--tp-teal); color: #fff; }
+
+    .source-check { display: flex; align-items: center; gap: 8px; margin: 5px 0; font-size: .85rem; }
+    .source-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-sam        { background: #3B82F6; }
+    .dot-usaspending{ background: #10B981; }
+    .dot-grants     { background: #F59E0B; }
+    .dot-ungm       { background: #8B5CF6; }
+    .dot-worldbank   { background: var(--tp-orange); }
+
+    .notice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .form-check-label { font-size: .82rem; }
+
+    .btn-search {
+      background: linear-gradient(135deg, var(--tp-teal), #1d7a6e);
+      border: none;
+      color: #fff;
+      width: 100%;
+      padding: 11px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: .95rem;
+      letter-spacing: .3px;
+      transition: opacity .2s, transform .1s;
+    }
+    .btn-search:hover { opacity: .9; transform: translateY(-1px); }
+    .btn-search:active { transform: translateY(0); }
+    .btn-search:disabled { opacity: .6; }
+
+    /* ── Results Panel ── */
+    .results-panel {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .results-toolbar {
+      background: #fff;
+      border-bottom: 1px solid var(--tp-border);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .result-count {
+      font-weight: 700;
+      color: var(--tp-dark);
+      font-size: .95rem;
+    }
+    .result-count .highlight { color: var(--tp-teal); }
+    .toolbar-spacer { flex: 1; }
+    .btn-export {
+      font-size: .82rem;
+      padding: 5px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--tp-border);
+      background: #fff;
+      color: var(--tp-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .btn-export:hover { background: var(--tp-light); }
+
+    .filter-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+    .filter-pill {
+      font-size: .76rem;
+      padding: 3px 10px;
+      border-radius: 12px;
+      background: var(--tp-light);
+      border: 1px solid var(--tp-border);
+      color: var(--tp-gray);
+    }
+
+    /* ── Table ── */
+    .table-wrapper { flex: 1; overflow-y: auto; }
+
+    .rfp-table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    .rfp-table thead th {
+      background: var(--tp-dark);
+      color: #ccc;
+      font-size: .76rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      padding: 10px 14px;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      cursor: pointer;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .rfp-table thead th:hover { color: #fff; }
+    .rfp-table thead th.sort-asc::after  { content: " ↑"; color: var(--tp-orange); }
+    .rfp-table thead th.sort-desc::after { content: " ↓"; color: var(--tp-orange); }
+
+    .rfp-table tbody tr {
+      border-bottom: 1px solid var(--tp-border);
+      cursor: pointer;
+      transition: background .12s;
+    }
+    .rfp-table tbody tr:hover   { background: #EEF9F8; }
+    .rfp-table tbody tr.active  { background: #D1F2EE; }
+    .rfp-table tbody td { padding: 10px 14px; vertical-align: middle; }
+
+    .td-title { font-weight: 600; color: var(--tp-dark); max-width: 340px; }
+    .td-title-text {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .td-agency { color: var(--tp-gray); font-size: .82rem; max-width: 180px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .td-date { white-space: nowrap; color: #374151; }
+    .td-deadline { white-space: nowrap; }
+    .deadline-soon { color: #DC2626; font-weight: 700; }
+    .deadline-ok   { color: #059669; }
+    .td-value { white-space: nowrap; font-weight: 600; color: #1F2937; }
+    .td-type { white-space: nowrap; }
+
+    .source-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .76rem;
+      padding: 3px 9px;
+      border-radius: 10px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .badge-sam         { background: #EFF6FF; color: #1D4ED8; }
+    .badge-usaspending { background: #ECFDF5; color: #065F46; }
+    .badge-grants      { background: #FFFBEB; color: #92400E; }
+    .badge-ungm        { background: #F5F3FF; color: #5B21B6; }
+    .badge-worldbank   { background: #FFF7ED; color: #9A3412; }
+
+    .type-badge {
+      font-size: .72rem;
+      padding: 2px 8px;
+      border-radius: 8px;
+      background: var(--tp-light);
+      color: var(--tp-gray);
+      border: 1px solid var(--tp-border);
+    }
+
+    /* ── Detail Drawer ── */
+    .detail-drawer {
+      position: fixed;
+      right: 0; top: 62px;
+      width: 440px;
+      height: calc(100vh - 62px);
+      background: #fff;
+      border-left: 1px solid var(--tp-border);
+      box-shadow: -4px 0 24px rgba(0,0,0,.1);
+      transform: translateX(100%);
+      transition: transform .25s ease;
+      z-index: 500;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .detail-drawer.open { transform: translateX(0); }
+    .drawer-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--tp-border);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .drawer-title { font-size: .95rem; font-weight: 700; color: var(--tp-dark); flex: 1; line-height: 1.4; }
+    .btn-close-drawer {
+      background: none; border: none; color: var(--tp-gray);
+      font-size: 1.2rem; cursor: pointer; padding: 2px; flex-shrink: 0;
+    }
+    .btn-close-drawer:hover { color: var(--tp-dark); }
+    .drawer-body { flex: 1; overflow-y: auto; padding: 16px 20px; }
+    .drawer-footer {
+      padding: 12px 20px;
+      border-top: 1px solid var(--tp-border);
+      display: flex; gap: 8px;
+    }
+    .detail-row { margin-bottom: 12px; }
+    .detail-label { font-size: .75rem; font-weight: 700; color: var(--tp-gray); text-transform: uppercase; letter-spacing: .6px; margin-bottom: 3px; }
+    .detail-value { font-size: .88rem; color: var(--tp-dark); }
+    .detail-desc {
+      font-size: .83rem;
+      color: #374151;
+      line-height: 1.6;
+      background: var(--tp-light);
+      border: 1px solid var(--tp-border);
+      border-radius: 8px;
+      padding: 12px;
+      max-height: 260px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+    .btn-open-link {
+      flex: 1;
+      background: var(--tp-teal);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 9px;
+      font-weight: 600;
+      font-size: .88rem;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      text-decoration: none;
+    }
+    .btn-open-link:hover { background: #1d7a6e; color: #fff; }
+    .btn-copy-link {
+      background: var(--tp-light);
+      border: 1px solid var(--tp-border);
+      border-radius: 8px;
+      padding: 9px 14px;
+      font-size: .88rem;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .btn-copy-link:hover { background: var(--tp-border); }
+
+    /* ── Empty / Loading states ── */
+    .state-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--tp-gray);
+      gap: 10px;
+      padding: 40px;
+      text-align: center;
+    }
+    .state-box i { font-size: 3rem; opacity: .35; }
+    .state-box h5 { font-size: 1rem; color: var(--tp-dark); margin: 0; }
+    .state-box p  { font-size: .85rem; margin: 0; max-width: 320px; }
+
+    .spinner-wrap {
+      display: flex; align-items: center; justify-content: center;
+      height: 100%; gap: 12px; color: var(--tp-teal); font-size: .95rem;
+    }
+
+    /* ── Settings Modal ── */
+    .modal-header { background: var(--tp-dark); color: #fff; border-radius: 12px 12px 0 0; }
+    .modal-header .btn-close { filter: invert(1); }
+
+    /* ── Error toast ── */
+    .error-list {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: .82rem;
+      color: #991B1B;
+      margin: 0 20px 12px;
+    }
+    .error-list li { margin: 2px 0; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+
+    /* ── Key indicator ── */
+    .key-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: .72rem; padding: 2px 8px; border-radius: 10px;
+      font-weight: 600;
+    }
+    .key-set   { background: #ECFDF5; color: #065F46; }
+    .key-unset { background: #FEF2F2; color: #991B1B; }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ─────────────────────────────────────────────────────────────── -->
+<div class="tp-header">
+  <div class="tp-header-bar"></div>
+  <div class="tp-header-inner">
+    <div class="tp-logo-wrap">
+      <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--tp-orange),var(--tp-teal));display:flex;align-items:center;justify-content:center;">
+        <i class="bi bi-compass" style="color:#fff;font-size:1.2rem;"></i>
+      </div>
+      <div>
+        <div class="tp-brand">Toos<span>Point</span> <span style="color:var(--tp-teal);">RFP</span> Search</div>
+        <div class="tp-tagline">Language Services Procurement Intelligence</div>
+      </div>
+    </div>
+    <div class="tp-nav">
+      <span id="keyStatus" class="key-badge {% if has_sam_key %}key-set{% else %}key-unset{% endif %}">
+        <i class="bi bi-key-fill"></i>
+        SAM.gov {% if has_sam_key %}Key Set{% else %}No Key{% endif %}
+      </span>
+      <button class="btn btn-settings" data-bs-toggle="modal" data-bs-target="#settingsModal">
+        <i class="bi bi-gear-fill me-1"></i>Settings
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Main Layout ─────────────────────────────────────────────────────────── -->
+<div class="main-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <!-- Search -->
+    <div class="sidebar-section">
+      <h6><i class="bi bi-search me-1"></i>Search</h6>
+      <label class="form-label">Keywords</label>
+      <div class="input-group mb-2">
+        <input id="keyword" type="text" class="form-control"
+               placeholder="translation, interpretation…"
+               value="language services"/>
+        <button class="btn btn-outline-secondary" type="button" onclick="clearKeyword()" title="Clear">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+      <div class="preset-btns" id="presetBtns">
+        {% for p in presets %}
+        <button class="preset-btn" onclick="setPreset('{{ p }}')">{{ p }}</button>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Dates -->
+    <div class="sidebar-section">
+      <h6><i class="bi bi-calendar3 me-1"></i>Date Range</h6>
+      <div class="row g-2">
+        <div class="col-6">
+          <label class="form-label">From</label>
+          <input id="dateFrom" type="date" class="form-control"/>
+        </div>
+        <div class="col-6">
+          <label class="form-label">To</label>
+          <input id="dateTo" type="date" class="form-control"/>
+        </div>
+      </div>
+      <div class="preset-btns mt-2">
+        <button class="preset-btn" onclick="setDateRange(30)">30 days</button>
+        <button class="preset-btn" onclick="setDateRange(60)">60 days</button>
+        <button class="preset-btn" onclick="setDateRange(90)">90 days</button>
+        <button class="preset-btn" onclick="setDateRange(180)">6 months</button>
+        <button class="preset-btn" onclick="setDateRange(365)">1 year</button>
+      </div>
+    </div>
+
+    <!-- NAICS + Notice -->
+    <div class="sidebar-section">
+      <h6><i class="bi bi-tag me-1"></i>Classification</h6>
+      <label class="form-label">NAICS Code</label>
+      <select id="naics" class="form-select mb-3">
+        <option value="">Any</option>
+        {% for code, label in naics_codes.items() %}
+        <option value="{{ code }}" {% if code == '541930' %}selected{% endif %}>
+          {{ code }} – {{ label }}
+        </option>
+        {% endfor %}
+      </select>
+      <label class="form-label">Notice Types (SAM.gov)</label>
+      <div class="notice-grid">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="o" id="nt_o" checked/>
+          <label class="form-check-label" for="nt_o">Solicitation</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="k" id="nt_k" checked/>
+          <label class="form-check-label" for="nt_k">Combined</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="p" id="nt_p" checked/>
+          <label class="form-check-label" for="nt_p">Pre-Sol</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="r" id="nt_r" checked/>
+          <label class="form-check-label" for="nt_r">Sources Sought</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="a" id="nt_a"/>
+          <label class="form-check-label" for="nt_a">Award</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="s" id="nt_s"/>
+          <label class="form-check-label" for="nt_s">Special</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="sidebar-section">
+      <h6><i class="bi bi-database me-1"></i>Sources</h6>
+      <div class="source-check">
+        <input class="form-check-input m-0" type="checkbox" id="src_sam" value="sam" checked/>
+        <span class="source-dot dot-sam"></span>
+        <label for="src_sam">SAM.gov <small class="text-muted">(US Federal)</small></label>
+      </div>
+      <div class="source-check">
+        <input class="form-check-input m-0" type="checkbox" id="src_grants" value="grants" checked/>
+        <span class="source-dot dot-grants"></span>
+        <label for="src_grants">Grants.gov</label>
+      </div>
+      <div class="mt-2">
+        <label class="form-label">Max results / source</label>
+        <input id="maxResults" type="number" class="form-control" value="25" min="5" max="100"/>
+      </div>
+    </div>
+
+    <!-- Search button -->
+    <button class="btn-search" id="searchBtn" onclick="doSearch()">
+      <i class="bi bi-search me-2"></i>Search RFPs
+    </button>
+
+  </aside>
+
+  <!-- Results Panel -->
+  <main class="results-panel" id="resultsPanel">
+
+    <!-- Toolbar -->
+    <div class="results-toolbar">
+      <div class="result-count" id="resultCount">
+        <span class="highlight">0</span> results
+      </div>
+      <div class="toolbar-spacer"></div>
+      <div id="filterPills" class="filter-pills"></div>
+      <button class="btn-export" id="exportBtn" onclick="exportCSV()" disabled>
+        <i class="bi bi-download"></i> Export CSV
+      </button>
+    </div>
+
+    <!-- Error list -->
+    <div id="errorList" style="display:none;"></div>
+
+    <!-- Table -->
+    <div class="table-wrapper" id="tableWrapper">
+      <div class="state-box" id="emptyState">
+        <i class="bi bi-file-earmark-text"></i>
+        <h5>Ready to Search</h5>
+        <p>Configure your search parameters and click <strong>Search RFPs</strong> to find language services procurement opportunities.</p>
+      </div>
+      <div id="loadingState" style="display:none;" class="spinner-wrap">
+        <div class="spinner-border text-teal" role="status" style="color:var(--tp-teal);"></div>
+        Searching procurement databases…
+      </div>
+      <table class="rfp-table" id="rfpTable" style="display:none;">
+        <thead>
+          <tr>
+            <th onclick="sortTable('title')">Title</th>
+            <th onclick="sortTable('agency')">Agency / Org</th>
+            <th onclick="sortTable('source')">Source</th>
+            <th onclick="sortTable('posted')">Posted</th>
+            <th onclick="sortTable('deadline')">Deadline</th>
+            <th onclick="sortTable('type')">Type</th>
+            <th onclick="sortTable('value')">Est. Value</th>
+          </tr>
+        </thead>
+        <tbody id="rfpBody"></tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+
+<!-- ── Detail Drawer ──────────────────────────────────────────────────────── -->
+<div class="detail-drawer" id="detailDrawer">
+  <div class="drawer-header">
+    <div class="drawer-title" id="drawerTitle">—</div>
+    <button class="btn-close-drawer" onclick="closeDrawer()"><i class="bi bi-x-lg"></i></button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-footer">
+    <a id="drawerLink" href="#" target="_blank" class="btn-open-link">
+      <i class="bi bi-box-arrow-up-right"></i> Open Posting
+    </a>
+    <button class="btn-copy-link" onclick="copyLink()">
+      <i class="bi bi-clipboard"></i> Copy
+    </button>
+  </div>
+</div>
+
+<!-- ── Settings Modal ─────────────────────────────────────────────────────── -->
+<div class="modal fade" id="settingsModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border-radius:12px;">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="bi bi-gear-fill me-2"></i>Settings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" style="padding:24px;">
+        <div class="mb-3">
+          <label class="form-label fw-bold">SAM.gov API Key</label>
+          <input type="password" id="samApiKey" class="form-control" placeholder="Paste your SAM.gov API key…"/>
+          <div class="form-text">
+            Free key available at
+            <a href="https://sam.gov/profile/details" target="_blank">sam.gov/profile/details</a>
+            → System Accounts → Public API.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label fw-bold">Default Max Results per Source</label>
+          <input type="number" id="settingsMax" class="form-control" value="25" min="5" max="100"/>
+        </div>
+        <div class="alert alert-info" style="font-size:.84rem;">
+          <i class="bi bi-info-circle me-1"></i>
+          SAM.gov is the primary source for US federal RFPs. Without a key,
+          only Grants.gov results are returned.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn btn-primary" onclick="saveSettings()" style="background:var(--tp-teal);border-color:var(--tp-teal);">
+          Save Settings
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+let allResults = [];
+let sortCol = 'posted';
+let sortDir = 'desc';
+let activeRow = null;
+
+// ── Date helpers ────────────────────────────────────────────────────────────
+function isoDate(d) {
+  return d.toISOString().split('T')[0];
+}
+function setDateRange(days) {
+  const to = new Date();
+  const from = new Date();
+  from.setDate(from.getDate() - days);
+  document.getElementById('dateTo').value = isoDate(to);
+  document.getElementById('dateFrom').value = isoDate(from);
+}
+// Init dates
+(function(){
+  const to = new Date();
+  const from = new Date();
+  from.setDate(from.getDate() - 90);
+  document.getElementById('dateTo').value = isoDate(to);
+  document.getElementById('dateFrom').value = isoDate(from);
+})();
+
+// ── Preset ──────────────────────────────────────────────────────────────────
+function setPreset(kw) {
+  document.getElementById('keyword').value = kw;
+}
+function clearKeyword() {
+  document.getElementById('keyword').value = '';
+  document.getElementById('keyword').focus();
+}
+
+// ── Search ─────────────────────────────────────────────────────────────────
+function doSearch() {
+  const keyword = document.getElementById('keyword').value.trim();
+  if (!keyword) { document.getElementById('keyword').focus(); return; }
+
+  const sources = ['sam','grants']
+    .filter(s => document.getElementById('src_'+s).checked);
+  const noticeTypes = ['o','k','p','r','a','s']
+    .filter(v => document.getElementById('nt_'+v)?.checked);
+
+  const body = {
+    keyword,
+    date_from: document.getElementById('dateFrom').value,
+    date_to:   document.getElementById('dateTo').value,
+    sources,
+    notice_types: noticeTypes,
+    naics:    document.getElementById('naics').value,
+    max_results: parseInt(document.getElementById('maxResults').value) || 25,
+  };
+
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('loadingState').style.display = 'flex';
+  document.getElementById('rfpTable').style.display = 'none';
+  document.getElementById('errorList').style.display = 'none';
+  document.getElementById('searchBtn').disabled = true;
+  document.getElementById('exportBtn').disabled = true;
+  closeDrawer();
+
+  fetch('/api/search', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(body)
+  })
+  .then(r => r.json())
+  .then(data => {
+    allResults = data.results || [];
+    renderResults(data.errors || []);
+  })
+  .catch(e => {
+    allResults = [];
+    renderResults([`Search failed: ${e.message}`]);
+  })
+  .finally(() => {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('searchBtn').disabled = false;
+  });
+}
+
+// Enter key
+document.getElementById('keyword').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doSearch();
+});
+
+// ── Render ─────────────────────────────────────────────────────────────────
+function renderResults(errors) {
+  const count = allResults.length;
+
+  // Error list
+  if (errors.length) {
+    const el = document.getElementById('errorList');
+    el.innerHTML = '<ul class="mb-0">' + errors.map(e => `<li>${e}</li>`).join('') + '</ul>';
+    el.className = 'error-list';
+    el.style.display = '';
+  }
+
+  // Count
+  const kw = document.getElementById('keyword').value;
+  document.getElementById('resultCount').innerHTML =
+    `<span class="highlight">${count}</span> result${count !== 1 ? 's' : ''} for "<strong>${escHtml(kw)}</strong>"`;
+
+  if (count === 0) {
+    document.getElementById('rfpTable').style.display = 'none';
+    document.getElementById('emptyState').style.display = 'flex';
+    document.getElementById('emptyState').querySelector('h5').textContent = 'No Results Found';
+    document.getElementById('emptyState').querySelector('p').textContent =
+      'Try broader keywords, a longer date range, or enable more sources.';
+    return;
+  }
+
+  document.getElementById('exportBtn').disabled = false;
+  renderTable();
+}
+
+function renderTable() {
+  // Sort
+  const sorted = [...allResults].sort((a, b) => {
+    let av = a[sortCol] || '', bv = b[sortCol] || '';
+    if (typeof av === 'number') return sortDir === 'asc' ? av - bv : bv - av;
+    return sortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+  });
+
+  // Update sort indicators
+  document.querySelectorAll('.rfp-table thead th').forEach(th => {
+    th.classList.remove('sort-asc','sort-desc');
+  });
+  const headers = ['title','agency','source','posted','deadline','type','value'];
+  const idx = headers.indexOf(sortCol);
+  if (idx >= 0) {
+    const ths = document.querySelectorAll('.rfp-table thead th');
+    ths[idx].classList.add(sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+  }
+
+  const body = document.getElementById('rfpBody');
+  body.innerHTML = sorted.map((r, i) => {
+    const badge = sourceBadge(r.source);
+    const dl = deadlineClass(r.deadline);
+    return `<tr onclick="showDetail(${i})" data-idx="${i}">
+      <td class="td-title"><div class="td-title-text">${escHtml(r.title)}</div></td>
+      <td class="td-agency" title="${escHtml(r.agency)}">${escHtml(r.agency)}</td>
+      <td>${badge}</td>
+      <td class="td-date">${r.posted || '—'}</td>
+      <td class="td-deadline ${dl}">${r.deadline || '—'}</td>
+      <td><span class="type-badge">${escHtml(r.type)}</span></td>
+      <td class="td-value">${r.value || '—'}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('rfpTable').style.display = '';
+  document.getElementById('emptyState').style.display = 'none';
+
+  // Update sort data mapping (store sorted order)
+  window._sortedResults = sorted;
+}
+
+function sortTable(col) {
+  if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+  else { sortCol = col; sortDir = 'asc'; }
+  renderTable();
+}
+
+// ── Detail Drawer ───────────────────────────────────────────────────────────
+function showDetail(idx) {
+  const r = (window._sortedResults || allResults)[idx];
+  if (!r) return;
+
+  // Highlight row
+  document.querySelectorAll('#rfpBody tr').forEach(tr => tr.classList.remove('active'));
+  const row = document.querySelector(`#rfpBody tr[data-idx="${idx}"]`);
+  if (row) row.classList.add('active');
+
+  document.getElementById('drawerTitle').textContent = r.title;
+  document.getElementById('drawerLink').href = r.link || '#';
+
+  const rows = [
+    ['Agency / Organization', r.agency],
+    ['Source',               r.source],
+    ['Posted Date',          r.posted],
+    ['Response Deadline',    r.deadline],
+    ['Notice / Award Type',  r.type],
+    ['Estimated Value',      r.value],
+    ['NAICS Code',           r.naics],
+    ['Set-Aside',            r.set_aside],
+    ['Solicitation No.',     r.sol_number],
+  ].filter(([,v]) => v).map(([l,v]) =>
+    `<div class="detail-row"><div class="detail-label">${l}</div><div class="detail-value">${escHtml(v)}</div></div>`
+  ).join('');
+
+  const desc = r.description
+    ? `<div class="detail-row"><div class="detail-label">Description</div><div class="detail-desc">${escHtml(r.description)}</div></div>`
+    : '';
+
+  document.getElementById('drawerBody').innerHTML = rows + desc;
+  document.getElementById('detailDrawer').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('detailDrawer').classList.remove('open');
+  document.querySelectorAll('#rfpBody tr').forEach(tr => tr.classList.remove('active'));
+}
+
+function copyLink() {
+  const link = document.getElementById('drawerLink').href;
+  navigator.clipboard.writeText(link).then(() => {
+    const btn = document.querySelector('.btn-copy-link');
+    btn.innerHTML = '<i class="bi bi-check-lg"></i> Copied!';
+    setTimeout(() => { btn.innerHTML = '<i class="bi bi-clipboard"></i> Copy'; }, 1800);
+  });
+}
+
+// ── Export ──────────────────────────────────────────────────────────────────
+function exportCSV() {
+  fetch('/api/export/csv', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({results: allResults})
+  })
+  .then(r => r.blob())
+  .then(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `rfp_language_services_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+  });
+}
+
+// ── Settings ────────────────────────────────────────────────────────────────
+document.getElementById('settingsModal').addEventListener('show.bs.modal', () => {
+  fetch('/api/settings').then(r => r.json()).then(cfg => {
+    document.getElementById('samApiKey').value = cfg.sam_api_key || '';
+    document.getElementById('settingsMax').value = cfg.max_results || 25;
+  });
+});
+
+function saveSettings() {
+  const cfg = {
+    sam_api_key: document.getElementById('samApiKey').value.trim(),
+    max_results: parseInt(document.getElementById('settingsMax').value) || 25,
+  };
+  fetch('/api/settings', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(cfg)
+  }).then(() => {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('settingsModal'));
+    modal.hide();
+    const ksBadge = document.getElementById('keyStatus');
+    if (cfg.sam_api_key) {
+      ksBadge.className = 'key-badge key-set';
+      ksBadge.innerHTML = '<i class="bi bi-key-fill"></i> SAM.gov Key Set';
+    } else {
+      ksBadge.className = 'key-badge key-unset';
+      ksBadge.innerHTML = '<i class="bi bi-key-fill"></i> SAM.gov No Key';
+    }
+    document.getElementById('maxResults').value = cfg.max_results;
+  });
+}
+
+// ── Helpers ─────────────────────────────────────────────────────────────────
+function escHtml(s) {
+  if (!s) return '';
+  return String(s)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+function sourceBadge(src) {
+  const map = {
+    'SAM.gov':      'badge-sam',
+
+    'Grants.gov':   'badge-grants',
+    'UNGM':         'badge-ungm',
+    'World Bank':   'badge-worldbank',
+  };
+  const cls = map[src] || 'badge-sam';
+  return `<span class="source-badge ${cls}">${escHtml(src)}</span>`;
+}
+
+function deadlineClass(dl) {
+  if (!dl) return '';
+  const d = new Date(dl);
+  const diff = (d - new Date()) / 86400000;
+  if (diff < 0)  return '';
+  if (diff < 14) return 'deadline-soon';
+  return 'deadline-ok';
+}
+</script>
+</body>
+</html>
