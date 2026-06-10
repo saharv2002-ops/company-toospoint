@@ -8,7 +8,8 @@
 
 ## In Progress
 <!-- Current work, ongoing initiatives. Add entries with date started. -->
-email
+Strategy level set: 6/10/26
+Meet with Boostlingo on 6/11 to become a vendor
 -
 
 ## Completed
