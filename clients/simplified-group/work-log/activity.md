@@ -9,9 +9,11 @@
 ## In Progress
 <!-- Current work, ongoing initiatives. Add entries with date started. -->
 
--
+- RFP for California - due June 23
 
 ## Completed
 <!-- Reverse chronological. Format: `YYYY-MM-DD — short description` -->
 
--
+-2026-May. Women empowerment RFP submitted. Waiting on results.
+
+-2026-May. They were successful in onboarding agents to Propio again.
