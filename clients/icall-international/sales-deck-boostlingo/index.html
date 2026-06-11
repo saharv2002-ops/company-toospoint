@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>iCall International — Vendor Pitch for Boostlingo</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+  :root{
+    --violet-900:#1f0a47;
+    --violet-800:#2c1166;
+    --violet-700:#3d1a8c;
+    --violet-600:#5028b3;
+    --violet-500:#6a3dd0;
+    --violet-400:#8c63e0;
+    --violet-300:#b094ec;
+    --violet-200:#d2bff5;
+    --violet-100:#ece1fb;
+    --gold:#e2b770;
+    --coral:#ee7d6a;
+    --ink:#160a2e;
+    --paper:#f5f1ea;
+    --bone:#fbf8f3;
+    --rule:rgba(31,10,71,0.10);
+  }
+
+  html,body{
+    background:#15101f;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  .deck{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:48px 24px 96px;
+    gap:34px;
+  }
+
+  .slide{
+    width:1280px;
+    max-width:100%;
+    aspect-ratio:16/9;
+    background:var(--bone);
+    box-shadow:
+      0 60px 120px -30px rgba(0,0,0,0.55),
+      0 12px 36px -12px rgba(0,0,0,0.35);
+    position:relative;
+    overflow:hidden;
+    border-radius:6px;
+    color:var(--ink);
+  }
+
+  /* chrome */
+  .chrome-corner{
+    position:absolute;top:22px;right:28px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:2px;
+    color:var(--violet-700);opacity:0.55;text-transform:uppercase;z-index:5;
+  }
+  .slide.dark .chrome-corner{color:var(--violet-200);opacity:0.55;}
+  .chrome-foot{
+    position:absolute;bottom:22px;left:36px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:2.4px;
+    color:var(--violet-700);opacity:0.55;text-transform:uppercase;z-index:5;
+  }
+  .slide.dark .chrome-foot{color:var(--violet-200);opacity:0.55;}
+  .slide-num{
+    position:absolute;bottom:22px;right:28px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:2px;
+    color:var(--violet-700);opacity:0.6;z-index:5;
+  }
+  .slide.dark .slide-num{color:var(--violet-200);opacity:0.6;}
+
+  /* shared atoms */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:11px;font-weight:700;letter-spacing:3.4px;
+    text-transform:uppercase;color:var(--violet-500);
+  }
+  .eyebrow::before{content:'';display:block;width:34px;height:2px;background:var(--violet-500);}
+  .slide.dark .eyebrow{color:var(--violet-300);}
+  .slide.dark .eyebrow::before{background:var(--violet-300);}
+
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 14px;border-radius:999px;
+    background:rgba(106,61,208,0.10);
+    color:var(--violet-700);
+    font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;
+    border:1px solid rgba(106,61,208,0.25);
+  }
+  .slide.dark .pill{
+    background:rgba(176,148,236,0.10);
+    border:1px solid rgba(176,148,236,0.30);
+    color:var(--violet-200);
+  }
+
+  .grain::after{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);
+    background-size:3px 3px;mix-blend-mode:overlay;opacity:0.5;
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 1 — COVER
+     ════════════════════════════════════════════ */
+  .slide-cover{
+    background:
+      radial-gradient(120% 80% at 75% 30%, rgba(140,99,224,0.22), transparent 55%),
+      radial-gradient(80% 60% at 15% 95%, rgba(226,183,112,0.16), transparent 60%),
+      linear-gradient(155deg,#1f0a47 0%, #2c1166 45%, #3d1a8c 100%);
+    color:#fff;
+  }
+  .cover-grid{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,0.045) 1px,transparent 1px);
+    background-size:80px 80px;
+    mask-image:radial-gradient(ellipse at 60% 40%,#000 30%,transparent 75%);
+  }
+  .cover-orb{
+    position:absolute;width:520px;height:520px;border-radius:50%;
+    right:-90px;top:-130px;
+    background:radial-gradient(circle at 30% 30%, rgba(176,148,236,0.55), rgba(106,61,208,0.18) 45%, transparent 70%);
+    filter:blur(2px);
+  }
+  .cover-orb.b{
+    width:340px;height:340px;left:-120px;bottom:-120px;
+    background:radial-gradient(circle at 50% 50%, rgba(226,183,112,0.40), rgba(238,125,106,0.10) 50%, transparent 75%);
+  }
+  .cover-content{
+    position:relative;z-index:3;height:100%;
+    padding:64px 90px 84px;
+    display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .cover-top{display:flex;align-items:center;justify-content:space-between;}
+  .cover-logo{
+    height:74px;display:block;padding:12px 18px;
+    background:#fff;border-radius:14px;
+    box-shadow:0 18px 40px -16px rgba(0,0,0,0.45);
+  }
+  .cover-partner{
+    text-align:right;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:2.5px;
+    color:rgba(255,255,255,0.55);text-transform:uppercase;line-height:1.7;
+  }
+  .cover-partner b{color:var(--violet-200);font-weight:500;}
+  .cover-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:800;font-size:78px;line-height:1.04;
+    letter-spacing:-1.2px;color:#fff;max-width:1000px;
+  }
+  .cover-headline .accent{
+    background:linear-gradient(90deg,var(--violet-200),var(--violet-400));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-style:italic;font-weight:600;
+  }
+  .cover-tag{
+    margin-top:26px;font-size:17px;line-height:1.7;font-weight:400;
+    color:rgba(255,255,255,0.82);max-width:760px;letter-spacing:0.1px;
+  }
+  .cover-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;}
+  .cover-mini-stats{display:flex;gap:54px;}
+  .mini-stat .num{
+    font-family:'Playfair Display',serif;
+    font-size:40px;font-weight:800;line-height:1;color:#fff;letter-spacing:-1px;
+  }
+  .mini-stat .num span{color:var(--violet-300);}
+  .mini-stat .lbl{
+    margin-top:8px;font-size:11px;letter-spacing:2px;
+    color:rgba(255,255,255,0.55);text-transform:uppercase;font-weight:600;
+  }
+  .cover-cta{
+    display:inline-flex;align-items:center;gap:14px;
+    padding:18px 28px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:50px;color:#fff;
+    font-size:13px;letter-spacing:2.5px;font-weight:600;text-transform:uppercase;
+    text-decoration:none;
+  }
+  .cover-cta .arrow{
+    flex:none;width:30px;height:30px;border-radius:50%;
+    background:var(--violet-300);color:var(--violet-900);
+    display:inline-flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:14px;line-height:1;
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 2 — WHO WE ARE (vendor positioning)
+     ════════════════════════════════════════════ */
+  .slide-about{background:linear-gradient(180deg,#fbf8f3,#f1ecdf);}
+  .about-content{
+    height:100%;padding:80px 90px 80px;
+    display:grid;grid-template-columns:0.85fr 1.15fr;gap:72px;
+  }
+  .about-left{display:flex;flex-direction:column;gap:24px;justify-content:center;}
+  .about-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:700;font-size:60px;line-height:1.08;
+    letter-spacing:-0.8px;color:var(--violet-900);word-spacing:0.02em;
+  }
+  .about-headline em{font-style:italic;color:var(--violet-500);font-weight:600;}
+  .about-right{display:flex;flex-direction:column;justify-content:center;gap:24px;}
+  .about-lead{
+    font-size:16px;line-height:1.72;color:#3a3450;font-weight:400;letter-spacing:0.1px;
+  }
+  .about-lead strong{color:var(--violet-900);font-weight:600;}
+  .about-values{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 24px;margin-top:4px;}
+  .value-row{
+    display:flex;align-items:flex-start;gap:14px;
+    padding:14px 0;border-top:1px solid var(--rule);
+  }
+  .value-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;font-weight:600;color:var(--violet-500);letter-spacing:1px;min-width:24px;
+  }
+  .value-text strong{
+    font-size:14px;font-weight:700;color:var(--violet-900);display:block;margin-bottom:2px;
+  }
+  .value-text span{font-size:12px;color:#5e587a;line-height:1.45;}
+
+  /* ════════════════════════════════════════════
+     SLIDE 3 — COMPLIANCE
+     ════════════════════════════════════════════ */
+  .slide-compliance{background:#fff;}
+  .cmp-header{
+    padding:64px 80px 0;
+    display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
+  }
+  .cmp-header h2{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:54px;line-height:1.08;
+    letter-spacing:-0.7px;color:var(--violet-900);max-width:740px;word-spacing:0.02em;
+  }
+  .cmp-header h2 em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .cmp-header p{font-size:14px;line-height:1.6;color:#5e587a;max-width:340px;}
+  .cmp-grid{
+    margin:30px 80px 60px;
+    display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
+  }
+  .cmp-card{
+    background:linear-gradient(180deg,#fbf8f3,#f3eaf7);
+    border:1px solid rgba(31,10,71,0.06);
+    border-radius:10px;
+    padding:22px 24px;
+    display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden;
+  }
+  .cmp-card.featured{
+    background:linear-gradient(165deg,var(--violet-700),var(--violet-900));
+    color:#fff;border:1px solid rgba(176,148,236,0.20);
+  }
+  .cmp-card.featured::after{
+    content:'';position:absolute;width:200px;height:200px;border-radius:50%;
+    right:-70px;bottom:-70px;
+    background:radial-gradient(circle at 30% 30%,rgba(176,148,236,0.40),transparent 70%);
+  }
+  .cmp-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;font-weight:700;letter-spacing:1.6px;
+    color:var(--violet-500);text-transform:uppercase;
+  }
+  .cmp-card.featured .cmp-num{color:var(--violet-300);}
+  .cmp-title{
+    font-family:'Playfair Display',serif;font-size:22px;font-weight:700;
+    line-height:1.15;color:var(--violet-900);letter-spacing:-0.3px;margin-top:4px;
+  }
+  .cmp-card.featured .cmp-title{color:#fff;}
+  .cmp-desc{font-size:12.5px;line-height:1.55;color:#5e587a;margin-top:2px;}
+  .cmp-card.featured .cmp-desc{color:rgba(255,255,255,0.80);}
+  .cmp-vendor{
+    display:inline-flex;align-items:center;gap:8px;margin-top:8px;
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;
+    letter-spacing:1.4px;color:var(--violet-700);text-transform:uppercase;
+  }
+  .cmp-card.featured .cmp-vendor{color:var(--violet-200);}
+  .cmp-vendor::before{
+    content:'';width:6px;height:6px;border-radius:50%;background:var(--violet-500);
+  }
+  .cmp-card.featured .cmp-vendor::before{background:var(--violet-300);}
+
+  /* ════════════════════════════════════════════
+     SLIDE 4 — QUALITY ASSURANCE — PILLARS
+     ════════════════════════════════════════════ */
+  .slide-qa{background:linear-gradient(180deg,#fbf8f3,#f1ecdf);}
+  .qa-header{
+    padding:64px 80px 0;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
+  }
+  .qa-header h2{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:54px;line-height:1.08;
+    letter-spacing:-0.7px;color:var(--violet-900);max-width:760px;word-spacing:0.02em;
+  }
+  .qa-header h2 em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .qa-header p{font-size:14px;line-height:1.6;color:#5e587a;max-width:340px;}
+  .qa-pillars{
+    margin:26px 80px 60px;
+    display:grid;grid-template-columns:repeat(5,1fr);gap:12px;
+  }
+  .qa-pill{
+    background:#fff;border:1px solid var(--rule);border-radius:10px;
+    padding:22px 18px;display:flex;flex-direction:column;gap:8px;min-height:200px;
+  }
+  .qa-pill .num{
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    letter-spacing:1.6px;color:var(--violet-500);
+  }
+  .qa-pill .ttl{
+    font-family:'Playfair Display',serif;font-size:18px;font-weight:700;line-height:1.2;
+    color:var(--violet-900);margin-top:4px;letter-spacing:-0.2px;
+  }
+  .qa-pill .desc{font-size:12px;line-height:1.5;color:#5e587a;}
+
+  .qa-band{
+    margin:0 80px 60px;background:#fff;border:1px solid var(--rule);border-radius:12px;
+    padding:22px 26px;display:flex;align-items:center;gap:20px;
+  }
+  .qa-band .lbl{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;
+    letter-spacing:1.6px;color:var(--violet-500);text-transform:uppercase;min-width:140px;
+  }
+  .qa-band .body{font-size:13.5px;line-height:1.6;color:#3a3450;}
+  .qa-band .body strong{color:var(--violet-900);font-weight:600;}
+
+  /* ════════════════════════════════════════════
+     SLIDE 5 — QA LIVE / CONTINUOUS
+     ════════════════════════════════════════════ */
+  .slide-qa-live{background:#fff;}
+  .qal-grid{height:100%;display:grid;grid-template-columns:1fr 1fr;}
+  .qal-left{
+    padding:80px 70px;display:flex;flex-direction:column;justify-content:center;gap:28px;
+    border-right:1px solid var(--rule);
+  }
+  .qal-headline{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:52px;line-height:1.06;
+    letter-spacing:-0.8px;color:var(--violet-900);word-spacing:0.02em;
+  }
+  .qal-headline em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .qal-subline{font-size:15.5px;line-height:1.7;color:#3a3450;max-width:480px;}
+  .qal-stats{display:flex;gap:36px;margin-top:4px;}
+  .qal-stat .n{
+    font-family:'Playfair Display',serif;font-size:38px;font-weight:800;
+    color:var(--violet-700);line-height:1;letter-spacing:-0.8px;
+  }
+  .qal-stat .n span{color:var(--violet-400);font-size:24px;}
+  .qal-stat .l{
+    margin-top:8px;font-size:10.5px;letter-spacing:2px;
+    color:var(--violet-700);text-transform:uppercase;font-weight:700;opacity:0.75;
+  }
+  .qal-right{padding:70px 60px;display:flex;flex-direction:column;justify-content:center;gap:8px;}
+  .qal-feat{
+    display:grid;grid-template-columns:50px 1fr;gap:18px;
+    padding:18px 0;border-bottom:1px solid var(--rule);
+  }
+  .qal-feat:last-child{border-bottom:none;}
+  .qal-feat-icon{
+    width:42px;height:42px;border-radius:11px;
+    background:rgba(106,61,208,0.10);border:1px solid rgba(106,61,208,0.20);
+    display:flex;align-items:center;justify-content:center;color:var(--violet-600);
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;
+  }
+  .qal-feat-text strong{
+    display:block;font-size:15px;font-weight:700;color:var(--violet-900);margin-bottom:4px;
+    font-family:'Playfair Display',serif;letter-spacing:-0.2px;
+  }
+  .qal-feat-text span{font-size:12.5px;color:#5e587a;line-height:1.55;}
+
+  /* ════════════════════════════════════════════
+     SLIDE 6 — TOP LANGUAGES + RAPID RECRUITMENT
+     ════════════════════════════════════════════ */
+  .slide-langs{background:linear-gradient(180deg,#fbf8f3,#f1ecdf);}
+  .lang-header{
+    padding:60px 80px 0;display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
+  }
+  .lang-header h2{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:54px;line-height:1.08;
+    letter-spacing:-0.7px;color:var(--violet-900);max-width:760px;word-spacing:0.02em;
+  }
+  .lang-header h2 em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .lang-header p{font-size:14px;line-height:1.6;color:#5e587a;max-width:340px;}
+  .lang-cloud{
+    margin:22px 80px 18px;
+    display:flex;flex-wrap:wrap;gap:9px;
+  }
+  .lang-chip{
+    display:inline-flex;align-items:center;
+    padding:8px 14px;border-radius:999px;
+    background:#fff;border:1px solid rgba(106,61,208,0.18);
+    font-size:12.5px;font-weight:600;color:var(--violet-800);
+    letter-spacing:0.2px;
+  }
+  .lang-chip.hi{
+    background:var(--violet-700);color:#fff;border-color:transparent;
+  }
+  .lang-band{
+    margin:14px 80px 50px;background:#fff;border:1px solid var(--rule);border-radius:12px;
+    padding:20px 26px;display:grid;grid-template-columns:160px 1fr auto;gap:24px;align-items:center;
+  }
+  .lang-band .lbl{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;
+    letter-spacing:1.6px;color:var(--violet-500);text-transform:uppercase;
+  }
+  .lang-band .body{font-size:13.5px;line-height:1.6;color:#3a3450;}
+  .lang-band .body strong{color:var(--violet-900);font-weight:600;}
+  .lang-band .badge{
+    font-family:'Playfair Display',serif;font-size:34px;font-weight:800;
+    color:var(--violet-700);letter-spacing:-0.5px;
+  }
+  .lang-band .badge span{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:700;letter-spacing:1.6px;color:var(--violet-500);margin-top:2px;text-transform:uppercase;}
+
+  /* ════════════════════════════════════════════
+     SLIDE 7 — PARTNERSHIP / CTA
+     ════════════════════════════════════════════ */
+  .slide-cta{
+    background:
+      radial-gradient(120% 80% at 75% 30%, rgba(140,99,224,0.22), transparent 55%),
+      linear-gradient(155deg,#1f0a47 0%, #2c1166 45%, #3d1a8c 100%);
+    color:#fff;
+  }
+  .cta-content{
+    position:relative;z-index:3;height:100%;padding:90px 90px 90px;
+    display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .cta-headline{
+    font-family:'Playfair Display',serif;font-weight:800;font-size:72px;line-height:1.04;
+    letter-spacing:-1.2px;color:#fff;max-width:980px;
+  }
+  .cta-headline .accent{
+    background:linear-gradient(90deg,var(--violet-200),var(--violet-400));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-style:italic;font-weight:600;
+  }
+  .cta-tag{
+    margin-top:24px;font-size:16.5px;line-height:1.7;
+    color:rgba(255,255,255,0.82);max-width:760px;
+  }
+  .cta-bottom{display:grid;grid-template-columns:1fr 1fr auto;gap:40px;align-items:end;}
+  .cta-contact{display:flex;flex-direction:column;gap:14px;}
+  .cta-row{
+    display:flex;align-items:center;gap:14px;
+    padding:10px 0;border-top:1px solid rgba(255,255,255,0.10);
+  }
+  .cta-row .lbl{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;
+    color:rgba(255,255,255,0.55);text-transform:uppercase;min-width:64px;
+  }
+  .cta-row .val{font-size:14.5px;color:#fff;font-weight:500;letter-spacing:0.2px;}
+  .cta-button{
+    display:inline-flex;align-items:center;gap:14px;justify-self:end;
+    padding:18px 28px;background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:50px;color:#fff;
+    font-size:13px;letter-spacing:2.5px;font-weight:600;text-transform:uppercase;
+    text-decoration:none;
+  }
+  .cta-button .arrow{
+    flex:none;width:30px;height:30px;border-radius:50%;
+    background:var(--violet-300);color:var(--violet-900);
+    display:inline-flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:14px;line-height:1;
+  }
+  .cta-logo{
+    height:62px;display:block;padding:10px 16px;
+    background:#fff;border-radius:12px;
+    box-shadow:0 18px 40px -16px rgba(0,0,0,0.45);
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ═══════════════════════════════════
+       SLIDE 1 — COVER
+       ═══════════════════════════════════ -->
+  <section class="slide slide-cover dark grain" id="s1">
+    <div class="cover-grid"></div>
+    <div class="cover-orb"></div>
+    <div class="cover-orb b"></div>
+
+    <div class="chrome-corner">iCall · Vendor Pitch · 2026</div>
+
+    <div class="cover-content">
+      <div class="cover-top">
+        <img class="cover-logo" src="logo.png" alt="iCall International">
+        <div class="cover-partner">
+          Prepared for<br>
+          <b>Boostlingo</b>
+        </div>
+      </div>
+
+      <div>
+        <div class="eyebrow">Vendor Partnership Proposal</div>
+        <h1 class="cover-headline" style="margin-top:22px;">
+          A vetted bench<br>
+          ready to <span class="accent">scale with you.</span>
+        </h1>
+        <p class="cover-tag">
+          iCall International is a leading interpretation provider purpose-built
+          for OPI and VRI at LSP scale — third-party-tested linguists, monthly
+          compliance screening, and a rapid recruiting engine for the languages
+          Boostlingo&rsquo;s clients need next.
+        </p>
+      </div>
+
+      <div class="cover-bottom">
+        <div class="cover-mini-stats">
+          <div class="mini-stat">
+            <div class="num"><span>2,000+</span></div>
+            <div class="lbl">Vetted Interpreters</div>
+          </div>
+          <div class="mini-stat">
+            <div class="num"><span>30+</span></div>
+            <div class="lbl">Active Languages</div>
+          </div>
+          <div class="mini-stat">
+            <div class="num"><span>24/7</span></div>
+            <div class="lbl">Coverage</div>
+          </div>
+        </div>
+        <a class="cover-cta" href="https://icallinternational.com">
+          Become A Vendor Partner
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="slide-num">01 / 07</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 2 — WHO WE ARE (vendor framing)
+       ═══════════════════════════════════ -->
+  <section class="slide slide-about" id="s2">
+    <div class="about-content">
+      <div class="about-left">
+        <span class="pill">Why iCall</span>
+        <h2 class="about-headline">
+          Built to plug<br>
+          into <em>LSPs.</em>
+        </h2>
+      </div>
+      <div class="about-right">
+        <p class="about-lead">
+          <strong>iCall International</strong> is a leading interpretation and
+          contact-center partner that has spent years operating to the same
+          standards Boostlingo holds its vendors to — <em>vetted linguists,
+          documented QA, and verifiable compliance.</em>
+        </p>
+        <p class="about-lead">
+          We&rsquo;re structured to be a quiet, dependable bench for an LSP:
+          fast onboarding into your platform, predictable connect quality,
+          transparent reporting, and an in-house recruiting team that can stand
+          up new language pairs on demand.
+        </p>
+
+        <div class="about-values">
+          <div class="value-row">
+            <div class="value-num">01</div>
+            <div class="value-text">
+              <strong>Vetted, not just listed</strong>
+              <span>Third-party language testing, certification checks, full background screening.</span>
+            </div>
+          </div>
+          <div class="value-row">
+            <div class="value-num">02</div>
+            <div class="value-text">
+              <strong>Compliance is monthly, not annual</strong>
+              <span>SDN &amp; OIG exclusion screening rerun every month on every interpreter.</span>
+            </div>
+          </div>
+          <div class="value-row">
+            <div class="value-num">03</div>
+            <div class="value-text">
+              <strong>Recruit-to-demand</strong>
+              <span>Standing recruiting pipeline that flexes to your language gaps.</span>
+            </div>
+          </div>
+          <div class="value-row">
+            <div class="value-num">04</div>
+            <div class="value-text">
+              <strong>Transparent QA</strong>
+              <span>Documented onboarding pillars + ongoing monitoring and supervisor support.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Vendor Pitch for Boostlingo</div>
+    <div class="slide-num">02 / 07</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 3 — COMPLIANCE
+       ═══════════════════════════════════ -->
+  <section class="slide slide-compliance" id="s3">
+    <div class="cmp-header">
+      <h2>Compliance you can <em>audit,</em> not just trust.</h2>
+      <p>Four layers of independent and recurring verification on every interpreter on our bench — before they take a call and every month after.</p>
+    </div>
+
+    <div class="cmp-grid">
+      <div class="cmp-card featured">
+        <div class="cmp-num">01 · Third-Party Language Testing</div>
+        <div class="cmp-title">Independent linguistic verification</div>
+        <div class="cmp-desc">Every interpreter is tested by external assessors — not graded internally — so language proficiency is documented by a neutral third party Boostlingo can verify.</div>
+        <div class="cmp-vendor">Vendors · Alta · LanguageStat</div>
+      </div>
+
+      <div class="cmp-card">
+        <div class="cmp-num">02 · Monthly Sanctions Screening</div>
+        <div class="cmp-title">Re-screened every month against SDN &amp; OIG</div>
+        <div class="cmp-desc">All active interpreters are rerun monthly against the OFAC SDN list and the OIG List of Excluded Individuals/Entities (LEIE). Anyone who appears is removed from the active bench immediately.</div>
+        <div class="cmp-vendor">Cadence · Monthly · 100% of active bench</div>
+      </div>
+
+      <div class="cmp-card">
+        <div class="cmp-num">03 · Background Checks</div>
+        <div class="cmp-title">Standardized pre-engagement screening</div>
+        <div class="cmp-desc">Background checks are run through ESS for every interpreter prior to being routed live calls — applied consistently across the bench, with results retained on file.</div>
+        <div class="cmp-vendor">Vendor · ESS</div>
+      </div>
+
+      <div class="cmp-card">
+        <div class="cmp-num">04 · Employer Reference Verification</div>
+        <div class="cmp-title">HR-led correspondence with prior employers</div>
+        <div class="cmp-desc">Our HR team directly contacts previous employers and language-service providers to verify experience and gather first-hand performance feedback — not just resume review.</div>
+        <div class="cmp-vendor">Owner · iCall HR</div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Vendor Pitch for Boostlingo</div>
+    <div class="slide-num">03 / 07</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 4 — QA PILLARS
+       ═══════════════════════════════════ -->
+  <section class="slide slide-qa" id="s4">
+    <div class="qa-header">
+      <h2>Quality assurance, <em>before</em> the first live call.</h2>
+      <p>Every interpreter on our bench has cleared the same five-pillar onboarding gate before being routed a single call.</p>
+    </div>
+
+    <div class="qa-pillars">
+      <div class="qa-pill">
+        <div class="num">01</div>
+        <div class="ttl">Linguistic Fluency Testing</div>
+        <div class="desc">Source- and target-language proficiency assessed against a documented rubric, with independent third-party scoring on top.</div>
+      </div>
+      <div class="qa-pill">
+        <div class="num">02</div>
+        <div class="ttl">OPI &amp; VRI Protocol Training</div>
+        <div class="desc">Mandatory training on remote interpretation protocols — turn-taking, message management, sight translation, VRI camera etiquette.</div>
+      </div>
+      <div class="qa-pill">
+        <div class="num">03</div>
+        <div class="ttl">Cultural Competency Evaluation</div>
+        <div class="desc">Evaluated on cultural appropriateness, register, and the judgment calls that separate fluent speakers from working interpreters.</div>
+      </div>
+      <div class="qa-pill">
+        <div class="num">04</div>
+        <div class="ttl">Certification Verification</div>
+        <div class="desc">Where certifications are claimed (e.g., CCHI, NBCMI, court-certified), we verify each one directly with the issuing body before activation.</div>
+      </div>
+      <div class="qa-pill">
+        <div class="num">05</div>
+        <div class="ttl">Background Checks</div>
+        <div class="desc">Full ESS background screening completed and on file before an interpreter is routed any live call.</div>
+      </div>
+    </div>
+
+    <div class="qa-band">
+      <div class="lbl">Onboarding Gate</div>
+      <div class="body">
+        An interpreter is only added to the active routing bench once <strong>all five pillars</strong> are documented and signed off — no provisional or partial activation.
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Vendor Pitch for Boostlingo</div>
+    <div class="slide-num">04 / 07</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 5 — QA — LIVE / CONTINUOUS
+       ═══════════════════════════════════ -->
+  <section class="slide slide-qa-live" id="s5">
+    <div class="qal-grid">
+      <div class="qal-left">
+        <span class="pill">Quality In-Flight</span>
+        <h2 class="qal-headline">
+          QA doesn&rsquo;t stop at <em>go-live.</em>
+        </h2>
+        <p class="qal-subline">
+          Onboarding gets an interpreter on the bench. What keeps them there
+          is a live operating layer — supervisor coverage during every
+          coverage hour, defined escalation paths, and ongoing reviews.
+        </p>
+        <div class="qal-stats">
+          <div class="qal-stat">
+            <div class="n">24/7</div>
+            <div class="l">Supervisor Coverage</div>
+          </div>
+          <div class="qal-stat">
+            <div class="n">100<span>%</span></div>
+            <div class="l">Active Bench, Monthly Review</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="qal-right">
+        <div class="qal-feat">
+          <div class="qal-feat-icon">01</div>
+          <div class="qal-feat-text">
+            <strong>Live On-Call Supervisor Support</strong>
+            <span>Supervisors are available on the line during all coverage hours — interpreters can pull one into an active call for assistance, party-mediation, or difficult-call escalation.</span>
+          </div>
+        </div>
+        <div class="qal-feat">
+          <div class="qal-feat-icon">02</div>
+          <div class="qal-feat-text">
+            <strong>Defined Escalation Paths</strong>
+            <span>Documented escalation tree for clinical, legal-sensitive, and complaint scenarios — every interpreter knows the route.</span>
+          </div>
+        </div>
+        <div class="qal-feat">
+          <div class="qal-feat-icon">03</div>
+          <div class="qal-feat-text">
+            <strong>Call Monitoring &amp; Coaching</strong>
+            <span>Ongoing monitoring of live and recorded calls, with structured feedback to interpreters and language-pair calibration sessions.</span>
+          </div>
+        </div>
+        <div class="qal-feat">
+          <div class="qal-feat-icon">04</div>
+          <div class="qal-feat-text">
+            <strong>Client Feedback Loop</strong>
+            <span>Boostlingo&rsquo;s QA findings flow directly into interpreter-level coaching plans, with retraining or removal for repeat misses.</span>
+          </div>
+        </div>
+        <div class="qal-feat">
+          <div class="qal-feat-icon">05</div>
+          <div class="qal-feat-text">
+            <strong>Continuous Compliance</strong>
+            <span>Monthly SDN/OIG re-screening (see slide 03) keeps the bench audit-ready — not just onboarding-ready.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Vendor Pitch for Boostlingo</div>
+    <div class="slide-num">05 / 07</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 6 — TOP LANGUAGES
+       ═══════════════════════════════════ -->
+  <section class="slide slide-langs" id="s6">
+    <div class="lang-header">
+      <h2>Our <em>top</em> active languages.</h2>
+      <p>A snapshot of our highest-volume language pairs — the full active bench runs well beyond this list, with a recruiting engine for anything Boostlingo needs next.</p>
+    </div>
+
+    <div class="lang-cloud">
+      <span class="lang-chip hi">Spanish</span>
+      <span class="lang-chip">Mandarin</span>
+      <span class="lang-chip">Cantonese</span>
+      <span class="lang-chip">Haitian Creole</span>
+      <span class="lang-chip">Cape Verdean Creole</span>
+      <span class="lang-chip">Korean</span>
+      <span class="lang-chip">Hmong</span>
+      <span class="lang-chip">Lao</span>
+      <span class="lang-chip">Arabic</span>
+      <span class="lang-chip">Urdu</span>
+      <span class="lang-chip">Punjabi</span>
+      <span class="lang-chip">Hindi</span>
+      <span class="lang-chip">Gujarati</span>
+      <span class="lang-chip">Dari</span>
+      <span class="lang-chip">Farsi</span>
+      <span class="lang-chip">Russian</span>
+      <span class="lang-chip">Polish</span>
+      <span class="lang-chip">Somali</span>
+      <span class="lang-chip">Tagalog</span>
+      <span class="lang-chip">Tamil</span>
+      <span class="lang-chip">Turkish</span>
+      <span class="lang-chip">Tigrinya</span>
+      <span class="lang-chip">Kinyarwanda</span>
+      <span class="lang-chip">German</span>
+      <span class="lang-chip">Portuguese</span>
+      <span class="lang-chip">Chin (Lai)</span>
+      <span class="lang-chip">Chin (Hakha)</span>
+      <span class="lang-chip">Ukrainian</span>
+      <span class="lang-chip">Vietnamese</span>
+      <span class="lang-chip">Yoruba</span>
+      <span class="lang-chip">Oromo</span>
+    </div>
+
+    <div class="lang-band">
+      <div class="lbl">Recruit-To-Demand</div>
+      <div class="body">
+        Beyond our top languages, iCall can <strong>rapidly recruit qualified
+        interpreters in whichever language pairs Boostlingo needs</strong> —
+        rare languages, regional dialects, or short-notice surges. Our HR and
+        recruiting team is standing capacity, not project-based.
+      </div>
+      <div class="badge">Top 31<span>Of A Wider Bench</span></div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Vendor Pitch for Boostlingo</div>
+    <div class="slide-num">06 / 07</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 7 — PARTNERSHIP / CTA
+       ═══════════════════════════════════ -->
+  <section class="slide slide-cta dark grain" id="s7">
+    <div class="cover-grid"></div>
+    <div class="cover-orb"></div>
+
+    <div class="cta-content">
+      <div>
+        <div class="eyebrow">The Next Step</div>
+        <h2 class="cta-headline" style="margin-top:22px;">
+          Let&rsquo;s make iCall<br>
+          a <span class="accent">Boostlingo</span> vendor.
+        </h2>
+        <p class="cta-tag">
+          We&rsquo;re ready to share full compliance documentation, share-out our
+          QA process docs, and walk Boostlingo&rsquo;s vendor management team
+          through a pilot scope on the language pairs where you need depth.
+        </p>
+      </div>
+
+      <div class="cta-bottom">
+        <div class="cta-contact">
+          <div class="cta-row">
+            <div class="lbl">Call</div>
+            <div class="val">+1 (818) 239&#8209;4744</div>
+          </div>
+          <div class="cta-row">
+            <div class="lbl">Email</div>
+            <div class="val">info@icallinternational.com</div>
+          </div>
+          <div class="cta-row">
+            <div class="lbl">Web</div>
+            <div class="val">icallinternational.com</div>
+          </div>
+        </div>
+        <a class="cta-button" href="https://icallinternational.com">
+          Schedule Vendor Review
+          <span class="arrow">→</span>
+        </a>
+        <img class="cta-logo" src="logo.png" alt="iCall International">
+      </div>
+    </div>
+
+    <div class="slide-num">07 / 07</div>
+  </section>
+
+</div>
+
+</body>
+</html>
