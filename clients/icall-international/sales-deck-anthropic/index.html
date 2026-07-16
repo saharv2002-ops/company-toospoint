@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>iCall International — Multilingual AI Deployment & Assurance Partner Pitch for Anthropic</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,500;1,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+  :root{
+    --violet-900:#1f0a47;
+    --violet-800:#2c1166;
+    --violet-700:#3d1a8c;
+    --violet-600:#5028b3;
+    --violet-500:#6a3dd0;
+    --violet-400:#8c63e0;
+    --violet-300:#b094ec;
+    --violet-200:#d2bff5;
+    --violet-100:#ece1fb;
+    --gold:#e2b770;
+    --coral:#ee7d6a;
+    --ink:#160a2e;
+    --paper:#f5f1ea;
+    --bone:#fbf8f3;
+    --rule:rgba(31,10,71,0.10);
+  }
+
+  html,body{
+    background:#15101f;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  .deck{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:48px 24px 96px;
+    gap:34px;
+  }
+
+  .slide{
+    width:1280px;
+    max-width:100%;
+    aspect-ratio:16/9;
+    background:var(--bone);
+    box-shadow:
+      0 60px 120px -30px rgba(0,0,0,0.55),
+      0 12px 36px -12px rgba(0,0,0,0.35);
+    position:relative;
+    overflow:hidden;
+    border-radius:6px;
+    color:var(--ink);
+  }
+
+  /* chrome */
+  .chrome-corner{
+    position:absolute;top:22px;right:28px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:2px;
+    color:var(--violet-700);opacity:0.55;text-transform:uppercase;z-index:5;
+  }
+  .slide.dark .chrome-corner{color:var(--violet-200);opacity:0.55;}
+  .chrome-foot{
+    position:absolute;bottom:22px;left:36px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;letter-spacing:2.4px;
+    color:var(--violet-700);opacity:0.55;text-transform:uppercase;z-index:5;
+  }
+  .slide.dark .chrome-foot{color:var(--violet-200);opacity:0.55;}
+  .slide-num{
+    position:absolute;bottom:22px;right:28px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:2px;
+    color:var(--violet-700);opacity:0.6;z-index:5;
+  }
+  .slide.dark .slide-num{color:var(--violet-200);opacity:0.6;}
+
+  /* shared atoms */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:11px;font-weight:700;letter-spacing:3.4px;
+    text-transform:uppercase;color:var(--violet-500);
+  }
+  .eyebrow::before{content:'';display:block;width:34px;height:2px;background:var(--violet-500);}
+  .slide.dark .eyebrow{color:var(--violet-300);}
+  .slide.dark .eyebrow::before{background:var(--violet-300);}
+
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 14px;border-radius:999px;
+    background:rgba(106,61,208,0.10);
+    color:var(--violet-700);
+    font-size:11px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;
+    border:1px solid rgba(106,61,208,0.25);
+  }
+  .slide.dark .pill{
+    background:rgba(176,148,236,0.10);
+    border:1px solid rgba(176,148,236,0.30);
+    color:var(--violet-200);
+  }
+
+  .grain::after{
+    content:'';position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,0.04) 1px,transparent 1px);
+    background-size:3px 3px;mix-blend-mode:overlay;opacity:0.5;
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 1 — COVER
+     ════════════════════════════════════════════ */
+  .slide-cover{
+    background:
+      radial-gradient(120% 80% at 75% 30%, rgba(140,99,224,0.22), transparent 55%),
+      radial-gradient(80% 60% at 15% 95%, rgba(226,183,112,0.16), transparent 60%),
+      linear-gradient(155deg,#1f0a47 0%, #2c1166 45%, #3d1a8c 100%);
+    color:#fff;
+  }
+  .cover-grid{
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,0.045) 1px,transparent 1px);
+    background-size:80px 80px;
+    mask-image:radial-gradient(ellipse at 60% 40%,#000 30%,transparent 75%);
+  }
+  .cover-orb{
+    position:absolute;width:520px;height:520px;border-radius:50%;
+    right:-90px;top:-130px;
+    background:radial-gradient(circle at 30% 30%, rgba(176,148,236,0.55), rgba(106,61,208,0.18) 45%, transparent 70%);
+    filter:blur(2px);
+  }
+  .cover-orb.b{
+    width:340px;height:340px;left:-120px;bottom:-120px;
+    background:radial-gradient(circle at 50% 50%, rgba(226,183,112,0.40), rgba(238,125,106,0.10) 50%, transparent 75%);
+  }
+  .cover-content{
+    position:relative;z-index:3;height:100%;
+    padding:56px 90px 76px;
+    display:flex;flex-direction:column;justify-content:space-between;gap:20px;
+  }
+  .cover-top{display:flex;align-items:center;justify-content:space-between;}
+  .cover-logo{
+    height:74px;display:block;padding:12px 18px;
+    background:#fff;border-radius:14px;
+    box-shadow:0 18px 40px -16px rgba(0,0,0,0.45);
+  }
+  .cover-partner{
+    text-align:right;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:2.5px;
+    color:rgba(255,255,255,0.55);text-transform:uppercase;line-height:1.7;
+  }
+  .cover-partner b{color:var(--violet-200);font-weight:500;}
+  .cover-headline{
+    font-family:'Playfair Display',serif;
+    font-weight:800;font-size:56px;line-height:1.05;
+    letter-spacing:-0.9px;color:#fff;max-width:1000px;
+  }
+  .cover-headline .accent{
+    background:linear-gradient(90deg,var(--violet-200),var(--violet-400));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-style:italic;font-weight:600;
+  }
+  .cover-tag{
+    margin-top:24px;font-size:16px;line-height:1.7;font-weight:400;
+    color:rgba(255,255,255,0.82);max-width:800px;letter-spacing:0.1px;
+  }
+  .cover-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;}
+  .cover-mini-stats{display:flex;gap:44px;}
+  .mini-stat .num{
+    font-family:'Playfair Display',serif;
+    font-size:38px;font-weight:800;line-height:1;color:#fff;letter-spacing:-1px;
+  }
+  .mini-stat .num span{color:var(--violet-300);}
+  .mini-stat .lbl{
+    margin-top:8px;font-size:11px;letter-spacing:2px;
+    color:rgba(255,255,255,0.55);text-transform:uppercase;font-weight:600;
+  }
+  .cover-cta{
+    display:inline-flex;align-items:center;gap:14px;
+    padding:18px 28px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:50px;color:#fff;
+    font-size:13px;letter-spacing:2.5px;font-weight:600;text-transform:uppercase;
+    text-decoration:none;
+  }
+  .cover-cta .arrow{
+    flex:none;width:30px;height:30px;border-radius:50%;
+    background:var(--violet-300);color:var(--violet-900);
+    display:inline-flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:14px;line-height:1;
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 2 — WHY ANTHROPIC (philosophy slide)
+     ════════════════════════════════════════════ */
+  .slide-why{background:linear-gradient(180deg,#fbf8f3,#f1ecdf);}
+  .why-content{
+    height:100%;padding:60px 110px 72px;
+    display:flex;flex-direction:column;justify-content:center;gap:20px;
+  }
+  .why-top{display:flex;align-items:flex-start;gap:32px;}
+  .why-top .eyebrow{margin-top:6px;}
+  .why-sub{
+    font-family:'Playfair Display',serif;font-style:italic;font-weight:500;
+    font-size:20px;line-height:1.35;color:var(--violet-500);
+  }
+  .why-sub .l2{display:block;color:var(--violet-700);font-weight:600;font-style:italic;}
+  .why-statement{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:36px;line-height:1.14;
+    letter-spacing:-0.4px;color:var(--violet-900);max-width:1060px;
+  }
+  .why-statement em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .why-body{max-width:1000px;margin-top:2px;}
+  .why-body p{
+    font-size:15px;line-height:1.72;color:#3a3450;font-weight:400;letter-spacing:0.05px;
+  }
+  .why-body p strong{color:var(--violet-900);font-weight:600;}
+  .why-pair{
+    margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:1060px;
+  }
+  .why-mission{
+    padding:16px 22px;
+    background:#fff;border:1px solid rgba(106,61,208,0.20);border-left:4px solid var(--violet-500);
+    border-radius:10px;
+  }
+  .why-mission .l{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;
+    color:var(--violet-500);text-transform:uppercase;font-weight:700;
+  }
+  .why-mission .q{
+    font-family:'Playfair Display',serif;font-size:18px;font-weight:700;
+    color:var(--violet-900);letter-spacing:-0.3px;line-height:1.28;margin-top:4px;
+  }
+  .why-mission .q em{font-style:italic;color:var(--violet-500);font-weight:600;}
+  .why-icall{
+    padding:16px 22px;
+    background:linear-gradient(165deg,var(--violet-700),var(--violet-900));
+    color:#fff;border-radius:10px;position:relative;overflow:hidden;
+  }
+  .why-icall::after{
+    content:'';position:absolute;width:180px;height:180px;border-radius:50%;
+    right:-70px;bottom:-70px;
+    background:radial-gradient(circle at 30% 30%,rgba(176,148,236,0.35),transparent 70%);
+  }
+  .why-icall .l{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.8px;
+    color:var(--violet-300);text-transform:uppercase;font-weight:700;position:relative;z-index:2;
+  }
+  .why-icall .t{
+    font-family:'Playfair Display',serif;font-size:18px;font-weight:700;
+    color:#fff;letter-spacing:-0.3px;line-height:1.28;margin-top:4px;position:relative;z-index:2;
+  }
+  .why-icall .d{
+    font-size:12.5px;line-height:1.55;color:rgba(255,255,255,0.86);
+    margin-top:6px;position:relative;z-index:2;
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 3 — THE RISK
+     ════════════════════════════════════════════ */
+  .slide-risk{background:#fff;}
+  .risk-grid{height:100%;display:grid;grid-template-columns:0.95fr 1.1fr;}
+  .risk-left{
+    padding:60px 56px 60px 78px;
+    display:flex;flex-direction:column;justify-content:center;gap:18px;
+    border-right:1px solid var(--rule);
+    background:linear-gradient(180deg,#fbf8f3,#f3eaf7);
+  }
+  .risk-headline{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:38px;line-height:1.08;
+    letter-spacing:-0.6px;color:var(--violet-900);word-spacing:0.02em;
+  }
+  .risk-headline em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .risk-subline{font-size:15px;line-height:1.7;color:#3a3450;max-width:480px;}
+  .risk-callout{
+    margin-top:6px;padding:20px 24px;
+    background:#fff;border:1px solid var(--rule);border-radius:12px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .risk-callout .lbl{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;
+    letter-spacing:1.8px;color:var(--violet-500);text-transform:uppercase;
+  }
+  .risk-callout .body{
+    font-size:13.5px;line-height:1.65;color:#3a3450;
+  }
+  .risk-callout .body strong{color:var(--violet-900);font-weight:600;}
+
+  .risk-right{padding:60px 70px 60px 60px;display:flex;flex-direction:column;justify-content:center;gap:4px;}
+  .risk-feat{
+    display:grid;grid-template-columns:50px 1fr;gap:18px;
+    padding:14px 0;border-bottom:1px solid var(--rule);
+  }
+  .risk-feat:last-child{border-bottom:none;}
+  .risk-feat-icon{
+    width:42px;height:42px;border-radius:11px;
+    background:rgba(106,61,208,0.10);border:1px solid rgba(106,61,208,0.20);
+    display:flex;align-items:center;justify-content:center;color:var(--violet-600);
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;
+  }
+  .risk-feat-text strong{
+    display:block;font-size:15px;font-weight:700;color:var(--violet-900);margin-bottom:3px;
+    font-family:'Playfair Display',serif;letter-spacing:-0.2px;
+  }
+  .risk-feat-text span{font-size:12px;color:#5e587a;line-height:1.5;display:block;}
+  .risk-feat-text .icall{
+    display:block;margin-top:5px;font-size:11.5px;line-height:1.5;
+    color:var(--violet-700);font-weight:500;
+  }
+  .risk-feat-text .icall b{
+    font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
+    letter-spacing:1.4px;color:var(--violet-500);text-transform:uppercase;margin-right:6px;
+  }
+
+  /* ════════════════════════════════════════════
+     SLIDE 3 — THREE LAYERS
+     ════════════════════════════════════════════ */
+  .slide-svc{background:linear-gradient(180deg,#fbf8f3,#f1ecdf);}
+  .svc-header{
+    padding:52px 80px 0;
+    display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
+  }
+  .svc-header h2{
+    font-family:'Playfair Display',serif;font-weight:700;font-size:42px;line-height:1.08;
+    letter-spacing:-0.6px;color:var(--violet-900);max-width:720px;word-spacing:0.02em;
+  }
+  .svc-header h2 em{color:var(--violet-500);font-style:italic;font-weight:600;}
+  .svc-header p{font-size:14px;line-height:1.6;color:#5e587a;max-width:340px;}
+  .svc-grid{
+    margin:24px 80px 14px;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  }
+  .svc-card{
+    background:#fff;border:1px solid var(--rule);border-radius:12px;
+    padding:22px 22px;display:flex;flex-direction:column;gap:8px;min-height:250px;
+    position:relative;overflow:hidden;
+  }
+  .svc-card.featured{
+    background:linear-gradient(165deg,var(--violet-700),var(--violet-900));
+    color:#fff;border:1px solid rgba(176,148,236,0.20);
+  }
+  .svc-card.featured::after{
+    content:'';position:absolute;width:220px;height:220px;border-radius:50%;
+    right:-80px;bottom:-80px;
+    background:radial-gradient(circle at 30% 30%,rgba(176,148,236,0.42),transparent 70%);
+  }
+  .svc-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;font-weight:700;letter-spacing:1.6px;
+    color:var(--violet-500);text-transform:uppercase;
+  }
+  .svc-card.featured .svc-num{color:var(--violet-300);}
+  .svc-title{
+    font-family:'Playfair Display',serif;font-size:22px;font-weight:700;
+    line-height:1.14;color:var(--violet-900);letter-spacing:-0.3px;margin-top:2px;
+  }
+  .svc-card.featured .svc-title{color:#fff;}
+  .svc-desc{font-size:12.5px;line-height:1.6;color:#5e587a;margin-top:2px;}
+  .svc-card.featured .svc-desc{color:rgba(255,255,255,0.82);}
+  .svc-bullets{margin-top:8px;display:flex;flex-direction:column;gap:6px;}
+  .svc-bullets li{
+    list-style:none;position:relative;padding-left:18px;
+    font-size:12px;line-height:1.5;color:#3a3450;
+  }
+  .svc-bullets li::before{
+    content:'';position:absolute;left:0;top:6px;width:8px;height:8px;
+    border-radius:50%;background:var(--violet-400);
+  }
+  .svc-card.featured .svc-bullets li{color:rgba(255,255,255,0.88);}
+  .svc-card.featured .svc-bullets li::before{background:var(--violet-200);}
+
+  .svc-band{
+    margin:6px 80px 56px;background:#fff;border:1px solid var(--rule);border-radius:12px;
+    padding:16px 24px;display:grid;grid-template-columns:170px 1fr 1fr;gap:22px;align-items:center;
+  }
+  .svc-band .lbl{
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;
+    letter-spacing:1.6px;color:var(--violet-500);text-transform:uppercase;
+  }
+  .svc-band-col{
+    display:flex;flex-direction:column;gap:2px;
+    padding-left:18px;border-left:1px solid var(--rule);
+  }
+  .svc-band-col .k{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.6px;
+    color:var(--violet-500);text-transform:uppercase;font-weight:700;
+  }
+  .svc-band-col .v{font-size:12.5px;line-height:1.5;color:#3a3450;}
+  .svc-band-col .v strong{color:var(--violet-900);font-weight:600;}
+
+  /* ════════════════════════════════════════════
+     SLIDE 4 — CTA
+     ════════════════════════════════════════════ */
+  .slide-cta{
+    background:
+      radial-gradient(120% 80% at 75% 30%, rgba(140,99,224,0.22), transparent 55%),
+      linear-gradient(155deg,#1f0a47 0%, #2c1166 45%, #3d1a8c 100%);
+    color:#fff;
+  }
+  .cta-content{
+    position:relative;z-index:3;height:100%;padding:60px 90px 76px;
+    display:flex;flex-direction:column;justify-content:space-between;gap:20px;
+  }
+  .cta-headline{
+    font-family:'Playfair Display',serif;font-weight:800;font-size:46px;line-height:1.06;
+    letter-spacing:-0.8px;color:#fff;max-width:940px;
+  }
+  .cta-headline .accent{
+    background:linear-gradient(90deg,var(--violet-200),var(--violet-400));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    font-style:italic;font-weight:600;
+  }
+  .cta-tag{
+    margin-top:16px;font-size:14.5px;line-height:1.65;
+    color:rgba(255,255,255,0.82);max-width:820px;
+  }
+  .cta-pilot{
+    margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;
+    max-width:940px;
+  }
+  .cta-pilot-card{
+    padding:16px 18px;border:1px solid rgba(255,255,255,0.14);
+    border-radius:10px;background:rgba(255,255,255,0.04);
+  }
+  .cta-pilot-card .num{
+    font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:1.8px;
+    color:var(--violet-300);text-transform:uppercase;font-weight:700;
+  }
+  .cta-pilot-card .ttl{
+    font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:#fff;margin-top:4px;
+    letter-spacing:-0.2px;
+  }
+  .cta-pilot-card .desc{font-size:11.5px;color:rgba(255,255,255,0.72);margin-top:6px;line-height:1.5;}
+  .cta-bottom{display:grid;grid-template-columns:1fr 1fr auto;gap:40px;align-items:end;}
+  .cta-contact{display:flex;flex-direction:column;gap:14px;}
+  .cta-row{
+    display:flex;align-items:center;gap:14px;
+    padding:10px 0;border-top:1px solid rgba(255,255,255,0.10);
+  }
+  .cta-row .lbl{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:2px;
+    color:rgba(255,255,255,0.55);text-transform:uppercase;min-width:64px;
+  }
+  .cta-row .val{font-size:14.5px;color:#fff;font-weight:500;letter-spacing:0.2px;}
+  .cta-button{
+    display:inline-flex;align-items:center;gap:14px;justify-self:end;
+    padding:18px 28px;background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:50px;color:#fff;
+    font-size:13px;letter-spacing:2.5px;font-weight:600;text-transform:uppercase;
+    text-decoration:none;
+  }
+  .cta-button .arrow{
+    flex:none;width:30px;height:30px;border-radius:50%;
+    background:var(--violet-300);color:var(--violet-900);
+    display:inline-flex;align-items:center;justify-content:center;
+    font-weight:900;font-size:14px;line-height:1;
+  }
+  .cta-logo{
+    height:62px;display:block;padding:10px 16px;
+    background:#fff;border-radius:12px;
+    box-shadow:0 18px 40px -16px rgba(0,0,0,0.45);
+  }
+</style>
+</head>
+<body>
+
+<div class="deck">
+
+  <!-- ═══════════════════════════════════
+       SLIDE 1 — COVER
+       ═══════════════════════════════════ -->
+  <section class="slide slide-cover dark grain" id="s1">
+    <div class="cover-grid"></div>
+    <div class="cover-orb"></div>
+    <div class="cover-orb b"></div>
+
+    <div class="chrome-corner">iCall · Multilingual AI Deployment &amp; Assurance Partner · 2026</div>
+
+    <div class="cover-content">
+      <div class="cover-top">
+        <img class="cover-logo" src="logo.png" alt="iCall International">
+        <div class="cover-partner">
+          Prepared for<br>
+          <b>Anthropic</b>
+        </div>
+      </div>
+
+      <div>
+        <div class="eyebrow">Multilingual AI Deployment &amp; Assurance Partner</div>
+        <h1 class="cover-headline" style="margin-top:20px;">
+          The multilingual assurance<br>
+          and <span class="accent">human-escalation layer</span><br>
+          for Claude at global scale.
+        </h1>
+        <p class="cover-tag">
+          iCall International is a multilingual AI assurance, deployment and
+          human-escalation partner &mdash; helping enterprises safely
+          operationalize Claude across languages, cultures, and regulated
+          customer interactions where technology alone isn&rsquo;t enough.
+        </p>
+      </div>
+
+      <div class="cover-bottom">
+        <div class="cover-mini-stats">
+          <div class="mini-stat">
+            <div class="num"><span>300+</span></div>
+            <div class="lbl">Linguists &amp; Agents</div>
+          </div>
+          <div class="mini-stat">
+            <div class="num"><span>300+</span></div>
+            <div class="lbl">Languages &amp; Dialects</div>
+          </div>
+          <div class="mini-stat">
+            <div class="num"><span>24/7</span></div>
+            <div class="lbl">Live Escalation</div>
+          </div>
+        </div>
+        <a class="cover-cta" href="mailto:info@icallinternational.com">
+          See The Layer We Own
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="slide-num">01 / 05</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 2 — WHY ANTHROPIC
+       ═══════════════════════════════════ -->
+  <section class="slide slide-why" id="s2">
+    <div class="why-content">
+      <div class="why-top">
+        <span class="eyebrow">Why Anthropic?</span>
+        <div class="why-sub">
+          That sounds backwards&hellip;
+          <span class="l2">But it&rsquo;s powerful.</span>
+        </div>
+      </div>
+
+      <h2 class="why-statement">
+        Claude is uniquely positioned for regulated enterprise environments
+        because of its emphasis on <em>safety, reliability and thoughtful
+        deployment.</em>
+      </h2>
+
+      <div class="why-body">
+        <p>
+          That same discipline is exactly what regulated global enterprises
+          need for their next frontier: deploying Claude across the languages,
+          dialects and cultural contexts where their customers actually live.
+          <strong>Multilingual deployment is the next challenge</strong> &mdash;
+          and the one that stresses safety, reliability and thoughtfulness the
+          hardest, because every additional locale multiplies the surface area
+          where a well-designed model can still be misheard, mis-scoped, or
+          misapplied.
+        </p>
+      </div>
+
+      <div class="why-pair">
+        <div class="why-mission">
+          <div class="l">The Alignment</div>
+          <div class="q">
+            Anthropic likes partners who <em>understand the mission</em>
+            &mdash; not just the API.
+          </div>
+        </div>
+        <div class="why-icall">
+          <div class="l">How iCall Helps Deploy Claude Here</div>
+          <div class="t">Assurance, in-language escalation, go-live support &mdash; under one delivery model.</div>
+          <div class="d">Pre-deployment multilingual evaluation, 24/7 in-language human handoff, and localization + policy design for Claude in healthcare, financial, legal and public-sector customer flows.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Multilingual AI Deployment &amp; Assurance Partner Pitch for Anthropic</div>
+    <div class="slide-num">02 / 05</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 3 — THE RISK
+       ═══════════════════════════════════ -->
+  <section class="slide slide-risk" id="s3">
+    <div class="risk-grid">
+      <div class="risk-left">
+        <span class="pill">The Risk</span>
+        <h2 class="risk-headline">
+          Deploying Claude globally creates risks
+          <em>traditional tech consultancies</em>
+          aren&rsquo;t equipped to solve alone.
+        </h2>
+        <p class="risk-subline">
+          A systems integrator can stand up the API. The last mile
+          &mdash; language, culture, escalation and compliance in live customer
+          interactions &mdash; is a workforce problem, not a software problem.
+        </p>
+        <div class="risk-callout">
+          <div class="lbl">The Wedge</div>
+          <div class="body">
+            Few global AI implementation firms combine
+            <strong>multilingual quality assurance, live language professionals
+            and regulated-industry operational support</strong> within a single
+            delivery model.
+          </div>
+        </div>
+      </div>
+
+      <div class="risk-right">
+        <div class="risk-feat">
+          <div class="risk-feat-icon">01</div>
+          <div class="risk-feat-text">
+            <strong>Cultural &amp; linguistic drift</strong>
+            <span>Claude behavior in low-resource languages, dialects and cultural context is subtly wrong in ways only native speakers catch.</span>
+            <span class="icall"><b>iCall assists</b>Native-speaker QA and in-locale evaluation catch what English-only review misses.</span>
+          </div>
+        </div>
+        <div class="risk-feat">
+          <div class="risk-feat-icon">02</div>
+          <div class="risk-feat-text">
+            <strong>Regulated customer interactions</strong>
+            <span>Healthcare, legal, financial and public-sector workflows layer PHI, licensure and clinical-accuracy exposure on top of the model.</span>
+            <span class="icall"><b>iCall assists</b>Compliance-screened bench with medical &amp; legal interpreter expertise built in.</span>
+          </div>
+        </div>
+        <div class="risk-feat">
+          <div class="risk-feat-icon">03</div>
+          <div class="risk-feat-text">
+            <strong>No safe human fallback</strong>
+            <span>When Claude declines or errs, enterprises need a warm handoff to a qualified human in-language &mdash; in real time.</span>
+            <span class="icall"><b>iCall assists</b>24/7 vetted interpreter bench takes the live handoff in 300+ languages.</span>
+          </div>
+        </div>
+        <div class="risk-feat">
+          <div class="risk-feat-icon">04</div>
+          <div class="risk-feat-text">
+            <strong>Ongoing multilingual assurance</strong>
+            <span>Continuous QA of production Claude output across every locale is a 24/7 human operation, not a dashboard.</span>
+            <span class="icall"><b>iCall assists</b>24/7 supervisor coverage samples and scores production output every day.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Multilingual AI Deployment &amp; Assurance Partner Pitch for Anthropic</div>
+    <div class="slide-num">03 / 05</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 4 — THREE LAYERS
+       ═══════════════════════════════════ -->
+  <section class="slide slide-svc" id="s4">
+    <div class="svc-header">
+      <h2>Three layers a tech consultancy <em>can&rsquo;t provide.</em></h2>
+      <p>The multilingual + human operating layer that sits on top of any Claude enterprise deployment &mdash; run by a single vendor, under one QA and compliance regime.</p>
+    </div>
+
+    <div class="svc-grid">
+      <div class="svc-card">
+        <div class="svc-num">01 · Assurance</div>
+        <div class="svc-title">Multilingual AI assurance</div>
+        <div class="svc-desc">Pre-deployment evaluation, red-teaming and ongoing production QA of Claude output across every locale where it ships &mdash; scored by native-speaker linguists, not English-only reviewers.</div>
+        <ul class="svc-bullets">
+          <li>Locale-specific evals &amp; red-team packs</li>
+          <li>Cultural &amp; regulatory safety review</li>
+          <li>Continuous production sampling &amp; scoring</li>
+        </ul>
+      </div>
+
+      <div class="svc-card featured">
+        <div class="svc-num">02 · Human Escalation</div>
+        <div class="svc-title">24/7 in-language handoff</div>
+        <div class="svc-desc">A standing bench of 300+ vetted interpreters and agents that takes live handoffs when Claude can&rsquo;t or shouldn&rsquo;t act &mdash; the fallback layer no systems integrator owns.</div>
+        <ul class="svc-bullets">
+          <li>OPI &amp; VRI in 300+ languages</li>
+          <li>Escalation playbooks &amp; supervisor coverage</li>
+          <li>Compliance-screened bench (SDN, OIG, ESS)</li>
+        </ul>
+      </div>
+
+      <div class="svc-card">
+        <div class="svc-num">03 · Deployment</div>
+        <div class="svc-title">Multilingual go-live support</div>
+        <div class="svc-desc">Localization, policy design, escalation-tree engineering and change-management for Claude in regulated customer workflows &mdash; from pilot to full production.</div>
+        <ul class="svc-bullets">
+          <li>Multilingual prompt &amp; policy design</li>
+          <li>Escalation-tree &amp; routing engineering</li>
+          <li>Agent training on human-in-the-loop flows</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="svc-band">
+      <div class="lbl">Who Does What</div>
+      <div class="svc-band-col">
+        <div class="k">Systems Integrator</div>
+        <div class="v">API integration, data plumbing, MCP servers, dashboards.</div>
+      </div>
+      <div class="svc-band-col">
+        <div class="k">iCall</div>
+        <div class="v"><strong>Multilingual + human operating layer</strong> that makes the integration safe to ship: assurance, escalation, deployment.</div>
+      </div>
+    </div>
+
+    <div class="chrome-foot">iCall International · Multilingual AI Deployment &amp; Assurance Partner Pitch for Anthropic</div>
+    <div class="slide-num">04 / 05</div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════
+       SLIDE 5 — CTA
+       ═══════════════════════════════════ -->
+  <section class="slide slide-cta dark grain" id="s5">
+    <div class="cover-grid"></div>
+    <div class="cover-orb"></div>
+
+    <div class="cta-content">
+      <div>
+        <div class="eyebrow">The Ask</div>
+        <h2 class="cta-headline" style="margin-top:20px;">
+          One problem no one else in<br>
+          your ecosystem <span class="accent">owns.</span>
+        </h2>
+        <p class="cta-tag">
+          We&rsquo;re not asking to be a generic partner. We&rsquo;re asking
+          for the workstreams that need the multilingual + human operating
+          layer &mdash; the layer your SI partners can&rsquo;t deliver
+          alone. Here are three ways to route that work to us.
+        </p>
+
+        <div class="cta-pilot">
+          <div class="cta-pilot-card">
+            <div class="num">Route 01</div>
+            <div class="ttl">Named Specialist</div>
+            <div class="desc">List iCall inside the Claude Partner Network as the named specialist for multilingual assurance and human escalation.</div>
+          </div>
+          <div class="cta-pilot-card">
+            <div class="num">Route 02</div>
+            <div class="ttl">Deal-Level Pull-In</div>
+            <div class="desc">When a deal has regulated multilingual customer workflows on the table, pull iCall in alongside the SI to own that layer.</div>
+          </div>
+          <div class="cta-pilot-card">
+            <div class="num">Route 03</div>
+            <div class="ttl">Customer Referral</div>
+            <div class="desc">Refer enterprise customers who need the multilingual + human layer directly to iCall to get them safely live on Claude.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cta-bottom">
+        <div class="cta-contact">
+          <div class="cta-row">
+            <div class="lbl">Call</div>
+            <div class="val">+1 (818) 239&#8209;4744</div>
+          </div>
+          <div class="cta-row">
+            <div class="lbl">Email</div>
+            <div class="val">info@icallinternational.com</div>
+          </div>
+          <div class="cta-row">
+            <div class="lbl">Web</div>
+            <div class="val">icallinternational.com</div>
+          </div>
+        </div>
+        <a class="cta-button" href="mailto:info@icallinternational.com">
+          Book A Scoping Call
+          <span class="arrow">→</span>
+        </a>
+        <img class="cta-logo" src="logo.png" alt="iCall International">
+      </div>
+    </div>
+
+    <div class="slide-num">05 / 05</div>
+  </section>
+
+</div>
+
+</body>
+</html>
