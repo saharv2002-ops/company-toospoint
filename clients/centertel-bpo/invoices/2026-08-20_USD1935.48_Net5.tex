@@ -1,0 +1,42 @@
+\documentclass{toospoint-invoice}
+
+\invoiceno{001}
+\invoiceclient{Center Tel BPO S.A. de C.V.}
+\invoicedate{August 20, 2026}
+
+\begin{document}
+
+\invoicemeta
+  {August 20, 2026}
+  {August 25, 2026}
+  {Net 5}
+  {July 20 -- 31, 2026}
+
+\invoiceparties{%
+  \textbf{Sahar Vojoodi}\\
+  Toospoint LLC\\[3pt]
+  {\footnotesize\color{TPGray}\faEnvelope[regular]\ \, \href{mailto:toospoint@gmail.com}{toospoint@gmail.com}}%
+}{%
+  \textbf{Center Tel BPO S.A. de C.V.}\\
+  Centro Financiero La Gran Via \#15\\
+  Antiguo Cuscatl\'an, La Libertad\\
+  El Salvador\\[1pt]
+  {\footnotesize\color{TPGray}Client}%
+}
+
+\invoicelines{%
+  \invoiceline
+    {Prorated consulting services}
+    {July 20 -- 31, 2026}
+    {\$1,935.48}
+    {\$1,935.48}
+}
+
+\invoicetotals{\$1,935.48}{\$0.00}{Total Due (USD)}{\$1,935.48}
+
+\invoicepayment
+  {ACH -- Wells Fargo}
+  {Account 8106258349}
+  {Routing 121042882}
+
+\end{document}
