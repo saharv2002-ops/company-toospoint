@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { AlertTriangle } from "lucide-react";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import { listInterpreters } from "@/lib/api";
 import type { Band, InterpreterFilters, InterpreterListItem } from "@/lib/types";
@@ -150,10 +151,17 @@ export function InterpreterTable({ onLogIntervention }: Props) {
                   )}
                 >
                   <TD>
-                    <div className="font-medium text-neutral-900">{item.full_name}</div>
-                    <div className="font-mono text-xs text-neutral-500">
-                      {item.external_id}
-                    </div>
+                    <Link
+                      href={`/interpreters/${item.id}`}
+                      className="group block"
+                    >
+                      <div className="font-medium text-neutral-900 group-hover:underline">
+                        {item.full_name}
+                      </div>
+                      <div className="font-mono text-xs text-neutral-500">
+                        {item.external_id}
+                      </div>
+                    </Link>
                   </TD>
                   <TD>
                     <div className="flex flex-wrap gap-1">

@@ -18,7 +18,7 @@
 
 ## Where we are right now
 
-**Day 7 starting.** Day 6 shipped the dashboard screen: KPI cards + filterable/sortable risk table + intervention modal. Full Next.js build clean (27.3 kB dashboard bundle). Ready for the interpreter detail screen.
+**Day 8 starting.** Day 7 shipped the interpreter detail screen: header + signal breakdown with why copy + 30-day Recharts sparklines + intervention log. Dashboard rows link to detail. Build clean. Ready for the interventions screen + polish.
 
 ## Done
 
@@ -96,7 +96,7 @@
 - ⏳ Endpoint latency measurement (target < 500ms) — deferred; on-demand data volumes with the seeded 200-row dataset are all sub-100ms locally; retest after Day 9 deploy against real hosting
 
 **Week 1 verdict: on schedule.** No scope needs to be cut from Week 2.
-- ✅ **Day 6** — dashboard screen (commit pending)
+- ✅ **Day 6** — dashboard screen (commit `9118ef7`)
   - web/package.json — added @tanstack/react-query, @radix-ui/react-dialog, lucide-react, class-variance-authority, clsx, tailwind-merge
   - web/lib/utils.ts — cn(), formatDate, daysAgo, bandBorderClass, bandBadgeClass helpers
   - web/lib/types.ts — TypeScript mirrors of backend Pydantic schemas (12 types)
@@ -120,24 +120,39 @@
     - InterpreterTable + InterventionDialog wired to selected interpreter state
   - web/app/layout.tsx — Providers wrapping children
   - Verified: `npm run build` clean, 27.3 kB dashboard bundle, 87.2 kB shared JS
+- ✅ **Day 7** — interpreter detail screen (commit pending)
+  - web/package.json — added recharts 2.13
+  - web/components/ui/progress.tsx — simple width-% progress bar; colour ramps green → yellow → red at 40 / 65 (matches band boundaries)
+  - web/components/signal-breakdown.tsx — 6-row card, per row: signal name + weight tag + progress bar + score + plain-English why copy from `GET /api/interpreters/{id}.signals[].why`
+  - web/components/sparkline-grid.tsx — 6 small-multiple LineCharts (Recharts) for signal_1..signal_6 across the last 30 days from `GET /api/interpreters/{id}/timeline?days=30`. Custom tooltip shows value + formatted date. Hidden Y axis, domain locked to [0,100]. Empty-state hint tells user to run backfill.
+  - web/components/intervention-log.tsx — reads `GET /api/interventions?interpreter_id=...&limit=50`. Row layout: action badge (32ch), notes + optional outcome, right-aligned date. Empty-state copy invites user to log next intervention.
+  - web/app/interpreters/[id]/page.tsx — detail page:
+    - "Back to dashboard" chevron link
+    - Header: external_id + status in mono, full name (3xl), language badges + tenure + hired date + timezone
+    - Right-side: Score card (composite + band pill + as_of) + "Log intervention" button
+    - 2-column grid: SignalBreakdown (2/3 width) + InterventionLog (1/3 width)
+    - Full-width: SparklineGrid (30 days)
+    - Footer: recent intervention count note
+    - Reuses InterventionDialog from Day 6 (Radix). Mutation invalidates ['interventions'] which re-renders the log immediately.
+  - web/components/interpreter-table.tsx — name column wrapped in `<Link href="/interpreters/{id}">` with `group-hover:underline`. Action button unaffected (separate click target).
+  - Verified: `npm run build` clean.
+    - Dashboard bundle: 6.57 kB (dropped from 27.3 kB — code-splitting kicked in)
+    - Detail page bundle: 104 kB (Recharts inline)
+    - Shared JS: 87.4 kB
+    - Route `/interpreters/[id]` correctly detected as dynamic (server-rendered on demand)
 
-## Immediate next actions (Day 7)
+## Immediate next actions (Day 8)
 
-Per `PLAN.md` § Day 7 — interpreter detail screen:
+Per `PLAN.md` § Day 8 — interventions screen + polish:
 
-1. `web/app/interpreters/[id]/page.tsx` — detail page.
-   - Header: name, languages, tenure, current score with band pill, "Log intervention" button.
-   - Signal breakdown card: 6 rows, each with signal name, progress bar (0-100), plain-English "why" copy (comes from GET /api/interpreters/{id}.signals[].why).
-   - 90-day signal timeline: 6 sparkline small multiples via Recharts, hover shows date + value. Timeline data from GET /api/interpreters/{id}/timeline?days=30 (backfilled Day 5).
-   - Intervention log for this interpreter (GET /api/interventions?interpreter_id=...).
-   - Deep linking works — hitting /interpreters/{id} directly loads correctly.
-2. Add Recharts to web/package.json.
-3. From the dashboard table, clicking an interpreter row → detail page.
-4. Back link → dashboard.
+1. `web/app/interventions/page.tsx` — cross-roster intervention log:
+   - Table of all interventions across the roster, filterable by outcome, action type, since_days
+   - Chart: intervention type → retention rate (bar chart, Recharts). Copy: "Retention outcomes update as interpreters continue or churn over the next 30 days."
+   - Link back to dashboard from every row (interpreter_id → detail page)
+2. Nav / breadcrumbs so users can move Dashboard ↔ Detail ↔ Interventions cleanly.
+3. Empty states, error states, loading skeletons — full audit across all screens.
 
-**Acceptance:** click any interpreter in the table, see the detail page; sparklines render; "why" copy is plain-English and matches the data; log an intervention, see it appear in the log immediately.
-
-**Trap:** Recharts sparkline rendering with 30 daily points can look noisy. Add a 7-day rolling smooth if it looks bad.
+**Acceptance:** Log 5 interventions across different interpreters, see them appear on /interventions. Chart renders (thin at first, that's fine — the story is "this fills in as we log more").
 
 ## Locked decisions
 
@@ -171,4 +186,5 @@ Per `PLAN.md` § Day 7 — interpreter detail screen:
 - **2026-08-21** — Day 3 shipped (commit `a3faf36`): seed.py + 9 in-memory tests. Dry-run against target 400 interpreters produces 12% red / 22% yellow / 66% green + 106K sessions / 123K dispatches / 7.3K feedback / 4.8K availability. CI now smoke-runs `seed --reset --total 200` against postgres between migrations and pytest. Local: 17 passed + 9 skipped.
 - **2026-08-21** — Day 4 shipped (commit `eca0018`): scoring engine with 6 pure signal functions (volume, decline-rate, latency, feedback, tenure bimodal bell, availability), weighted composite (25/20/10/15/15/15), band assignment, bulk SQL aggregation (uses percentile_cont for medians), `POST /api/scores/recompute` endpoint. 22 unit tests + 4 e2e tests. e2e verifies blind scoring recovers seeded bucket distribution within 3pts. Local: 39 passed + 13 skipped.
 - **2026-08-21** — Day 5 shipped (commit `5b9f8ea`): read APIs. 6 new endpoints (list, detail, timeline, dashboard summary, intervention list+create) + backfill endpoint. Explanations service produces plain-English "why" strings per signal. 10 new Pydantic response schemas. 12 read integration tests. 14 routes total in OpenAPI. Week 1 complete on schedule; no Week 2 scope cuts.
-- **2026-08-21** — Day 6 shipped: dashboard screen. shadcn-style primitives (card/button/badge/input/dialog/table) + Radix Dialog. Typed API client hits all 14 endpoints. KPI cards + filterable/sortable risk table + intervention modal. Next.js build clean at 27.3 kB dashboard bundle.
+- **2026-08-21** — Day 6 shipped (commit `9118ef7`): dashboard screen. shadcn-style primitives (card/button/badge/input/dialog/table) + Radix Dialog. Typed API client hits all 14 endpoints. KPI cards + filterable/sortable risk table + intervention modal. Next.js build clean at 27.3 kB dashboard bundle.
+- **2026-08-21** — Day 7 shipped: interpreter detail screen. Recharts sparklines (6 small multiples over 30 days), signal breakdown card with plain-English why copy, intervention log, header with score + band pill + Log intervention button. Dashboard rows link to detail. Build clean (dashboard 6.57 kB after code-split, detail 104 kB with Recharts).
