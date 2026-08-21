@@ -1,0 +1,64 @@
+### ChurnScope API smoke tests
+### Requires: API running on localhost:8000, seeded + backfilled data
+###
+### Usage in VS Code: install "REST Client" extension, then click "Send Request"
+### above each block. Alternatively pipe to httpie or curl equivalents.
+
+@host = http://localhost:8000
+
+### Health
+GET {{host}}/health
+
+### Recompute scores for today
+POST {{host}}/api/scores/recompute
+
+### Backfill 30 days of scores
+POST {{host}}/api/scores/backfill?days=30
+
+### Dashboard summary
+GET {{host}}/api/dashboard/summary
+
+### List all interpreters (paginated)
+GET {{host}}/api/interpreters?limit=25
+
+### Filter to Red band, Spanish speakers
+GET {{host}}/api/interpreters?band=red&language=es&limit=50
+
+### Filter to interpreters silent for 7+ days
+GET {{host}}/api/interpreters?max_days_since_last_session=7
+
+### One interpreter detail (paste an id from the list response)
+# GET {{host}}/api/interpreters/{{id}}
+
+### Timeline for an interpreter
+# GET {{host}}/api/interpreters/{{id}}/timeline?days=30
+
+### List interventions
+GET {{host}}/api/interventions
+
+### Create an intervention
+# POST {{host}}/api/interventions
+# Content-Type: application/json
+#
+# {
+#   "interpreter_id": "PASTE-UUID-HERE",
+#   "action": "coach_call",
+#   "notes": "Morning check-in"
+# }
+
+### Ingest 1 interpreter (illustrative)
+POST {{host}}/api/ingest/interpreters
+Content-Type: application/json
+
+{
+  "items": [
+    {
+      "external_id": "smoke-1",
+      "full_name": "Smoke Test",
+      "languages": ["en", "es"],
+      "certifications": [],
+      "hired_at": "2025-01-01",
+      "status": "active"
+    }
+  ]
+}

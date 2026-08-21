@@ -410,6 +410,25 @@ class RecomputeResult:
     band_counts: dict[str, int] = field(default_factory=dict)
 
 
+MAX_BACKFILL_DAYS = 90
+
+
+def recompute_range(db: Session, end: date, days: int) -> list[RecomputeResult]:
+    """Recompute scores for each of the last `days` days ending at `end`.
+
+    Powers the timeline sparklines on Day 7's interpreter detail screen.
+    Capped at MAX_BACKFILL_DAYS. Producing an as_of near the edge of
+    seeded history is safe — signals with insufficient data return 0.
+    """
+    if days <= 0 or days > MAX_BACKFILL_DAYS:
+        raise ValueError(f"days must be in 1..{MAX_BACKFILL_DAYS}, got {days}")
+    results: list[RecomputeResult] = []
+    for offset in range(days - 1, -1, -1):
+        target = end - timedelta(days=offset)
+        results.append(recompute_all(db, target))
+    return results
+
+
 def recompute_all(db: Session, as_of: date) -> RecomputeResult:
     inputs = collect_all_inputs(db, as_of)
     breakdowns = [score_interpreter(inp, as_of) for inp in inputs]

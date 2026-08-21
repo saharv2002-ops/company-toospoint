@@ -5,7 +5,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.middleware import PayloadSizeLimitMiddleware
+from app.routers.dashboard import router as dashboard_router
 from app.routers.ingest import router as ingest_router
+from app.routers.interpreters import router as interpreters_router
+from app.routers.interventions import router as interventions_router
 from app.routers.scores import router as scores_router
 
 app = FastAPI(
@@ -25,6 +28,9 @@ app.add_middleware(
 
 app.include_router(ingest_router)
 app.include_router(scores_router)
+app.include_router(interpreters_router)
+app.include_router(dashboard_router)
+app.include_router(interventions_router)
 
 
 @app.get("/health")
