@@ -20,6 +20,7 @@
 - [`contracts/`](./contracts) — NDA, consulting agreement (`.tex` + `.pdf`)
 - [`invoices/`](./invoices) — issued invoices (`.tex` source + `.pdf`)
 - [`sales-deck/`](./sales-deck) — `SGP_Sales_Deck.pptx` + HTML render + slide PNGs (Simplified Group BPO sales deck — "SGP")
+- [`sales-deck-remoto/`](./sales-deck-remoto) — `SGP_Remoto_Discovery.pptx`, 5-slide standalone deck for the Simplified × Remoto partnership discovery call
 - [`work-log/activity.md`](./work-log/activity.md) — running activity log
 
 ## Notes
