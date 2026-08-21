@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.middleware import PayloadSizeLimitMiddleware
 from app.routers.ingest import router as ingest_router
+from app.routers.scores import router as scores_router
 
 app = FastAPI(
     title="ChurnScope API",
@@ -23,6 +24,7 @@ app.add_middleware(
 )
 
 app.include_router(ingest_router)
+app.include_router(scores_router)
 
 
 @app.get("/health")

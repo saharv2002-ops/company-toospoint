@@ -18,7 +18,7 @@
 
 ## Where we are right now
 
-**Day 4 starting.** Day 3 shipped: seed script generates a realistic 400-interpreter dataset with 106K sessions, 123K dispatches, 7.3K feedback, 4.8K availability snapshots. Distribution lands exactly on 12% Red / 22% Yellow / 66% Green targets. Ready to build the scoring engine.
+**Day 5 starting.** Day 4 shipped: scoring engine with 6 pure signal functions, weighted composite scorer, band assignment, bulk collection, and `POST /api/scores/recompute` endpoint. End-to-end tests confirm blind scoring recovers seeded bucket distribution within 3-point tolerance. Ready for read APIs + Friday checkpoint.
 
 ## Done
 
@@ -36,7 +36,7 @@
   - `tests/test_ingest.py`: 9 integration tests (skipped locally when POSTGRES_TEST_URL unset; run in CI)
   - CI extended: postgres:16 service + alembic upgrade head + full pytest with POSTGRES_TEST_URL wired
   - Local verification: 8 passed + 9 skipped (integration tests gated)
-- ✅ **Day 3** — seed script + tests (commit pending)
+- ✅ **Day 3** — seed script + tests (commit `a3faf36`)
   - `api/scripts/seed.py` — one file, pure generators + one DB insert function
   - Config knobs at top: `TOTAL_INTERPRETERS=400`, `RED_TARGET_PCT=12`, `YELLOW_TARGET_PCT=22`, `DAYS_OF_HISTORY=90`, `AVAILABILITY_WEEKS=12`, `DEFAULT_SEED=42`
   - Roster: 400 interpreters, English + weighted secondary language (Spanish 35%, Mandarin 8%, Arabic 6%, Vietnamese 4%, Russian 4%, long tail of 30 languages), tenure spread 40/30/30 (<1yr / 1-3yr / 3+yr), 16 timezones, 6 certifications
@@ -50,25 +50,46 @@
   - Dry-run output: 400 interpreters (48 red / 88 yellow / 264 green) → 106K sessions / 123K dispatches / 7.3K feedback / 4.8K availability = ~241K rows total
   - CI: `python -m scripts.seed --reset --total 200` runs against the postgres:16 service between `alembic upgrade head` and `pytest` — proves the full ingest pipeline end-to-end
   - Local verification: pytest → 17 passed + 9 skipped
+- ✅ **Day 4** — scoring engine (commit pending)
+  - `api/app/services/scoring.py` — 6 pure signal functions + composite + band + bulk collection + recompute
+    - `SignalInputs` dataclass with pre-aggregated per-interpreter fields
+    - Weights locked from SPEC § 3: `WEIGHTS = {1:25, 2:20, 3:10, 4:15, 5:15, 6:15}` (sum=100, asserted)
+    - Bands: `[0,40) green, [40,65) yellow, [65,100] red` via `BAND_YELLOW_MIN=40`, `BAND_RED_MIN=65`
+    - Signal 1 (volume): recent-per-day vs baseline-per-day; drop 30% → 50, drop 60%+ → 100
+    - Signal 2 (decline rate): recent % minus baseline %; rise 15pts → 50, rise 30pts+ → 100
+    - Signal 3 (latency): median growth; 40% → 50, 100%+ → 100
+    - Signal 4 (feedback): complaints OR rating<3 in last 30d; 0→0, 1→50, 2→80, 3+→100
+    - Signal 5 (tenure): bimodal Gaussian bumps at 4.5mo (sd=2, peak=90) and 21mo (sd=6, peak=90); floor 15, decays after 48mo
+    - Signal 6 (availability): recent avg vs baseline avg; drop 25% → 50, drop 50%+ → 100
+    - `collect_all_inputs()` — bulk SQL: one aggregate query per signal across full roster, uses Postgres `percentile_cont(0.5) WITHIN GROUP` for medians
+    - `recompute_all()` — upserts into `churn_scores` via `INSERT ... ON CONFLICT (interpreter_id, as_of) DO UPDATE`
+  - `api/app/routers/scores.py` — `POST /api/scores/recompute?as_of=YYYY-MM-DD` (defaults to today UTC). Returns `RecomputeResponse{as_of, scored, band_counts}`.
+  - `api/tests/test_scoring.py` — 22 unit tests: 3 fixture cases per signal (green input, red input, edge case) + composite weighting math + weights sum + band boundaries
+  - `api/tests/test_scoring_e2e.py` — 4 integration tests (requires_postgres): seed 200 → recompute → band distribution within 3pts of seed target (12/22/66), churn_scores populated, idempotent recompute, POST endpoint returns correct payload
+  - Local verification: pytest → 39 passed + 13 skipped
+  - CI already covers the e2e path via existing seed step
 
-## Immediate next actions (Day 4)
+## Immediate next actions (Day 5)
 
-Per `PLAN.md` § Day 4 — the scoring engine:
+Per `PLAN.md` § Day 5 — read APIs + Friday checkpoint:
 
-1. `api/app/services/scoring.py` — one function per signal, each returning 0-100:
-   - `signal_volume_decline(interpreter_id, as_of)` — last 14 vs 90-day rolling avg; drop >30% = signal
-   - `signal_decline_rate_rise(...)` — 14-day decline % vs 90-day baseline; rise >15pts = signal
-   - `signal_response_latency(...)` — median seconds; growth >40% vs baseline = signal
-   - `signal_feedback_spike(...)` — complaints or ratings <3 in last 30 days; 2+ = strong
-   - `signal_tenure_vulnerability(...)` — bell weighting, peak at 3-6mo and 18-24mo
-   - `signal_availability_shrinkage(...)` — declared hours drop >25% vs 90-day = signal
-2. Composite scorer: weighted average per SPEC § 3 weights (25/20/10/15/15/15). Bands: 0-39 green, 40-64 yellow, 65-100 red.
-3. Unit tests per signal: 3 fixture cases (clear green input, clear red input, edge case). Composite test covers weighting math.
-4. `POST /api/scores/recompute?as_of=YYYY-MM-DD` endpoint — batches all interpreters, writes to `churn_scores`.
-5. Materialization: one `churn_scores` row per (interpreter_id, as_of).
-6. Commit + push.
+1. Read endpoints wiring the frontend for Days 6-8:
+   - `GET /api/interpreters?band=&language=&min_tenure=&days_since_last=` — filterable list, paginated, joins latest score
+   - `GET /api/interpreters/{id}` — profile + latest score + all 6 signal values + human-readable "why" strings
+   - `GET /api/interpreters/{id}/timeline?days=90` — daily signal history for the sparklines
+   - `GET /api/dashboard/summary` — band counts, week-over-week delta, top 5 highest-risk
+   - `GET /api/interventions` + `POST /api/interventions` (POST already exists via ingest — expose a dedicated intervention log endpoint)
+2. "Why fired" plain-English copy generator per signal (used by the interpreter detail endpoint and Day 7's frontend).
+3. OpenAPI `/docs` pass: verify examples + response schemas complete for every endpoint.
+4. `.http` file in `api/tests/manual/` for smoke-testing all endpoints top-to-bottom.
+5. **Friday checkpoint** (per PLAN.md § End-of-week checkpoint):
+   - Smoke-test every endpoint via Postman/.http — all return clean JSON
+   - Compare summary counts against raw SQL
+   - Any endpoint > 500ms? Add index and re-check.
+   - Deploy API to Railway/Fly staging, smoke test.
+   - If Week 1 slipped >1 day: cut interventions retention chart + timeline sparklines from Week 2.
 
-**Acceptance:** After seeding + `POST /api/scores/recompute`, band distribution matches Day-3 seed target within 3 points. All signal unit tests pass.
+**Acceptance:** every read endpoint returns clean JSON <500ms; API staging deploy live and smoke-tested.
 
 ## Locked decisions
 
@@ -99,4 +120,5 @@ Per `PLAN.md` § Day 4 — the scoring engine:
 
 - **2026-08-21** — Day 1 shipped (commit `0e8cf9e`). Live `/health` verified. CI configured. CONTINUATION.md added (commit `a484444`).
 - **2026-08-21** — Day 2 shipped (commit `341ccd1`): 7-table data model, 6 pg enums, initial Alembic migration, Pydantic 2 ingest schemas (MAX_BATCH_SIZE=5000, extra=forbid, tight validators), 6 ingest endpoints with pg upsert, 10MB payload middleware, 9 integration tests + 7 schema unit tests. CI now runs against postgres:16 service. Local: 8 passed + 9 skipped (integration gated on POSTGRES_TEST_URL).
-- **2026-08-21** — Day 3 shipped: seed.py + 9 in-memory tests. Dry-run against target 400 interpreters produces 12% red / 22% yellow / 66% green + 106K sessions / 123K dispatches / 7.3K feedback / 4.8K availability. CI now smoke-runs `seed --reset --total 200` against postgres between migrations and pytest. Local: 17 passed + 9 skipped.
+- **2026-08-21** — Day 3 shipped (commit `a3faf36`): seed.py + 9 in-memory tests. Dry-run against target 400 interpreters produces 12% red / 22% yellow / 66% green + 106K sessions / 123K dispatches / 7.3K feedback / 4.8K availability. CI now smoke-runs `seed --reset --total 200` against postgres between migrations and pytest. Local: 17 passed + 9 skipped.
+- **2026-08-21** — Day 4 shipped: scoring engine with 6 pure signal functions (volume, decline-rate, latency, feedback, tenure bimodal bell, availability), weighted composite (25/20/10/15/15/15), band assignment, bulk SQL aggregation (uses percentile_cont for medians), `POST /api/scores/recompute` endpoint. 22 unit tests + 4 e2e tests. e2e verifies blind scoring recovers seeded bucket distribution within 3pts. Local: 39 passed + 13 skipped.
