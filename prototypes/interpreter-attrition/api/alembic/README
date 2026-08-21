@@ -1,0 +1,10 @@
+Alembic migrations for ChurnScope.
+
+Generate a new migration:
+  alembic revision --autogenerate -m "message"
+
+Apply migrations:
+  alembic upgrade head
+
+Roll back one revision:
+  alembic downgrade -1

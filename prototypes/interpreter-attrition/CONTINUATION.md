@@ -18,33 +18,44 @@
 
 ## Where we are right now
 
-**Day 2 starting.** Day 1 shipped and pushed as commit `0e8cf9e`. Ready to build the data model + ingest endpoints.
+**Day 3 starting.** Day 2 shipped: data model + ingest endpoints + integration tests. CI now runs against a live Postgres service. Ready for the seed script.
 
 ## Done
 
 - ✅ **Day 0 pre-flight** — product name (ChurnScope placeholder), first-pitch prospect (GLOBO), 2-week plan locked
 - ✅ **Day 1** — repo skeleton (commit `0e8cf9e`)
-  - FastAPI 0.115 + Python 3.12; `GET /health` returns `{status, ts}`; pytest green
-  - Next.js 14 App Router + TypeScript + Tailwind; `npm run build` clean
-  - `infra/docker-compose.yml` (Postgres 16 + api with hot-reload)
-  - `.github/workflows/churnscope-ci.yml` (path-scoped, api·pytest + web·build)
-  - Root `.gitignore` extended for Node; README has CI badge + quick start
+  - FastAPI 0.115 + Python 3.12; `GET /health`; Next.js 14 + Tailwind; docker-compose; CI wired
+- ✅ **Day 2** — data model + ingest (commit pending)
+  - `app/enums.py`: 6 native pg enums (InterpreterStatus, SessionType, SessionOutcome, DispatchResponse, InterventionAction, ChurnBand)
+  - `app/models/*.py`: 7 SQLAlchemy 2 models (Interpreter, Session, Dispatch, Feedback, AvailabilitySnapshot, Intervention, ChurnScore)
+  - `app/schemas/ingest.py`: Pydantic 2 ingest schemas with strict validation, batch envelope, MAX_BATCH_SIZE=5000
+  - `app/routers/ingest.py`: 6 endpoints (`POST /api/ingest/{interpreters,sessions,dispatches,feedback,availability,interventions}`) with `ON CONFLICT DO UPDATE` upsert semantics
+  - `app/middleware.py`: PayloadSizeLimitMiddleware (10MB guard)
+  - `alembic/versions/20260821_0001_initial_schema.py`: initial migration, 7 tables + 6 enum types + indexes + FK CASCADEs + check constraints
+  - `tests/test_schemas.py`: 7 no-DB Pydantic validation tests
+  - `tests/test_ingest.py`: 9 integration tests (skipped locally when POSTGRES_TEST_URL unset; run in CI)
+  - CI extended: postgres:16 service + alembic upgrade head + full pytest with POSTGRES_TEST_URL wired
+  - Local verification: 8 passed + 9 skipped (integration tests gated)
 
-## Immediate next actions (Day 2)
+## Immediate next actions (Day 3)
 
-Per `PLAN.md` § Day 2:
+Per `PLAN.md` § Day 3 — the seed script:
 
-1. Alembic init inside `api/` (`alembic init alembic`)
-2. Migration for 7 tables (see `SPEC.md` § 4):
-   - `interpreters`, `sessions`, `dispatches`, `feedback`, `availability_snapshots`, `interventions`, `churn_scores`
-3. SQLAlchemy 2 declarative models mirroring the migration
-4. Pydantic 2 schemas for ingest (in `app/schemas/`)
-5. Ingest endpoints — all `POST /api/ingest/*`, batch upsert via `ON CONFLICT DO UPDATE`
-6. Integration tests (`tests/test_ingest.py`) — insert 100 rows, verify count + fields, re-insert same batch, verify no duplicates
-7. Rate-limit + 10MB payload guard on ingest endpoints
-8. Commit + push
+1. `scripts/seed.py` generates:
+   - 400 interpreters, language distribution weighted (Spanish 35%, Mandarin 8%, Arabic 6%, Vietnamese 4%, Russian 4%, long tail)
+   - Tenure spread: 40% <12 months, 30% 1-3 years, 30% 3+ years
+   - 90 days of sessions, volume declining for the ~12% we want in Red band
+   - Dispatches with realistic decline rates (2-8% baseline, 20-40% for at-risk)
+   - Feedback: 92% none, 6% 4-5 stars, 2% low/complaints, clustered on at-risk interpreters
+   - Weekly availability snapshots for last 12 weeks
+2. Config knobs at top: `RED_TARGET_PCT`, `YELLOW_TARGET_PCT`, `TOTAL_INTERPRETERS`
+3. Idempotent: `python seed.py --reset` wipes and reseeds
+4. Verification step at end: prints computed band distribution (should land within 2 pts of target)
+5. Commit + push
 
-**Acceptance:** `pytest api/tests/test_ingest.py` green; drop DB + rerun migrations + tests still green.
+**Acceptance:** After `python seed.py --reset`, DB contains 400 interpreters and behaviour data such that Day-4 scoring lands ~12% Red / ~22% Yellow / ~66% Green.
+
+**Trap:** don't spend Day 3 tuning distributions to perfection. "Close enough that the demo doesn't look weird" is the bar.
 
 ## Locked decisions
 
@@ -73,4 +84,5 @@ Per `PLAN.md` § Day 2:
 
 ## Session log
 
-- **2026-08-21** — Day 1 shipped (commit `0e8cf9e`). Live `/health` verified. CI configured. CONTINUATION.md added.
+- **2026-08-21** — Day 1 shipped (commit `0e8cf9e`). Live `/health` verified. CI configured. CONTINUATION.md added (commit `a484444`).
+- **2026-08-21** — Day 2 shipped: 7-table data model, 6 pg enums, initial Alembic migration, Pydantic 2 ingest schemas (MAX_BATCH_SIZE=5000, extra=forbid, tight validators), 6 ingest endpoints with pg upsert, 10MB payload middleware, 9 integration tests + 7 schema unit tests. CI now runs against postgres:16 service. Local: 8 passed + 9 skipped (integration gated on POSTGRES_TEST_URL).
