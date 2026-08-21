@@ -18,7 +18,7 @@
 
 ## Where we are right now
 
-**Day 8 starting.** Day 7 shipped the interpreter detail screen: header + signal breakdown with why copy + 30-day Recharts sparklines + intervention log. Dashboard rows link to detail. Build clean. Ready for the interventions screen + polish.
+**Day 9 starting.** Day 8 shipped the cross-roster interventions screen (with retention chart) + persistent nav bar + backend enrichment of the intervention list. All 3 screens usable end-to-end. Ready for the polish pass + deploy.
 
 ## Done
 
@@ -120,7 +120,7 @@
     - InterpreterTable + InterventionDialog wired to selected interpreter state
   - web/app/layout.tsx — Providers wrapping children
   - Verified: `npm run build` clean, 27.3 kB dashboard bundle, 87.2 kB shared JS
-- ✅ **Day 7** — interpreter detail screen (commit pending)
+- ✅ **Day 7** — interpreter detail screen (commit `7d2b839`)
   - web/package.json — added recharts 2.13
   - web/components/ui/progress.tsx — simple width-% progress bar; colour ramps green → yellow → red at 40 / 65 (matches band boundaries)
   - web/components/signal-breakdown.tsx — 6-row card, per row: signal name + weight tag + progress bar + score + plain-English why copy from `GET /api/interpreters/{id}.signals[].why`
@@ -140,19 +140,53 @@
     - Detail page bundle: 104 kB (Recharts inline)
     - Shared JS: 87.4 kB
     - Route `/interpreters/[id]` correctly detected as dynamic (server-rendered on demand)
+- ✅ **Day 8** — interventions screen + nav (commit pending)
+  - Backend enrichment:
+    - New `InterventionListItem` schema (extends read fields with `interpreter_name` + `interpreter_external_id`). Kept `InterventionRead` lean for POST responses.
+    - `GET /api/interventions` joins Interpreter and populates enriched fields — avoids per-row lookups on the frontend
+    - Added `action` filter (in addition to interpreter_id, outcome, since_days)
+    - Updated `test_reads.py` create+list test to assert enriched fields present
+  - Frontend types + client updated to match
+  - `web/components/nav-bar.tsx` — sticky top nav: ChurnScope brand + subtitle, Dashboard/Interventions links with active state (dashboard active also when on /interpreters/*), dev-only Recompute button (moved from dashboard page). Uses `usePathname()` for active detection.
+  - `app/layout.tsx` — NavBar rendered above children
+  - `app/page.tsx` — pruned duplicate product name + Recompute button. Now just a "Dashboard" H1 + subtitle + "As of" chip.
+  - `app/interpreters/[id]/page.tsx` — removed "Back to dashboard" link (nav handles it)
+  - `web/components/retention-chart.tsx` — Recharts stacked BarChart per action (retained green / churned red / pending grey). Frontend aggregation from fetched intervention list. Empty-state copy: "Chart fills in as interpreters continue or churn over the next 30 days".
+  - `app/interventions/page.tsx` — new page:
+    - H1 + description
+    - RetentionChart (full width)
+    - Card containing 3 filters (action select, outcome select, since_days select) + reset button, then table with columns: Interpreter (linked to detail), Action badge, Notes, Outcome (capitalised or "pending"), Logged date
+    - Empty-state copy, error state, loading state, footer with "showing X of Y (N filters)"
+  - Verified: `npm run build` clean. 4 routes generated. Bundle sizes:
+    - / (dashboard): 5.66 kB
+    - /interpreters/[id]: 9.6 kB (uses shared Recharts chunk = 220 kB First Load)
+    - /interventions: 6.71 kB (also uses shared Recharts = 212 kB First Load)
+    - Shared JS: 87.4 kB
+  - Backend local: 39 passed + 25 skipped (unchanged; enriched tests run in CI)
 
-## Immediate next actions (Day 8)
+## Immediate next actions (Day 9)
 
-Per `PLAN.md` § Day 8 — interventions screen + polish:
+Per `PLAN.md` § Day 9 — polish + deploy:
 
-1. `web/app/interventions/page.tsx` — cross-roster intervention log:
-   - Table of all interventions across the roster, filterable by outcome, action type, since_days
-   - Chart: intervention type → retention rate (bar chart, Recharts). Copy: "Retention outcomes update as interpreters continue or churn over the next 30 days."
-   - Link back to dashboard from every row (interpreter_id → detail page)
-2. Nav / breadcrumbs so users can move Dashboard ↔ Detail ↔ Interventions cleanly.
-3. Empty states, error states, loading skeletons — full audit across all screens.
+1. Visual pass:
+   - Confirm single font family (Geist or Inter) used consistently
+   - Confirm band colours consistent (Red `#dc2626`, Yellow `#eab308`, Green `#16a34a`) with 10% alpha backgrounds
+   - Spacing pass: nothing cramped, nothing floating
+   - Mobile / iPad audit: dashboard should at least be scrollable on iPad width
+2. Empty states, error states, loading states — full audit across all screens
+3. README at repo root:
+   - What this is (2 sentences), who it's for
+   - How to run locally (docker compose up, python -m scripts.seed --reset)
+   - Live demo URL, screenshots
+4. Deploy:
+   - Frontend → Vercel from web/
+   - API → Railway from api/, with Railway Postgres attached
+   - Custom domain: `churnscope.toospoint.com` (or product-name equivalent)
+   - Environment variables set on both platforms
+   - Seeded data loaded into production DB
+5. Smoke test the live URL from phone + fresh incognito browser
 
-**Acceptance:** Log 5 interventions across different interpreters, see them appear on /interventions. Chart renders (thin at first, that's fine — the story is "this fills in as we log more").
+**Acceptance:** Send the live URL to a friend outside the industry. They can tell you what the app is doing within 30 seconds of clicking around.
 
 ## Locked decisions
 
@@ -187,4 +221,5 @@ Per `PLAN.md` § Day 8 — interventions screen + polish:
 - **2026-08-21** — Day 4 shipped (commit `eca0018`): scoring engine with 6 pure signal functions (volume, decline-rate, latency, feedback, tenure bimodal bell, availability), weighted composite (25/20/10/15/15/15), band assignment, bulk SQL aggregation (uses percentile_cont for medians), `POST /api/scores/recompute` endpoint. 22 unit tests + 4 e2e tests. e2e verifies blind scoring recovers seeded bucket distribution within 3pts. Local: 39 passed + 13 skipped.
 - **2026-08-21** — Day 5 shipped (commit `5b9f8ea`): read APIs. 6 new endpoints (list, detail, timeline, dashboard summary, intervention list+create) + backfill endpoint. Explanations service produces plain-English "why" strings per signal. 10 new Pydantic response schemas. 12 read integration tests. 14 routes total in OpenAPI. Week 1 complete on schedule; no Week 2 scope cuts.
 - **2026-08-21** — Day 6 shipped (commit `9118ef7`): dashboard screen. shadcn-style primitives (card/button/badge/input/dialog/table) + Radix Dialog. Typed API client hits all 14 endpoints. KPI cards + filterable/sortable risk table + intervention modal. Next.js build clean at 27.3 kB dashboard bundle.
-- **2026-08-21** — Day 7 shipped: interpreter detail screen. Recharts sparklines (6 small multiples over 30 days), signal breakdown card with plain-English why copy, intervention log, header with score + band pill + Log intervention button. Dashboard rows link to detail. Build clean (dashboard 6.57 kB after code-split, detail 104 kB with Recharts).
+- **2026-08-21** — Day 7 shipped (commit `7d2b839`): interpreter detail screen. Recharts sparklines (6 small multiples over 30 days), signal breakdown card with plain-English why copy, intervention log, header with score + band pill + Log intervention button. Dashboard rows link to detail. Build clean (dashboard 6.57 kB after code-split, detail 104 kB with Recharts).
+- **2026-08-21** — Day 8 shipped: cross-roster interventions screen + nav bar. Backend enriched intervention list with interpreter name + external_id (join, avoids per-row lookups). Nav bar sticky with active-state links, Recompute moved from dashboard. RetentionChart stacked bar (retained/churned/pending per action). 4 routes now: dashboard, detail, interventions, 404.

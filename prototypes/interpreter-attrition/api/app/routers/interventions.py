@@ -9,7 +9,12 @@ from sqlalchemy.orm import Session
 
 from app.db import get_db
 from app.models import Interpreter, Intervention
-from app.schemas.reads import InterventionCreate, InterventionListResponse, InterventionRead
+from app.schemas.reads import (
+    InterventionCreate,
+    InterventionListItem,
+    InterventionListResponse,
+    InterventionRead,
+)
 
 router = APIRouter(prefix="/api/interventions", tags=["interventions"])
 
@@ -17,16 +22,29 @@ router = APIRouter(prefix="/api/interventions", tags=["interventions"])
 @router.get("", response_model=InterventionListResponse)
 def list_interventions(
     interpreter_id: UUID | None = None,
+    action: str | None = None,
     outcome: str | None = None,
     since_days: int | None = Query(default=None, ge=1, le=365),
     limit: int = Query(default=50, ge=1, le=500),
     offset: int = Query(default=0, ge=0),
     db: Session = Depends(get_db),
 ) -> InterventionListResponse:
-    stmt = select(Intervention)
+    stmt = select(
+        Intervention.id,
+        Intervention.interpreter_id,
+        Intervention.action,
+        Intervention.notes,
+        Intervention.created_at,
+        Intervention.outcome,
+        Interpreter.full_name,
+        Interpreter.external_id,
+    ).join(Interpreter, Interpreter.id == Intervention.interpreter_id)
+
     filters = []
     if interpreter_id is not None:
         filters.append(Intervention.interpreter_id == interpreter_id)
+    if action is not None:
+        filters.append(Intervention.action == action)
     if outcome is not None:
         filters.append(Intervention.outcome == outcome)
     if since_days is not None:
@@ -40,8 +58,20 @@ def list_interventions(
     ).scalar_one()
 
     stmt = stmt.order_by(Intervention.created_at.desc()).limit(limit).offset(offset)
-    rows = db.execute(stmt).scalars().all()
-    items = [InterventionRead.model_validate(r) for r in rows]
+    rows = db.execute(stmt).all()
+    items = [
+        InterventionListItem(
+            id=row.id,
+            interpreter_id=row.interpreter_id,
+            interpreter_name=row.full_name,
+            interpreter_external_id=row.external_id,
+            action=row.action,
+            notes=row.notes,
+            created_at=row.created_at,
+            outcome=row.outcome,
+        )
+        for row in rows
+    ]
     return InterventionListResponse(items=items, total=int(total), limit=limit, offset=offset)
 
 

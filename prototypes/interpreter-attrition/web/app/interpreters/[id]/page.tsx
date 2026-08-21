@@ -1,8 +1,6 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import { InterventionDialog } from "@/components/intervention-dialog";
@@ -29,14 +27,6 @@ export default function InterpreterDetailPage() {
 
   return (
     <main className="mx-auto max-w-[1400px] px-6 py-8 md:px-10">
-      <Link
-        href="/"
-        className="mb-6 inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-neutral-500 hover:text-neutral-900"
-      >
-        <ArrowLeft className="h-3.5 w-3.5" />
-        Back to dashboard
-      </Link>
-
       {isLoading && (
         <div className="rounded-lg border border-neutral-200 bg-white p-8 text-center text-sm text-neutral-500">
           Loading interpreter…

@@ -131,7 +131,11 @@ def test_create_and_list_interventions(seeded_and_scored, client, db):
     assert r2.status_code == 200
     body = r2.json()
     assert body["total"] >= 1
-    assert any(item["id"] == created["id"] for item in body["items"])
+    match = next((item for item in body["items"] if item["id"] == created["id"]), None)
+    assert match is not None
+    # List items must include interpreter identity (avoids per-row lookup on frontend).
+    assert match["interpreter_name"]
+    assert match["interpreter_external_id"]
 
 
 def test_create_intervention_unknown_interpreter(seeded_and_scored, client):

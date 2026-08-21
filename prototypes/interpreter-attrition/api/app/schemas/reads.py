@@ -106,6 +106,7 @@ class InterventionCreate(BaseModel):
 
 
 class InterventionRead(BaseModel):
+    """POST /api/interventions response — just the row."""
     model_config = ConfigDict(from_attributes=True)
 
     id: UUID
@@ -116,8 +117,22 @@ class InterventionRead(BaseModel):
     outcome: str | None
 
 
+class InterventionListItem(BaseModel):
+    """GET /api/interventions row — enriched with interpreter identity so
+    the interventions screen doesn't need per-row lookups."""
+
+    id: UUID
+    interpreter_id: UUID
+    interpreter_name: str
+    interpreter_external_id: str
+    action: InterventionAction
+    notes: str | None
+    created_at: datetime
+    outcome: str | None
+
+
 class InterventionListResponse(BaseModel):
-    items: list[InterventionRead]
+    items: list[InterventionListItem]
     total: int
     limit: int
     offset: int
