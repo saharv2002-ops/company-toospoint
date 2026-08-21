@@ -44,6 +44,8 @@ jobs:
           cache-dependency-path: prototypes/interpreter-attrition/api/requirements-dev.txt
       - run: pip install -r requirements-dev.txt
       - run: alembic upgrade head
+      - name: Seed smoke run (200 interpreters against pg)
+        run: python -m scripts.seed --reset --total 200
       - run: pytest -q
 
   web:
