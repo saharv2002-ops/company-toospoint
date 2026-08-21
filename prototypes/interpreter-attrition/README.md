@@ -1,6 +1,10 @@
 # Interpreter Attrition Dashboard
 
+![ci](https://github.com/saharv2002-ops/company-toospoint/actions/workflows/churnscope-ci.yml/badge.svg?branch=prototype%2Finterpreter-attrition)
+
 Early-warning dashboard that flags interpreters likely to churn in the next 30 days, so LSP operations teams can intervene before losing capacity.
+
+**Working name:** ChurnScope (placeholder — rename before first pitch)
 
 **Status:** planning complete, build starting on branch `prototype/interpreter-attrition`.
 
@@ -19,13 +23,28 @@ scripts/   seed.py + dev helpers
 docs/      demo script, one-pager, ADRs if any
 ```
 
-## Quick start (after Day 1 lands)
+## Quick start (Day 1 lands the skeleton)
 
 ```bash
-docker compose -f infra/docker-compose.yml up      # api + postgres
-cd web && pnpm dev                                  # frontend
-python scripts/seed.py --reset                      # populate demo data
-open http://localhost:3000
+# API + Postgres via Docker
+docker compose -f infra/docker-compose.yml up
+
+# Frontend (in a separate shell)
+cd web && npm install && npm run dev
+
+# Verify
+curl http://localhost:8000/health           # → {"status":"ok","ts":"..."}
+open http://localhost:3000                  # → ChurnScope Day 1 placeholder
+```
+
+Local dev without Docker (API only):
+
+```bash
+cd api
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements-dev.txt
+uvicorn app.main:app --reload
+pytest -q
 ```
 
 ## Target prospects (see `../../outreach/`)

@@ -228,3 +228,17 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node / Next.js (churnscope-web)
+node_modules/
+.next/
+out/
+.pnpm-store/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.vercel
+
+# Local env files (churnscope infra)
+prototypes/**/.env
