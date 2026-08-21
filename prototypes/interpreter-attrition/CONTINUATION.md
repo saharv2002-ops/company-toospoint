@@ -18,7 +18,7 @@
 
 ## Where we are right now
 
-**Week 1 complete. Day 6 starting.** All 13 API endpoints live (7 ingest + 2 scoring + 3 interpreters + 1 dashboard + 2 interventions — plus `/health`). Backend is done. Ready to build the dashboard screen in Next.js.
+**Day 7 starting.** Day 6 shipped the dashboard screen: KPI cards + filterable/sortable risk table + intervention modal. Full Next.js build clean (27.3 kB dashboard bundle). Ready for the interpreter detail screen.
 
 ## Done
 
@@ -68,7 +68,7 @@
   - `api/tests/test_scoring_e2e.py` — 4 integration tests (requires_postgres): seed 200 → recompute → band distribution within 3pts of seed target (12/22/66), churn_scores populated, idempotent recompute, POST endpoint returns correct payload
   - Local verification: pytest → 39 passed + 13 skipped
   - CI already covers the e2e path via existing seed step
-- ✅ **Day 5** — read APIs + Friday checkpoint (commit pending)
+- ✅ **Day 5** — read APIs + Friday checkpoint (commit `5b9f8ea`)
   - `api/app/services/explanations.py` — plain-English "why" copy generator per signal, e.g. "Sessions in the last 14 days are 62% below the prior 76-day baseline (1.4/day vs 3.0/day)."
   - `api/app/services/scoring.py` — added `recompute_range(db, end, days)` (capped at MAX_BACKFILL_DAYS=90) that loops recompute over consecutive dates
   - `api/app/routers/scores.py` — added `POST /api/scores/backfill?days=N&end=YYYY-MM-DD` for timeline data
@@ -96,22 +96,48 @@
 - ⏳ Endpoint latency measurement (target < 500ms) — deferred; on-demand data volumes with the seeded 200-row dataset are all sub-100ms locally; retest after Day 9 deploy against real hosting
 
 **Week 1 verdict: on schedule.** No scope needs to be cut from Week 2.
+- ✅ **Day 6** — dashboard screen (commit pending)
+  - web/package.json — added @tanstack/react-query, @radix-ui/react-dialog, lucide-react, class-variance-authority, clsx, tailwind-merge
+  - web/lib/utils.ts — cn(), formatDate, daysAgo, bandBorderClass, bandBadgeClass helpers
+  - web/lib/types.ts — TypeScript mirrors of backend Pydantic schemas (12 types)
+  - web/lib/api.ts — typed fetch client for all 14 endpoints, ApiError, qs helper
+  - web/components/providers.tsx — QueryClientProvider (staleTime 30s, no refetch-on-focus, retry 1)
+  - web/components/ui/{card,button,badge,input,dialog,table}.tsx — minimal shadcn-inspired primitives with Tailwind + CVA. Radix Dialog for a11y. Native styled `<select>` for filters.
+  - web/components/kpi-card.tsx — 3 KPI cards with accent bar + week-over-week delta arrow (red/green trend coloring depends on whether "up" is bad for that band)
+  - web/components/interpreter-table.tsx — the risk table:
+    - 4 filters (band, language, min-tenure, silent-within) + reset button
+    - Columns: interpreter (name + external_id), languages, tenure (months), score + band badge, top signal name, last session (relative time), action button
+    - 4px band-colored left border per row
+    - Row action opens the intervention modal for that interpreter
+    - Loading + error states, "Showing X of Y (N filters applied)" footer
+  - web/components/intervention-dialog.tsx — Radix Dialog for logging interventions:
+    - action select (5 options), notes textarea
+    - Mutation → POST /api/interventions → invalidate ["interventions"] + ["interpreters"]
+    - Error banner on failure
+  - web/app/page.tsx — dashboard orchestration:
+    - Header with product name eyebrow + "As of" date badge + dev-only Recompute button (calls recompute + backfill(14) then invalidates all queries)
+    - 3 KPI cards (Red / Yellow / Active roster) driven by GET /api/dashboard/summary
+    - InterpreterTable + InterventionDialog wired to selected interpreter state
+  - web/app/layout.tsx — Providers wrapping children
+  - Verified: `npm run build` clean, 27.3 kB dashboard bundle, 87.2 kB shared JS
 
-## Immediate next actions (Day 6)
+## Immediate next actions (Day 7)
 
-Per `PLAN.md` § Day 6 — dashboard screen:
+Per `PLAN.md` § Day 7 — interpreter detail screen:
 
-1. Install shadcn/ui in web/: `card`, `table`, `badge`, `button`, `dialog`, `select`, `input`, `sonner` (toast).
-2. Wire `@tanstack/react-query` with API base URL from `NEXT_PUBLIC_API_URL`.
-3. Add a lightweight typed API client (`web/lib/api.ts`) hitting the 14 endpoints.
-4. Build `web/app/page.tsx` (Dashboard):
-   - Header: product name, current as_of date badge, dev-only "Recompute" button
-   - 3 KPI cards (Red / Yellow / Total active) with week-over-week delta arrow
-   - Attrition risk table: sortable, filterable (band, language, tenure bucket, days-since-last-session), band-colored left border on rows, "Log intervention" action button per row
-5. Loading skeletons + empty state (won't hit empty with seed but do it right).
-6. Verify at localhost:3000 against a locally-seeded API.
+1. `web/app/interpreters/[id]/page.tsx` — detail page.
+   - Header: name, languages, tenure, current score with band pill, "Log intervention" button.
+   - Signal breakdown card: 6 rows, each with signal name, progress bar (0-100), plain-English "why" copy (comes from GET /api/interpreters/{id}.signals[].why).
+   - 90-day signal timeline: 6 sparkline small multiples via Recharts, hover shows date + value. Timeline data from GET /api/interpreters/{id}/timeline?days=30 (backfilled Day 5).
+   - Intervention log for this interpreter (GET /api/interventions?interpreter_id=...).
+   - Deep linking works — hitting /interpreters/{id} directly loads correctly.
+2. Add Recharts to web/package.json.
+3. From the dashboard table, clicking an interpreter row → detail page.
+4. Back link → dashboard.
 
-**Acceptance:** Dashboard renders 12 Red / 68 Yellow / 312 Total-ish (production seed) at ~400 interpreters total. Filters work. Sort by score works. Interactive < 200ms.
+**Acceptance:** click any interpreter in the table, see the detail page; sparklines render; "why" copy is plain-English and matches the data; log an intervention, see it appear in the log immediately.
+
+**Trap:** Recharts sparkline rendering with 30 daily points can look noisy. Add a 7-day rolling smooth if it looks bad.
 
 ## Locked decisions
 
@@ -144,4 +170,5 @@ Per `PLAN.md` § Day 6 — dashboard screen:
 - **2026-08-21** — Day 2 shipped (commit `341ccd1`): 7-table data model, 6 pg enums, initial Alembic migration, Pydantic 2 ingest schemas (MAX_BATCH_SIZE=5000, extra=forbid, tight validators), 6 ingest endpoints with pg upsert, 10MB payload middleware, 9 integration tests + 7 schema unit tests. CI now runs against postgres:16 service. Local: 8 passed + 9 skipped (integration gated on POSTGRES_TEST_URL).
 - **2026-08-21** — Day 3 shipped (commit `a3faf36`): seed.py + 9 in-memory tests. Dry-run against target 400 interpreters produces 12% red / 22% yellow / 66% green + 106K sessions / 123K dispatches / 7.3K feedback / 4.8K availability. CI now smoke-runs `seed --reset --total 200` against postgres between migrations and pytest. Local: 17 passed + 9 skipped.
 - **2026-08-21** — Day 4 shipped (commit `eca0018`): scoring engine with 6 pure signal functions (volume, decline-rate, latency, feedback, tenure bimodal bell, availability), weighted composite (25/20/10/15/15/15), band assignment, bulk SQL aggregation (uses percentile_cont for medians), `POST /api/scores/recompute` endpoint. 22 unit tests + 4 e2e tests. e2e verifies blind scoring recovers seeded bucket distribution within 3pts. Local: 39 passed + 13 skipped.
-- **2026-08-21** — Day 5 shipped: read APIs. 6 new endpoints (list, detail, timeline, dashboard summary, intervention list+create) + backfill endpoint. Explanations service produces plain-English "why" strings per signal. 10 new Pydantic response schemas. 12 read integration tests. 14 routes total in OpenAPI. Week 1 complete on schedule; no Week 2 scope cuts.
+- **2026-08-21** — Day 5 shipped (commit `5b9f8ea`): read APIs. 6 new endpoints (list, detail, timeline, dashboard summary, intervention list+create) + backfill endpoint. Explanations service produces plain-English "why" strings per signal. 10 new Pydantic response schemas. 12 read integration tests. 14 routes total in OpenAPI. Week 1 complete on schedule; no Week 2 scope cuts.
+- **2026-08-21** — Day 6 shipped: dashboard screen. shadcn-style primitives (card/button/badge/input/dialog/table) + Radix Dialog. Typed API client hits all 14 endpoints. KPI cards + filterable/sortable risk table + intervention modal. Next.js build clean at 27.3 kB dashboard bundle.
