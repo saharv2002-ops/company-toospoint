@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Speak Two Languages. Build Your Future. — Center Tel BPO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#081f52;
+    --navy-2:#0e2a6b;
+    --navy-3:#050f2e;
+    --orange:#ff5a1f;
+    --orange-2:#ff7a3d;
+    --orange-3:#e63e0a;
+    --amber:#ffc02e;
+    --ink:#050914;
+    --paper:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:#0a0f22}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--ink);
+    min-height:100vh;display:grid;place-items:center;padding:40px 20px;
+  }
+
+  /* SQUARE 1:1 — IG / FB / WhatsApp native */
+  .poster{
+    position:relative;
+    width:min(1080px,100%);
+    aspect-ratio:1/1;
+    overflow:hidden;
+    border-radius:24px;
+    background:linear-gradient(120deg,var(--navy-3) 0%, var(--navy) 55%, var(--navy-2) 100%);
+    color:#fff;
+    box-shadow:0 50px 120px rgba(0,0,0,.5), 0 20px 40px rgba(0,0,0,.3);
+    isolation:isolate;
+  }
+
+  /* HERO PHOTO — bleeds off right, subject is the hero */
+  .hero{
+    position:absolute;top:0;right:0;bottom:0;width:62%;z-index:1;overflow:hidden;
+  }
+  .hero img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:38% 22%;
+    filter:contrast(1.05) saturate(1.05);
+  }
+  /* left-side navy wash so type stays crisp */
+  .hero::before{
+    content:"";position:absolute;inset:0;z-index:2;
+    background:linear-gradient(90deg, var(--navy-3) 0%, rgba(8,31,82,.85) 22%, rgba(8,31,82,.15) 45%, transparent 60%);
+  }
+  /* soft cinematic vignette on subject */
+  .hero::after{
+    content:"";position:absolute;inset:0;z-index:2;
+    background:radial-gradient(80% 60% at 70% 30%, rgba(255,140,60,.18), transparent 60%);
+    mix-blend-mode:screen;
+  }
+
+  /* MOTION STRIPES behind subject (energy) */
+  .stripes{
+    position:absolute;top:0;bottom:0;right:0;width:70%;z-index:2;pointer-events:none;
+    background:
+      repeating-linear-gradient(115deg, transparent 0 60px, rgba(255,255,255,.04) 60px 62px, transparent 62px 140px);
+  }
+
+  /* Big glow behind subject */
+  .glow{
+    position:absolute;top:-140px;right:-160px;width:520px;height:520px;z-index:2;
+    background:radial-gradient(circle,var(--orange) 0%, transparent 62%);
+    opacity:.38;filter:blur(20px);
+  }
+  .glow-2{
+    position:absolute;bottom:-120px;left:-100px;width:420px;height:420px;z-index:1;
+    background:radial-gradient(circle,var(--orange-3) 0%, transparent 62%);
+    opacity:.35;filter:blur(30px);
+  }
+
+  /* ─── TOP BAR: logo + NOW HIRING pill ─── */
+  .top{
+    position:absolute;top:34px;left:44px;right:44px;z-index:8;
+    display:flex;align-items:center;justify-content:space-between;gap:20px;
+  }
+  .logo{display:flex;align-items:center;gap:12px;color:#fff}
+  .logo .globe{
+    width:38px;height:38px;border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, #6ea3ff 0%, #2a63d9 55%, #051233 100%);
+    position:relative;
+    box-shadow:inset 0 -2px 5px rgba(0,0,0,.35), inset 0 2px 3px rgba(255,255,255,.45), 0 6px 14px rgba(0,0,0,.35);
+  }
+  .logo .globe::before,.logo .globe::after{content:"";position:absolute;inset:0;border-radius:50%;border:1px solid rgba(255,255,255,.6)}
+  .logo .globe::before{transform:scaleX(.35)}
+  .logo .globe::after{transform:scaleY(.35)}
+  .logo b{font-family:'Archivo Black',sans-serif;font-size:16px;letter-spacing:.6px;line-height:1;color:#fff}
+  .logo span{display:block;font-size:9px;letter-spacing:3px;color:rgba(255,255,255,.75);margin-top:3px;text-transform:uppercase;font-weight:500}
+
+  .live{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:10px 16px;border-radius:999px;
+    background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);
+    backdrop-filter:blur(10px);
+    font-family:'Archivo',sans-serif;font-weight:800;font-size:11.5px;
+    letter-spacing:2.2px;text-transform:uppercase;color:#fff;
+  }
+  .live::before{
+    content:"";width:8px;height:8px;border-radius:50%;background:var(--orange);
+    box-shadow:0 0 0 0 rgba(255,90,31,.7);animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{50%{box-shadow:0 0 0 10px rgba(255,90,31,0)}}
+
+  /* ─── HEADLINE / LEFT COLUMN ─── */
+  .left{
+    position:absolute;top:118px;left:44px;right:52%;bottom:210px;z-index:7;
+    display:flex;flex-direction:column;gap:22px;
+  }
+  .kicker{
+    display:inline-flex;align-items:center;gap:12px;
+    color:var(--amber);font-family:'Archivo',sans-serif;font-weight:800;
+    font-size:12px;letter-spacing:3.5px;text-transform:uppercase;
+    width:fit-content;
+  }
+  .kicker::before{content:"";width:28px;height:2px;background:var(--amber)}
+
+  h1{
+    font-family:'Archivo Black','Archivo',sans-serif;
+    font-weight:900;
+    font-size: clamp(44px, 5.6vw, 68px);
+    line-height:.92;letter-spacing:-2px;
+    text-transform:uppercase;color:#fff;
+    text-shadow:0 4px 24px rgba(0,0,0,.25);
+  }
+  h1 .accent{
+    background:linear-gradient(180deg, var(--amber) 0%, var(--orange) 60%, var(--orange-3) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  h1 .thin{
+    display:block;font-family:'Archivo',sans-serif;font-weight:600;
+    font-size:.36em;letter-spacing:.5px;color:rgba(255,255,255,.82);
+    text-transform:none;margin-top:12px;line-height:1.35;max-width:24ch;
+  }
+
+  /* Role chip */
+  .role{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:10px 16px;border-radius:10px;
+    background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);
+    color:#fff;font-family:'Archivo',sans-serif;font-weight:700;font-size:13px;
+    letter-spacing:1.2px;text-transform:uppercase;width:fit-content;
+    backdrop-filter:blur(8px);
+  }
+  .role::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--amber);
+  }
+
+  /* DIAGONAL EARN RIBBON — the scroll-stopper */
+  .ribbon{
+    position:relative;
+    align-self:flex-start;
+    margin-top:6px;
+    padding:16px 26px 16px 22px;
+    background:linear-gradient(100deg, var(--orange) 0%, var(--orange-3) 100%);
+    color:#fff;
+    font-family:'Archivo Black',sans-serif;
+    font-size:22px;letter-spacing:-.3px;text-transform:uppercase;
+    transform:rotate(-2.5deg);
+    box-shadow:0 20px 40px rgba(255,90,31,.35), inset 0 -3px 0 rgba(0,0,0,.18), inset 0 2px 0 rgba(255,255,255,.2);
+    border-radius:6px;
+    display:inline-flex;align-items:center;gap:14px;
+  }
+  .ribbon::before,.ribbon::after{
+    content:"";position:absolute;top:50%;width:14px;height:14px;
+    background:var(--orange-3);border-radius:50%;transform:translateY(-50%);
+    box-shadow:inset 0 2px 4px rgba(0,0,0,.35);
+  }
+  .ribbon::before{left:-6px}
+  .ribbon::after{right:-6px}
+  .ribbon .coin{
+    display:grid;place-items:center;width:34px;height:34px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, #ffe08a, #ffb020 55%, #a86800 100%);
+    color:#3a1e00;font-family:'Archivo Black',sans-serif;font-size:18px;
+    box-shadow:inset 0 -2px 3px rgba(0,0,0,.35), inset 0 2px 2px rgba(255,255,255,.5);
+  }
+  .ribbon small{
+    display:block;font-family:'Inter',sans-serif;font-weight:600;
+    font-size:10px;letter-spacing:2px;opacity:.9;margin-top:2px;
+  }
+
+  /* ─── VALUE STACK ─── */
+  .stack{
+    display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px;
+  }
+  .val{
+    display:flex;align-items:center;gap:12px;
+    padding:12px 14px;border-radius:12px;
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.14);
+    backdrop-filter:blur(6px);
+    transition:.2s ease;
+  }
+  .val:hover{background:rgba(255,255,255,.11);border-color:rgba(255,192,46,.35)}
+  .val .check{
+    width:26px;height:26px;border-radius:50%;
+    background:linear-gradient(135deg,var(--amber),var(--orange));
+    display:grid;place-items:center;color:#1a0800;flex-shrink:0;
+    box-shadow:0 4px 10px rgba(255,90,31,.35);
+  }
+  .val p{font-family:'Archivo',sans-serif;font-weight:700;font-size:13px;color:#fff;letter-spacing:.1px;line-height:1.15}
+  .val p span{display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:10.5px;color:rgba(255,255,255,.7);margin-top:2px;letter-spacing:.2px}
+
+  /* ─── CTA BAR (bottom, unmissable) ─── */
+  .cta-bar{
+    position:absolute;left:0;right:0;bottom:0;z-index:8;
+    padding:26px 44px 30px;
+    background:linear-gradient(180deg, transparent, rgba(5,15,46,.85) 45%);
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .cta{
+    flex:1;
+    display:inline-flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:20px 24px 20px 28px;
+    background:linear-gradient(100deg, var(--orange) 0%, var(--orange-3) 100%);
+    color:#fff;text-decoration:none;
+    border-radius:16px;
+    font-family:'Archivo Black',sans-serif;font-size:22px;letter-spacing:.3px;text-transform:uppercase;
+    box-shadow:
+      0 20px 40px -8px rgba(255,90,31,.55),
+      inset 0 -4px 0 rgba(0,0,0,.2),
+      inset 0 2px 0 rgba(255,255,255,.22);
+    position:relative;overflow:hidden;
+  }
+  .cta::before{
+    content:"";position:absolute;top:0;bottom:0;left:-30%;width:30%;
+    background:linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
+    animation:sheen 3.6s infinite;
+  }
+  @keyframes sheen{0%{left:-30%}60%,100%{left:120%}}
+  .cta .arr{
+    width:44px;height:44px;border-radius:50%;background:#fff;color:var(--orange-3);
+    display:grid;place-items:center;flex-shrink:0;
+    box-shadow:inset 0 -2px 0 rgba(0,0,0,.1);
+  }
+  .cta small{
+    display:block;font-family:'Inter',sans-serif;font-weight:500;
+    font-size:11px;letter-spacing:2px;opacity:.9;text-transform:uppercase;margin-top:3px;
+  }
+
+  .channels{
+    display:flex;flex-direction:column;gap:8px;color:#fff;text-align:right;
+  }
+  .channels b{font-family:'Archivo',sans-serif;font-weight:800;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--amber)}
+  .channels .row{display:flex;gap:8px;align-items:center;justify-content:flex-end}
+  .channels .ic{
+    width:34px;height:34px;border-radius:50%;
+    background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);
+    display:grid;place-items:center;color:#fff;
+    backdrop-filter:blur(6px);
+  }
+  .channels .em{font-family:'Inter',sans-serif;font-size:11px;color:rgba(255,255,255,.85);letter-spacing:.3px}
+
+  /* small decorative arrows near subject */
+  .zips{
+    position:absolute;right:44px;top:180px;z-index:5;display:flex;flex-direction:column;gap:8px;
+  }
+  .zips i{
+    display:block;width:0;height:0;
+    border-left:16px solid var(--amber);
+    border-top:10px solid transparent;border-bottom:10px solid transparent;
+    filter:drop-shadow(0 4px 8px rgba(0,0,0,.35));
+    opacity:.9;
+  }
+  .zips i:nth-child(1){opacity:.4}
+  .zips i:nth-child(2){opacity:.7;transform:translateX(6px)}
+  .zips i:nth-child(3){transform:translateX(12px)}
+
+  /* social share hint pill on hero */
+  .badge-money{
+    position:absolute;right:40px;top:270px;z-index:6;
+    padding:12px 16px;border-radius:14px;
+    background:#fff;color:var(--navy);
+    font-family:'Archivo Black',sans-serif;font-size:14px;letter-spacing:-.2px;
+    box-shadow:0 14px 30px rgba(0,0,0,.35), inset 0 -2px 0 rgba(0,0,0,.06);
+    transform:rotate(4deg);
+    display:flex;align-items:center;gap:10px;
+  }
+  .badge-money .dollar{
+    width:28px;height:28px;border-radius:50%;
+    background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;
+    display:grid;place-items:center;font-family:'Archivo Black',sans-serif;font-size:14px;
+    box-shadow:inset 0 -2px 2px rgba(0,0,0,.25), inset 0 2px 2px rgba(255,255,255,.4);
+  }
+  .badge-money small{display:block;font-family:'Inter',sans-serif;font-weight:600;font-size:9.5px;color:var(--navy);opacity:.7;letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
+
+  /* PRINT */
+  @page{size:A4 portrait;margin:0}
+  @media print{
+    body{background:#fff;padding:0}
+    .poster{width:100%;height:100vh;aspect-ratio:auto;border-radius:0;box-shadow:none}
+  }
+
+  @media (max-width:760px){
+    .poster{aspect-ratio:1/1.15}
+    .hero{width:100%;opacity:.35}
+    .left{right:44px}
+    .stack{grid-template-columns:1fr}
+    .cta{font-size:16px;padding:16px 18px}
+    .channels{display:none}
+    .badge-money,.zips{display:none}
+  }
+</style>
+</head>
+<body>
+
+<main class="poster" aria-label="Center Tel BPO hiring Spanish-English interpreters">
+
+  <!-- HERO IMAGE -->
+  <div class="hero">
+    <img
+      src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=1600&q=90"
+      alt="Bilingual interpreter smiling with a headset"
+      onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&w=1600&q=90'"
+    />
+  </div>
+  <div class="stripes"></div>
+  <div class="glow"></div>
+  <div class="glow-2"></div>
+
+  <!-- TOP BAR -->
+  <header class="top">
+    <div class="logo">
+      <div class="globe"></div>
+      <div>
+        <b>CENTER TEL BPO</b>
+        <span>Quality is our pride</span>
+      </div>
+    </div>
+    <div class="live">Now Hiring · Remote Worldwide</div>
+  </header>
+
+  <!-- Motion arrows near subject -->
+  <div class="zips"><i></i><i></i><i></i></div>
+
+  <!-- Floating money badge over image -->
+  <div class="badge-money">
+    <div class="dollar">$</div>
+    <div>
+      Earn <span style="color:var(--orange-3)">every minute</span>
+      <small>Uncapped</small>
+    </div>
+  </div>
+
+  <!-- LEFT: HEADLINE + VALUE STACK -->
+  <section class="left">
+    <div class="kicker">Spanish · English Interpreter</div>
+
+    <h1>
+      Speak Two<br/>
+      Languages.<br/>
+      <span class="accent">Build Your Future.</span>
+      <span class="thin">Join a growing global team of interpreters and turn your bilingual skills into real income — from anywhere.</span>
+    </h1>
+
+    <div class="ribbon">
+      <span class="coin">$</span>
+      <div>
+        Earn Every Minute You Interpret
+        <small>Paid per minute · uncapped earnings</small>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="val">
+        <div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+        <p>Work From Anywhere<span>100% remote, worldwide</span></p>
+      </div>
+      <div class="val">
+        <div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+        <p>Earn More with Bonuses<span>Performance incentives</span></p>
+      </div>
+      <div class="val">
+        <div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+        <p>Your Schedule, Your Life<span>Pick the shifts that fit</span></p>
+      </div>
+      <div class="val">
+        <div class="check"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+        <p>Ongoing Support & Growth<span>Training + real career path</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <footer class="cta-bar">
+    <a class="cta" href="mailto:careers@centertelbpo.com">
+      <span>
+        Start Your Interpreter Career
+        <small>Apply today · reply within 24h</small>
+      </span>
+      <span class="arr">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </span>
+    </a>
+    <div class="channels">
+      <b>Message us</b>
+      <div class="row">
+        <a class="ic" href="https://wa.me/" title="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11 11 0 0 0 3.6 17.3L2 22l4.9-1.6A11 11 0 1 0 20.5 3.5zM12 20a8 8 0 0 1-4.1-1.1l-.3-.2-2.9 1 1-2.8-.2-.3A8 8 0 1 1 12 20zm4.5-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1s-.6.8-.7.9c-.1.2-.3.2-.5.1a6.6 6.6 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5s-.5-1.3-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-1 2.3c0 1.3 1 2.6 1.1 2.8.1.2 2 3 4.7 4.1a5.7 5.7 0 0 0 2.3.7 3 3 0 0 0 2-.6c.5-.4 1-1.5 1.1-2s.1-.9 0-1a2 2 0 0 0-.5-.3z"/></svg></a>
+        <a class="ic" href="#" title="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a class="ic" href="mailto:careers@centertelbpo.com" title="Email"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+      </div>
+      <span class="em">careers@centertelbpo.com</span>
+    </div>
+  </footer>
+
+</main>
+
+</body>
+</html>
